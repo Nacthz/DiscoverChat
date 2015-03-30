@@ -15,7 +15,7 @@ public interface DbInterface {
     public long add(Model model);
 
     // Getting single chat
-    public Model get(int id);
+    public  Model get(int id);
 
     // Getting All chats
     public List getAll();

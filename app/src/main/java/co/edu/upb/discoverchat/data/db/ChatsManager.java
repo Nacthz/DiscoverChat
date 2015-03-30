@@ -16,6 +16,7 @@ import co.edu.upb.discoverchat.models.Model;
  * This class will handle all the data about the chats
  */
 public class ChatsManager extends DbBase implements DbInterface {
+    public static final String TBL_LOCAL = TBL_CHATS;
 
     public ChatsManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -42,7 +43,7 @@ public class ChatsManager extends DbBase implements DbInterface {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.query(TBL_CHATS,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
+        Cursor c = db.query(TBL_LOCAL,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
         if(c != null){
             c.moveToFirst();
             return loadChatFromCursor(c);
@@ -82,11 +83,9 @@ public class ChatsManager extends DbBase implements DbInterface {
     }
 
     private Chat loadChatFromCursor(Cursor c){
-        Chat chat = new Chat();
-        chat.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        chat.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-        chat.setRoomImagePath(c.getString(c.getColumnIndex(KEY_ROOM_IMAGE_PATH)));
-        //TODO Need load the receivers
+        Chat chat = new Chat(c);
+        ReceiversManager receiversManager = new ReceiversManager(context);
+        chat.setReceivers(receiversManager.getAllForChat(chat));
         return chat;
     }
 

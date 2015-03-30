@@ -11,6 +11,8 @@ import java.util.List;
  * Created by hatsumora on 30/03/15.
  */
 public class DbBase extends SQLiteOpenHelper {
+
+    protected Context context;
     protected static final int VERSION = 1;
     protected static final String DATABASE_NAME = "DiscoverChat";
 
@@ -19,17 +21,18 @@ public class DbBase extends SQLiteOpenHelper {
 
 
 
-    protected static final String KEY_ID = "id";
-    protected static final String KEY_NAME = "name";
-    protected static final String KEY_ROOM_IMAGE_PATH = "room_image_path";
-    protected static final String KEY_CHAT_ID = "chat_id";
-    protected static final String KEY_PHONE = "phone";
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_ROOM_IMAGE_PATH = "room_image_path";
+    public static final String KEY_CHAT_ID = "chat_id";
+    public static final String KEY_PHONE = "phone";
 
     public DbBase(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
     public DbBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, VERSION);
+        this.context = context;
     }
 
     @Override
