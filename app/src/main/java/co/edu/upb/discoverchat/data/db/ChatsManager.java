@@ -14,6 +14,11 @@ import co.edu.upb.discoverchat.models.Chat;
  * This class will handle all the data about the chats
  */
 public class ChatsManager extends DbBase {
+
+    public ChatsManager(Context context){
+        super(context, DATABASE_NAME, null, VERSION);
+    }
+
     public ChatsManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, VERSION);
     }
