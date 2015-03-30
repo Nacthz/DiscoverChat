@@ -1,9 +1,10 @@
 package co.edu.upb.discoverchat.chat;
 import java.util.ArrayList;
 
+import co.edu.upb.discoverchat.models.Model;
 import  co.edu.upb.discoverchat.models.Receiver;
 
-public class Chat {
+public class Chat implements Model {
     private long id;
     private String name;
     private boolean group;
