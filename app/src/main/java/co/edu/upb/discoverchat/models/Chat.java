@@ -1,8 +1,5 @@
-package co.edu.upb.discoverchat.chat;
+package co.edu.upb.discoverchat.models;
 import java.util.ArrayList;
-
-import co.edu.upb.discoverchat.models.Model;
-import  co.edu.upb.discoverchat.models.Receiver;
 
 public class Chat implements Model {
     private long id;
@@ -32,7 +29,7 @@ public class Chat implements Model {
     public String getRoomImagePath(){
     	return roomImagePath;
     }
-    public Chat setId(String roomImagePath){
+    public Chat setRoomImagePath(String roomImagePath){
     	this.roomImagePath = roomImagePath;
         return this;
     }
@@ -42,4 +39,14 @@ public class Chat implements Model {
         return this;
     }
 
+    @Override
+    public String toJsonString() {
+        return null;
+    }
+
+    @Override
+    public Model newFromJsonString(String jsoncChat) {
+
+        return null;
+    }
 }

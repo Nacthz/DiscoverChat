@@ -40,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:text="New Text"
                     android:id="@+id/chat_txt_last_message_date"
-                    android:paddingRight="5dp" />
+                    android:paddingRight="5dp"
+                    android:textColor="#ffdedede" />
             </LinearLayout>
 
         </LinearLayout>
