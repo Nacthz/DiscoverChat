@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.data.db;
+package co.edu.upb.discoverchat.data.db.base;
 
 import android.database.Cursor;
 

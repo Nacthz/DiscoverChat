@@ -4,7 +4,7 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.edu.upb.discoverchat.data.db.DbBase;
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 public class Chat implements Model {
     private long id;

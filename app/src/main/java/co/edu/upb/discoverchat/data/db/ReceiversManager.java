@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Model;
 import co.edu.upb.discoverchat.models.Receiver;
@@ -15,7 +17,7 @@ import co.edu.upb.discoverchat.models.Receiver;
 /**
  * Created by hatsumora on 30/03/15.
  */
-public class ReceiversManager extends  DbBase implements DbInterface{
+public class ReceiversManager extends DbBase implements DbInterface {
     public ReceiversManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }

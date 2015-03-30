@@ -1,7 +1,7 @@
 package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
-import co.edu.upb.discoverchat.data.db.DbBase;
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 public class Receiver implements Model {
     private long id;
