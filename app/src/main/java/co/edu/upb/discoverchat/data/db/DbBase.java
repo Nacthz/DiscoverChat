@@ -17,11 +17,13 @@ public class DbBase extends SQLiteOpenHelper {
     protected static final String TBL_CHATS = "chats";
 
     protected static final String KEY_ID = "id";
-    protected static final String KEY_NAME = "id";
-    protected static final String KEY_ROOM_IMAGE_PATH = "id";
+    protected static final String KEY_NAME = "name";
+    protected static final String KEY_ROOM_IMAGE_PATH = "room_image_path";
 
 
-
+    public DbBase(Context context){
+        super(context, DATABASE_NAME, null, VERSION);
+    }
     public DbBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, VERSION);
     }
