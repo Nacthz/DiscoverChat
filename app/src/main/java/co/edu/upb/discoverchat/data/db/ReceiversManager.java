@@ -9,4 +9,6 @@ public class ReceiversManager extends  DbBase {
     public ReceiversManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
+
+
 }
