@@ -19,22 +19,26 @@ public class Chat {
     }
     public Chat setId(long id){
     	this.id = id;
+        return this;
     }
     public String getName(){
     	return name;
     }
     public Chat setName(String name){
     	this.name = name;
+        return this;
     }
     public String getRoomImagePath(){
     	return roomImagePath;
     }
     public Chat setId(String roomImagePath){
     	this.roomImagePath = roomImagePath;
+        return this;
     }
     public ArrayList<Receiver> getReceivers(){ return receivers; }
     public Chat setReceivers(ArrayList receivers){
     	this.receivers = receivers;
+        return this;
     }
 
 }
