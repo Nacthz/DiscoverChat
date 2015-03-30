@@ -2,7 +2,7 @@ package co.edu.upb.discoverchat.models;
 
 public class Receiver implements Model {
     private long id;
-    private long chat_id;
+    private long chatId;
     private String name;
     private String phone;
 
@@ -12,11 +12,11 @@ public class Receiver implements Model {
         this.id = id;
         return this;
     }
-    public long getChat_id() {
-        return chat_id;
+    public long getChatId() {
+        return chatId;
     }
-    public Receiver setChat_id(long chat_id) {
-        this.chat_id = chat_id;
+    public Receiver setChatId(long chatId) {
+        this.chatId = chatId;
         return this;
     }
     public String getName() {

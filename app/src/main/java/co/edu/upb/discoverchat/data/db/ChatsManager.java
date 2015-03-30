@@ -21,10 +21,6 @@ public class ChatsManager extends DbBase implements DbInterface {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
-    public ChatsManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, null, VERSION);
-    }
-
     // Adding new chat
     public long add(Model model) {
         Chat chat = (Chat)model;

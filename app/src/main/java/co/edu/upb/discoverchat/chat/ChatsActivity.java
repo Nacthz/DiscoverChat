@@ -56,7 +56,7 @@ public class ChatsActivity extends Activity {
 
     public void setChatListData(){
         ChatsManager manager = new ChatsManager(this);
-        chats.addAll(manager.getAllChats());
+        chats.addAll(manager.getAll());
     }
     public void onItemClick(int mPosition)
     {
