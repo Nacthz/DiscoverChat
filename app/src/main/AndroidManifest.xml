@@ -8,12 +8,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppDiscoverTheme" >
         <activity
-            android:name=".chat.ChatsActivity"
+            android:name=".StartActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".chat.ChatsActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

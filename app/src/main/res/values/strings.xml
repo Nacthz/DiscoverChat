@@ -9,5 +9,10 @@
     <string name="tab2">PERFIL</string>
     <string name="tab3">CONTACTOS</string>
     <string name="title_activity_chats">ChatsActivity</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>
