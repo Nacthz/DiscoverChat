@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.models.Model;
 
 /**
  * Created by hatsumora on 30/03/15.
  * This class will handle all the data about the chats
  */
-public class ChatsManager extends DbBase {
+public class ChatsManager extends DbBase implements DbInterface {
 
     public ChatsManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -23,8 +24,10 @@ public class ChatsManager extends DbBase {
     public ChatsManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, VERSION);
     }
+
     // Adding new chat
-    public long addChat(Chat chat) {
+    public long add(Model model) {
+        Chat chat = (Chat)model;
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -39,7 +42,7 @@ public class ChatsManager extends DbBase {
     }
 
     // Getting single chat
-    public Chat getChat(int id) {
+    public Chat get(int id) {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -52,7 +55,7 @@ public class ChatsManager extends DbBase {
     }
 
     // Getting All chats
-    public List<Chat> getAllChats() {
+    public List<Chat> getAll() {
         List<Chat> chats = new ArrayList<>();
         String selectQuery = "SELECT * FROM "+ TBL_CHATS;
         SQLiteDatabase db =  this.getReadableDatabase();
@@ -69,14 +72,15 @@ public class ChatsManager extends DbBase {
     }
 
     // Getting chats Count
-    public int getChatsCount() {
-        return getAllChats().size();
+    public int getAllCount() {
+        return getAll().size();
     }
     // Updating single chat
     //public int updateChat(Chat chat) {return 0;}
 
     // Deleting single chat
-    public int deleteChat(Chat chat) {
+    public int delete(Model model) {
+        Chat chat = (Chat)model;
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
     }
@@ -89,4 +93,5 @@ public class ChatsManager extends DbBase {
         //TODO Need load the receivers
         return chat;
     }
+
 }

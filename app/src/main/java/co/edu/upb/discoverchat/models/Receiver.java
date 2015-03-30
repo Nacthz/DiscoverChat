@@ -1,6 +1,6 @@
 package co.edu.upb.discoverchat.models;
 
-public class Receiver {
+public class Receiver implements Model {
     private long id;
     private long chat_id;
     private String name;
@@ -32,5 +32,15 @@ public class Receiver {
     public Receiver setPhone(String phone) {
         this.phone = phone;
         return this;
+    }
+
+    @Override
+    public String toJsonString() {
+        return null;
+    }
+
+    @Override
+    public Model newFromJsonString(String model) {
+        return null;
     }
 }
