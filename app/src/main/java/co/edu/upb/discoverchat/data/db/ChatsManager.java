@@ -60,26 +60,33 @@ public class ChatsManager extends DbBase {
         Cursor c = db.rawQuery(selectQuery, null);
 
         if(c.moveToFirst())
-            do{
+            do
                 chats.add(loadChatFromCursor(c));
-               }while (c.moveToNext());
+            while (c.moveToNext());
 
+        db.close();
         return chats;
     }
 
     // Getting chats Count
-    public int getChatsCount() {return 0;}
+    public int getChatsCount() {
+        return getAllChats().size();
+    }
     // Updating single chat
-    public int updateChat(Chat chat) {return 0;}
+    //public int updateChat(Chat chat) {return 0;}
 
     // Deleting single chat
-    public Chat deleteChat(Chat chat) {return null;}
+    public int deleteChat(Chat chat) {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
+    }
 
     private Chat loadChatFromCursor(Cursor c){
         Chat chat = new Chat();
         chat.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         chat.setName(c.getString(c.getColumnIndex(KEY_NAME)));
         chat.setRoomImagePath(c.getString(c.getColumnIndex(KEY_ROOM_IMAGE_PATH)));
+        //TODO Need load the receivers
         return chat;
     }
 }
