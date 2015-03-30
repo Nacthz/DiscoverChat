@@ -1,11 +1,19 @@
 package co.edu.upb.discoverchat.models;
 
+import android.database.Cursor;
+
 public class Receiver implements Model {
     private long id;
     private long chatId;
     private String name;
     private String phone;
 
+    public Receiver(Cursor c) {
+
+    }
+    public Receiver(){
+
+    }
     public long getId() {return id;}
 
     public Receiver setId(long id) {

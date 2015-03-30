@@ -1,15 +1,27 @@
 package co.edu.upb.discoverchat.models;
+import android.database.Cursor;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import co.edu.upb.discoverchat.data.db.DbBase;
 
 public class Chat implements Model {
     private long id;
     private String name;
     private boolean group;
     private String roomImagePath;
-    private ArrayList<Receiver> receivers;
+    private List<Receiver> receivers;
 
     public Chat(){
         receivers = new ArrayList<>();
+    }
+
+    public Chat(Cursor c) {
+        super();
+        this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
+        this.setName(c.getString(c.getColumnIndex(DbBase.KEY_NAME)));
+        this.setRoomImagePath(c.getString(c.getColumnIndex(DbBase.KEY_ROOM_IMAGE_PATH)));
     }
 
     public long getId(){
@@ -33,8 +45,8 @@ public class Chat implements Model {
     	this.roomImagePath = roomImagePath;
         return this;
     }
-    public ArrayList<Receiver> getReceivers(){ return receivers; }
-    public Chat setReceivers(ArrayList receivers){
+    public List<Receiver> getReceivers(){ return receivers; }
+    public Chat setReceivers(List receivers){
     	this.receivers = receivers;
         return this;
     }
@@ -45,7 +57,7 @@ public class Chat implements Model {
     }
 
     @Override
-    public Model newFromJsonString(String jsoncChat) {
+    public Model newFromJsonString(String jsonChat) {
 
         return null;
     }
