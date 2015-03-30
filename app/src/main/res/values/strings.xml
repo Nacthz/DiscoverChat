@@ -8,5 +8,6 @@
     <string name="tab1">MENSAJES</string>
     <string name="tab2">PERFIL</string>
     <string name="tab3">CONTACTOS</string>
+    <string name="title_activity_chats">ChatsActivity</string>
 
 </resources>

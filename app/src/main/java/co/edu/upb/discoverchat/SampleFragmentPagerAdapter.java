@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "@string/tab1", "@string/tab2", "@string/tab3" };
+    private String tabTitles[] = new String[] { "Chats", "Perfil", "Contactos" };
 
     public SampleFragmentPagerAdapter(FragmentManager fm) {
         super(fm);

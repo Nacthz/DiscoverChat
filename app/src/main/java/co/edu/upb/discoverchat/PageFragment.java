@@ -31,7 +31,7 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if(mPage == 1){
-            View view = inflater.inflate(R.layout.fragment_page, container, false);
+            View view = inflater.inflate(R.layout.activity_chats, container, false);
             return view;
         }
         if(mPage == 2){
