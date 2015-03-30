@@ -24,15 +24,11 @@ public class ChatsActivity extends Activity {
         setContentView(R.layout.activity_chats);
 
         chatsActivity = this;
+
         setChatListData();
         Resources res = getResources();
         chatList = (ListView)findViewById(R.id.chats_lst);
-
         adapter = new ChatsAdapter(chatsActivity, chats,res );
-
-
-
-
         chatList.setAdapter(adapter);
     }
 
