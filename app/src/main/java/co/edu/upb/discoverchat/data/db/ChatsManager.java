@@ -54,7 +54,7 @@ public class ChatsManager extends DbBase {
     // Getting All chats
     public List<Chat> getAllChats() {
         List<Chat> chats = new ArrayList<>();
-        String selectQuery = "SELECT * FORM "+ TBL_CHATS;
+        String selectQuery = "SELECT * FROM "+ TBL_CHATS;
         SQLiteDatabase db =  this.getReadableDatabase();
 
         Cursor c = db.rawQuery(selectQuery, null);
