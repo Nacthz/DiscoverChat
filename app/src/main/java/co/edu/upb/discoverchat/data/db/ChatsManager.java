@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.models.Chat;
@@ -39,24 +40,31 @@ public class ChatsManager extends DbBase {
 
     // Getting single chat
     public Chat getChat(int id) {
-        Chat chat = new Chat();
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor c = db.query(TBL_CHATS,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
         if(c != null){
             c.moveToFirst();
-            chat.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-            chat.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-            chat.setRoomImagePath(c.getString(c.getColumnIndex(KEY_ROOM_IMAGE_PATH)));
-            // TODO get receivers
-            return chat;
+            return loadChatFromCursor(c);
         }
         return null;
     }
 
     // Getting All chats
     public List<Chat> getAllChats() {
-        return null;
+        List<Chat> chats = new ArrayList<>();
+        String selectQuery = "SELECT * FORM "+ TBL_CHATS;
+        SQLiteDatabase db =  this.getReadableDatabase();
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c.moveToFirst())
+            do{
+                chats.add(loadChatFromCursor(c));
+               }while (c.moveToNext());
+
+        return chats;
     }
 
     // Getting chats Count
@@ -66,4 +74,12 @@ public class ChatsManager extends DbBase {
 
     // Deleting single chat
     public Chat deleteChat(Chat chat) {return null;}
+
+    private Chat loadChatFromCursor(Cursor c){
+        Chat chat = new Chat();
+        chat.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        chat.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+        chat.setRoomImagePath(c.getString(c.getColumnIndex(KEY_ROOM_IMAGE_PATH)));
+        return chat;
+    }
 }
