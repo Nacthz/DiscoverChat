@@ -84,9 +84,6 @@ public class ChatsManager extends DbBase implements DbInterface {
 
     private Chat loadChatFromCursor(Cursor c){
         Chat chat = new Chat(c);
-        chat.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        chat.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-        chat.setRoomImagePath(c.getString(c.getColumnIndex(KEY_ROOM_IMAGE_PATH)));
         ReceiversManager receiversManager = new ReceiversManager(context);
         chat.setReceivers(receiversManager.getAllForChat(chat));
         return chat;

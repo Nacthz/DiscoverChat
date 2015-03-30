@@ -9,7 +9,7 @@ import co.edu.upb.discoverchat.data.db.DbBase;
 public class Chat implements Model {
     private long id;
     private String name;
-    private boolean group;
+    private boolean group = false;
     private String roomImagePath;
     private List<Receiver> receivers;
 
@@ -48,9 +48,14 @@ public class Chat implements Model {
     public List<Receiver> getReceivers(){ return receivers; }
     public Chat setReceivers(List receivers){
     	this.receivers = receivers;
+        if(receivers.size()>1)
+            group = true;
         return this;
     }
 
+    public boolean isGroup(){
+        return group;
+    }
     @Override
     public String toJsonString() {
         return null;

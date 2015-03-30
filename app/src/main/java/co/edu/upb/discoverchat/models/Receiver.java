@@ -1,6 +1,7 @@
 package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
+import co.edu.upb.discoverchat.data.db.DbBase;
 
 public class Receiver implements Model {
     private long id;
@@ -9,7 +10,10 @@ public class Receiver implements Model {
     private String phone;
 
     public Receiver(Cursor c) {
-
+        this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
+        this.setName(c.getString(c.getColumnIndex(DbBase.KEY_NAME)));
+        this.setChatId(c.getInt(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
+        this.setPhone(c.getString(c.getColumnIndex(DbBase.KEY_PHONE)));
     }
     public Receiver(){
 
