@@ -1,10 +1,14 @@
 package co.edu.upb.discoverchat;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import co.edu.upb.discoverchat.data.db.provider.ContactProvider;
 
 
 public class SplashActivity extends ActionBarActivity {
@@ -13,6 +17,12 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        ContactProvider cp = new ContactProvider(this);
+        Cursor c = cp.getAllContacts();
+        if(c.moveToFirst()){
+            String name = c.getString(0);
+            Toast.makeText(this,name,Toast.LENGTH_SHORT);
+        }
         if(checkUserData())
             launchMainActivity();
         else
