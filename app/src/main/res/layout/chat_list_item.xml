@@ -21,7 +21,8 @@
                 android:text="New Text"
                 android:id="@+id/chat_txt_user_name"
                 android:paddingTop="10dp"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="#ff7b7b7b" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -32,7 +33,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Text"
-                    android:id="@+id/chat_txt_last_message" />
+                    android:id="@+id/chat_txt_last_message"
+                    android:textColor="#ff7b7b7b" />
 
                 <TextView
                     android:gravity="right"
@@ -43,6 +45,5 @@
                     android:paddingRight="5dp"
                     android:textColor="#ff7b7b7b" />
             </LinearLayout>
-
         </LinearLayout>
 </LinearLayout>

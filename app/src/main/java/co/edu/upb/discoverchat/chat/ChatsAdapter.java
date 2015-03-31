@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;
 
 public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
@@ -59,6 +60,8 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder = new ViewHolder();
             holder.profile = (ImageView)view.findViewById(R.id.chat_img_profile);
             holder.user_name = (TextView)view.findViewById(R.id.chat_txt_user_name);
+            holder.lastMessage = (TextView)view.findViewById(R.id.chat_txt_last_message);
+            holder.lastMessage_date =(TextView)view.findViewById(R.id.chat_txt_last_message_date);
             view.setTag(holder);
         }else
             holder = (ViewHolder)view.getTag();
@@ -66,6 +69,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.user_name.setText("No chats");
         else{
             chat = null;
+            ChatsManager chatmanagers = new ChatsManager(activity);
             chat = data.get(position);
             holder.user_name.setText(chat.getName());
             // holder.image.setImageResource(res.getIdentifier("co.edu.upb.discoverchat:drawable/",null,null));
@@ -76,6 +80,8 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
     public static class ViewHolder {
         public TextView user_name;
         public ImageView profile;
+        public TextView lastMessage;
+        public TextView lastMessage_date;
     }
 
     private class OnChatClickListener implements View.OnClickListener{

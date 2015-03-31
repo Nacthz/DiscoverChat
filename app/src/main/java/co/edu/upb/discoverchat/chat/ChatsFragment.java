@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class ChatsFragment extends Fragment {
         setChatListData();
         Resources res = getResources();
         chatList = (ListView)getActivity().findViewById(R.id.chats_lst);
-        adapter = new ChatsAdapter(this.getActivity(), chats,res );
+        adapter = new ChatsAdapter(this.getActivity(), chats,res,this);
         chatList.setAdapter(adapter);
     }
 
@@ -67,7 +68,6 @@ public class ChatsFragment extends Fragment {
         chats.addAll(manager.getAll());
     }
     public void onItemClick(int mPosition) {
-        //Chat chat = chats.get(mPosition);
-        //getActivity().startActivityForChat(chat);
+        Toast.makeText(this.getActivity(), mPosition, Toast.LENGTH_SHORT).show();
     }
 }
