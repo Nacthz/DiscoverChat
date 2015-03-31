@@ -1,6 +1,10 @@
 package co.edu.upb.discoverchat.models;
 
+import android.database.Cursor;
+
 import java.util.HashMap;
+
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 /**
  * Created by hatsumora on 30/03/15.
@@ -9,7 +13,16 @@ public class User implements Model {
     private long id;
     private String google_gcm_code;
     private String authentication_token;
+    private String email;
     private String path_to_image;
+
+    public User(){}
+    public User(Cursor c) {
+        this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
+        this.setGoogle_gcm_code(c.getString(c.getColumnIndex(DbBase.KEY_GOOGLE_CLOUD_MESSAGE)));
+        this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
+        this.setEmail(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
+    }
 
     public long getId() {
         return id;
@@ -35,7 +48,12 @@ public class User implements Model {
     public void setPath_to_image(String path_to_image) {
         this.path_to_image = path_to_image;
     }
-
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public int register(HashMap<String, Object> data){
         // TODO Not implemented
         return 0;
