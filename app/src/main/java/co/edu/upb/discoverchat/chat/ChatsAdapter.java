@@ -87,8 +87,8 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            ChatsActivity chats = (ChatsActivity)activity;
-            chats.onItemClick(mPosition);
+            //ChatsActivity chats = (ChatsActivity)activity;
+            //chats.onItemClick(mPosition);
         }
     }
 
