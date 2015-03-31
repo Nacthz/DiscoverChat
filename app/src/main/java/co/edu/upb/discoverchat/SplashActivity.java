@@ -26,7 +26,7 @@ public class SplashActivity extends ActionBarActivity {
             launchMainActivity();
         else
             launchRegisterActivity();
-
+        finish();
     }
 
     private void launchRegisterActivity() {
