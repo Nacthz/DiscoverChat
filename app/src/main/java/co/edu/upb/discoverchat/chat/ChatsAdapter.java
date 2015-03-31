@@ -1,6 +1,7 @@
 package co.edu.upb.discoverchat.chat;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
@@ -18,13 +19,15 @@ import co.edu.upb.discoverchat.models.Chat;
 public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
 
     private Activity activity;
+    private Fragment fragment;
     private ArrayList <Chat> data;
     private static LayoutInflater inflater = null;
     public Resources res;
     Chat chat = null;
 
-    public ChatsAdapter(Activity activity, ArrayList<Chat> data, Resources res) {
+    public ChatsAdapter(Activity activity, ArrayList<Chat> data, Resources res, Fragment fragment) {
         this.activity = activity;
+        this.fragment = fragment;
         this.data = data;
         this.res = res;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,10 +72,12 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.user_name.setText("No chats");
         else{
             chat = null;
-            ChatsManager chatmanagers = new ChatsManager(activity);
+            ChatsManager chat_manager = new ChatsManager(activity);
             chat = data.get(position);
             holder.user_name.setText(chat.getName());
-            // holder.image.setImageResource(res.getIdentifier("co.edu.upb.discoverchat:drawable/",null,null));
+            holder.lastMessage.setText(chat_manager.getLastMessageForChat(chat));
+            //TODO
+            //holder.profile.setImageResource(res.getIdentifier("co.edu.upb.discoverchat:drawable/",null,null));
             view.setOnClickListener(new OnChatClickListener(position));
         }
         return view;    }
@@ -93,9 +98,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            //ChatsActivity chats = (ChatsActivity)activity;
-            //chats.onItemClick(mPosition);
+            ((ChatsFragment)fragment).onItemClick(mPosition);
         }
     }
-
 }
