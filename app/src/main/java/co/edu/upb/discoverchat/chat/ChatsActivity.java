@@ -54,16 +54,15 @@ public class ChatsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setChatListData(){
+    public void setChatListData() {
         ChatsManager manager = new ChatsManager(this);
         chats.addAll(manager.getAll());
     }
-    public void onItemClick(int mPosition)
-    {
+    public void onItemClick(int mPosition) {
         Chat chat = chats.get(mPosition);
         startActivityForChat(chat);
     }
-    private void startActivityForChat(Chat chat){
+    private void startActivityForChat(Chat chat) {
         //Intent intent = new Intent(this,MessagesActivity.class);
         //intent.putExtra("chat",chat.toString());
         //startActivity(intent);
