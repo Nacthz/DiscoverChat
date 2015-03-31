@@ -46,9 +46,9 @@ public class Chat implements Model {
         return this;
     }
     public List<Receiver> getReceivers(){ return receivers; }
-    public Chat setReceivers(List receivers){
-    	this.receivers = receivers;
-        if(receivers.size()>1)
+    public Chat setReceivers(List receivers) {
+        this.receivers = receivers;
+        if (receivers.size() > 1)
             group = true;
         return this;
     }
