@@ -46,6 +46,7 @@ public class MainActivity extends ActionBarActivity
                     fragment = new ChatsFragment();
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, ChatsFragment.TAG).commit();
+                this.setTitle("Chats");
                 break;
             case 1: //stats
                 fragment = getFragmentManager().findFragmentByTag(StatsFragment.TAG);
@@ -53,6 +54,7 @@ public class MainActivity extends ActionBarActivity
                     fragment = new StatsFragment();
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, StatsFragment.TAG).commit();
+                this.setTitle("Yolo");
                 break;
             case 2: //my account //todo
                 break;
