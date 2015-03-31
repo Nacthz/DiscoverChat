@@ -1,4 +1,6 @@
-package co.edu.upb.discoverchat;import android.graphics.drawable.Drawable;
+package co.edu.upb.discoverchat;
+
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by poliveira on 24/10/2014.
