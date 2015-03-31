@@ -1,5 +1,6 @@
 package co.edu.upb.discoverchat;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +13,26 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        if(checkUserData())
+            launchMainActivity();
+        else
+            launchRegisterActivity();
+
     }
 
+    private void launchRegisterActivity() {
+        //Intent intent = new Intent(this,)
+    }
+
+    private void launchMainActivity() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    private boolean checkUserData() {
+
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,4 +55,6 @@ public class SplashActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
