@@ -32,6 +32,7 @@ public class UserManager extends DbBase implements DbInterface {
         values.put(KEY_EMAIL, user.getEmail());
         values.put(KEY_GOOGLE_CLOUD_MESSAGE, user.getGoogle_gcm_code());
         values.put(KEY_AUTHENTICATION_TOKEN, user.getAuthentication_token());
+        values.put(KEY_PHONE, user.getPhone());
 
         long id = db.insert(TBL_CHATS, null, values);
         user.setId(id);
@@ -69,13 +70,11 @@ public class UserManager extends DbBase implements DbInterface {
             while (c.moveToNext());
 
         db.close();
-        throw new SecurityException();
-        //return users;
+        return users;
     }
 
-    @Override
     public int getAllCount() {
-        return 0;
+        return getAll().size();
     }
 
     @Override
