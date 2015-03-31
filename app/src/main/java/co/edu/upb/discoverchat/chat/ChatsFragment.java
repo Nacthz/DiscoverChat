@@ -67,7 +67,7 @@ public class ChatsFragment extends Fragment {
         ChatsManager manager = new ChatsManager(getActivity());
         chats.addAll(manager.getAll());
     }
-    public void onItemClick(int mPosition) {
-        Toast.makeText(this.getActivity(), mPosition, Toast.LENGTH_SHORT).show();
+    public void onItemClick(long mPosition) {
+        Toast.makeText(this.getActivity(), "Hola" + mPosition, Toast.LENGTH_SHORT).show();
     }
 }

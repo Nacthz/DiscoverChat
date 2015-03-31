@@ -1,13 +1,10 @@
 package co.edu.upb.discoverchat;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import co.edu.upb.discoverchat.data.db.ChatsManager;
-import co.edu.upb.discoverchat.models.Chat;
 
 
 public class SplashActivity extends ActionBarActivity {
@@ -16,12 +13,6 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Chat c1 = new Chat().setName("Juan").setRoomImagePath("qw");
-        Chat c2 = new Chat().setName("Mafe").setRoomImagePath("Sda");
-
-        ChatsManager cm = new ChatsManager(this);
-        cm.add(c1);
-        cm.add(c2);
         if(checkUserData())
             launchMainActivity();
         else
