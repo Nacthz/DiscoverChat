@@ -6,6 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:clickable="true"
         android:layout_height="168dp"
         android:background="@drawable/wallpaper"
         android:id="@+id/navigationHeader"

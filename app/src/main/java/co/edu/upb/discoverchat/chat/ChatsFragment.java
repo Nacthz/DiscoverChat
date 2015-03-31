@@ -1,10 +1,14 @@
 package co.edu.upb.discoverchat.chat;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -13,32 +17,34 @@ import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;
 
-public class ChatsActivity extends Activity {
 
+public class ChatsFragment extends Fragment {
+    public static final String TAG = "chats";
     ListView chatList;
     ChatsAdapter adapter;
-    public ChatsActivity chatsActivity = null;
     public ArrayList<Chat> chats = new ArrayList<>();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chats);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_chats, container, false);
+    }
 
-        chatsActivity = this;
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         setChatListData();
         Resources res = getResources();
-        chatList = (ListView)findViewById(R.id.chats_lst);
-        adapter = new ChatsAdapter(chatsActivity, chats,res );
+        chatList = (ListView)getActivity().findViewById(R.id.chats_lst);
+        adapter = new ChatsAdapter(this.getActivity(), chats,res );
         chatList.setAdapter(adapter);
     }
 
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chats, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_chats, menu);
         return true;
     }
 
@@ -57,16 +63,11 @@ public class ChatsActivity extends Activity {
     }
 
     public void setChatListData() {
-        ChatsManager manager = new ChatsManager(this);
+        ChatsManager manager = new ChatsManager(getActivity());
         chats.addAll(manager.getAll());
     }
     public void onItemClick(int mPosition) {
-        Chat chat = chats.get(mPosition);
-        startActivityForChat(chat);
-    }
-    private void startActivityForChat(Chat chat) {
-        //Intent intent = new Intent(this,MessagesActivity.class);
-        //intent.putExtra("chat",chat.toString());
-        //startActivity(intent);
+        //Chat chat = chats.get(mPosition);
+        //getActivity().startActivityForChat(chat);
     }
 }

@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import co.edu.upb.discoverchat.chat.ChatsFragment;
+
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
 
@@ -31,7 +33,7 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("John Doe", "johndoe@doe.com", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        mNavigationDrawerFragment.setUserData("Luis García", "luis.garciap@upb.edu.co", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 
     @Override
@@ -39,6 +41,11 @@ public class MainActivity extends ActionBarActivity
         Fragment fragment;
         switch (position) {
             case 0: //search//todo
+                fragment = getFragmentManager().findFragmentByTag(ChatsFragment.TAG);
+                if (fragment == null) {
+                    fragment = new ChatsFragment();
+                }
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment, ChatsFragment.TAG).commit();
                 break;
             case 1: //stats
                 fragment = getFragmentManager().findFragmentByTag(StatsFragment.TAG);
