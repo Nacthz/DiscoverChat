@@ -76,8 +76,9 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             chat = data.get(position);
             holder.user_name.setText(chat.getName());
             holder.lastMessage.setText(chat_manager.getLastMessageForChat(chat));
-            //TODO
-            //holder.profile.setImageResource(res.getIdentifier("co.edu.upb.discoverchat:drawable/",null,null));
+            holder.lastMessage_date.setText(chat_manager.getLastDateForChat(chat));
+            //TODO Image Profile
+            holder.profile.setImageResource(R.drawable.ic_action_person);
             view.setOnClickListener(new OnChatClickListener(position));
         }
         return view;    }

@@ -8,7 +8,9 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/chat_img_profile" />
+            android:id="@+id/chat_img_profile"
+            android:layout_margin="5dp"
+            android:background="#000000" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -20,9 +22,9 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/chat_txt_user_name"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:textSize="20dp"
-                android:textColor="#ff7b7b7b" />
+                android:textColor="#373737" />
 
             <LinearLayout
                 android:orientation="horizontal"
