@@ -65,7 +65,7 @@ public class DbBase extends SQLiteOpenHelper {
                     KEY_ID + " INTEGER PRIMARY KEY, " +
                     KEY_EMAIL + " TEXT, " +
                     KEY_GOOGLE_CLOUD_MESSAGE + " TEXT, " +
-                    KEY_AUTHENTICATION_TOKEN + " TEXT, " +
+                    KEY_AUTHENTICATION_TOKEN + " TEXT " +
                 ")";
 
         queryList.add(createChats);
