@@ -11,17 +11,19 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
  */
 public class User implements Model {
     private long id;
+    private String email;
+    private String phone;
     private String google_gcm_code;
     private String authentication_token;
-    private String email;
     private String path_to_image;
 
     public User(){}
     public User(Cursor c) {
         this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
         this.setGoogle_gcm_code(c.getString(c.getColumnIndex(DbBase.KEY_GOOGLE_CLOUD_MESSAGE)));
+        this.setPhone(c.getString(c.getColumnIndex(DbBase.KEY_PHONE)));
         this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
-        this.setEmail(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
+        this.setEmail(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)))  ;
     }
 
     public long getId() {
@@ -54,6 +56,13 @@ public class User implements Model {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public int register(HashMap<String, Object> data){
         // TODO Not implemented
         return 0;

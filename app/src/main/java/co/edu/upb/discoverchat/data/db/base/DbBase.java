@@ -64,6 +64,7 @@ public class DbBase extends SQLiteOpenHelper {
                 "CREATE TABLE "+TBL_USER+"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
                     KEY_EMAIL + " TEXT, " +
+                    KEY_PHONE + " TEXT, " +
                     KEY_GOOGLE_CLOUD_MESSAGE + " TEXT, " +
                     KEY_AUTHENTICATION_TOKEN + " TEXT " +
                 ")";
