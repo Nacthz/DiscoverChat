@@ -91,8 +91,12 @@ public class ChatsManager extends DbBase implements DbInterface {
         return chat;
     }
 
-    private String getLastMessageForChat(Chat chat){
-        //TODO 
+    public String getLastMessageForChat(Chat chat){
+        //TODO
+        return "Chingones";
+    }
+    public String getLastDateForChat(Chat chat){
+        //TODO
         return "Hoy";
     }
 }
