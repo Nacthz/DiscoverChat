@@ -14,12 +14,13 @@ public class ContactProvider {
     }
     String[] dataSearched = {   ContactsContract.Contacts.DISPLAY_NAME,
                                 ContactsContract.Contacts.PHOTO_URI,
-                                ContactsContract.Contacts.HAS_PHONE_NUMBER};
+                                ContactsContract.CommonDataKinds.Phone.NUMBER
+    };
     Context context;
     public Cursor getAllContacts(){
-        Cursor c = null;
+
         ContentResolver resolver = context.getContentResolver();
-        c = resolver.query(ContactsContract.Contacts.CONTENT_URI, dataSearched,null,null,null);
+        Cursor c = resolver.query(ContactsContract.Contacts.CONTENT_URI, dataSearched,null,null,null);
 
         return c;
     }
