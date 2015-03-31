@@ -19,10 +19,13 @@ public class SplashActivity extends ActionBarActivity {
         setContentView(R.layout.activity_splash);
         ContactProvider cp = new ContactProvider(this);
         Cursor c = cp.getAllContacts();
+        String name ="";
         if(c.moveToFirst()){
-            String name = c.getString(0);
-            Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
+            do
+            name += c.getString(0) + " - ";
+            while (c.moveToNext());
         }
+        Toast.makeText(this, name, Toast.LENGTH_LONG).show();
         if(checkUserData())
             launchMainActivity();
         else

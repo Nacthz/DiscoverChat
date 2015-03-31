@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
+import co.edu.upb.discoverchat.NavigationDrawerFragment;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;
@@ -78,7 +83,10 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.lastMessage.setText(chat_manager.getLastMessageForChat(chat));
             holder.lastMessage_date.setText(chat_manager.getLastDateForChat(chat));
             //TODO Image Profile
-            holder.profile.setImageResource(R.drawable.ic_action_person);
+            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(),R.drawable.avatar);
+            holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(bm));
+
+           // holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_action_person)));
             view.setOnClickListener(new OnChatClickListener(position));
         }
         return view;    }
