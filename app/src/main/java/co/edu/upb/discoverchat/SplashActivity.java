@@ -21,7 +21,7 @@ public class SplashActivity extends ActionBarActivity {
         Cursor c = cp.getAllContacts();
         if(c.moveToFirst()){
             String name = c.getString(0);
-            Toast.makeText(this,name,Toast.LENGTH_SHORT);
+            Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
         }
         if(checkUserData())
             launchMainActivity();
