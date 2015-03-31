@@ -13,5 +13,6 @@
     <string name="action_filter">Filter</string>
     <string name="title_activity_main_activity2rrrr">MainActivity2rrrr</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>
