@@ -8,7 +8,7 @@ import com.loopj.android.http.*;
 public class RestClient {
     private static final String protocol = "http://";
     private static final String urlBase = "192.168.1.11";
-    private static final String portNumber = ":1234/";
+    private static final String portNumber = ":3000/";
 
     private static final String registrationPath = "users.json";
     private static String shipMessagePath = "messages/ship.json";
