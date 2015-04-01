@@ -71,6 +71,10 @@ public class User implements Model {
         // TODO Not implemented
         return 0;
     }
+
+    public void ensureGCM(){
+
+    }
     @Override
     public String toJsonString() {
         return null;

@@ -2,6 +2,7 @@ package co.edu.upb.discoverchat;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -46,7 +47,13 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     private boolean checkUserData() {
+        new AsyncTask<Object,Object,Object>(){
+            @Override
+            protected Object doInBackground(Object... params) {
 
+                return null;
+            }
+        }.execute();
         return false;
     }
 

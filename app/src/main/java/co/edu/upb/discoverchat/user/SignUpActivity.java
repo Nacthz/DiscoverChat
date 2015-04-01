@@ -42,22 +42,8 @@ public class SignUpActivity extends ActionBarActivity {
                 String phone = _phone.getText().toString();
                 String passwd = _passwd.getText().toString();
                 String confirmPasswd = _confirmPasswd.getText().toString();
-
-                UserTools.Email emailStatus;
-                UserTools.Phone phoneStatus;
-                UserTools.Password passwdStatus;
-
-                UserTools tools = new UserTools();
-                emailStatus = tools.validEmail(email);
-                phoneStatus = tools.validPhone(phone);
-                passwdStatus = tools.ValidPasswords(passwd, confirmPasswd);
-                serverStatus = new ProgressDialog(SignUpActivity.this);
-                serverStatus.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                serverStatus.setMessage("Espere un momento");
-                serverStatus.setCanceledOnTouchOutside(false);
-                serverStatus.show();
-
-                validData(emailStatus,phoneStatus,passwdStatus);
+                prepareProgressDialog();
+                validData(email,phone,passwd, confirmPasswd);
             }
         });
 
@@ -68,6 +54,15 @@ public class SignUpActivity extends ActionBarActivity {
                 SignUpActivity.this.startActivity(intent);
             }
         });
+    }
+
+    private void prepareProgressDialog() {
+
+        serverStatus = new ProgressDialog(SignUpActivity.this);
+        serverStatus.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        serverStatus.setMessage("Espere un momento");
+        serverStatus.setCanceledOnTouchOutside(false);
+        serverStatus.show();
     }
 
 
@@ -92,7 +87,16 @@ public class SignUpActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public boolean validData(UserTools.Email emailStatus, UserTools.Phone phoneStatus, UserTools.Password passwdStatus){
+    public boolean validData(String email,String phone, String passwd, String confirmPasswd){
+        UserTools.Email emailStatus;
+        UserTools.Phone phoneStatus;
+        UserTools.Password passwdStatus;
+
+        UserTools tools = new UserTools();
+        emailStatus = tools.validEmail(email);
+        phoneStatus = tools.validPhone(phone);
+        passwdStatus = tools.ValidPasswords(passwd, confirmPasswd);
+
         switch (emailStatus){
             case WRONG_EMAIL:
                 badEmail();
@@ -106,8 +110,17 @@ public class SignUpActivity extends ActionBarActivity {
                 badPhone(UserTools.Phone.TOO_SHORT.name());
                 break;
         }
+        switch (passwdStatus){
+            case PASSWORD_TOO_SHORT:
+                badPassword("La contraseña es demasiado corta");
+                break;
+            case PASSWORDS_NOT_MATCH:
+                badPassword("Las contraseñas no coinciden");
+                break;
+        }
         return errors;
     }
+
     public void badEmail(){
         Toast.makeText(SignUpActivity.this, "El correo electrónico está mal escrito",Toast.LENGTH_LONG).show();
         applyReset();
@@ -115,6 +128,10 @@ public class SignUpActivity extends ActionBarActivity {
     public void badPhone(String message){
         String text = "El numero es: "+message;
         Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+        applyReset();
+    }
+    public void badPassword(String message){
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
         applyReset();
     }
     public void applyReset(){
