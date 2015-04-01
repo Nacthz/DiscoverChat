@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
+import co.edu.upb.discoverchat.user.SignUpActivity;
 
 
 public class SplashActivity extends ActionBarActivity {
@@ -35,7 +36,8 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     private void launchRegisterActivity() {
-        //Intent intent = new Intent(this,)
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 
     private void launchMainActivity() {
