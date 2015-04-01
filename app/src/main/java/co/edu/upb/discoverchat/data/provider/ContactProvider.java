@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.data.db.provider;
+package co.edu.upb.discoverchat.data.provider;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;

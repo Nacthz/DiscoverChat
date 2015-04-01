@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import co.edu.upb.discoverchat.data.db.provider.ContactProvider;
+import co.edu.upb.discoverchat.data.provider.ContactProvider;
 
 
 public class SplashActivity extends ActionBarActivity {
