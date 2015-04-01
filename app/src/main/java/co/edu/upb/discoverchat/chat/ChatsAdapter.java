@@ -83,10 +83,8 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.lastMessage.setText(chat_manager.getLastMessageForChat(chat));
             holder.lastMessage_date.setText(chat_manager.getLastDateForChat(chat));
             //TODO Image Profile
-            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(),R.drawable.avatar);
+            Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.avatar);
             holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(bm));
-
-           // holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_action_person)));
             view.setOnClickListener(new OnChatClickListener(position));
         }
         return view;    }
@@ -100,7 +98,6 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
 
     private class OnChatClickListener implements View.OnClickListener{
         private int mPosition;
-
         private OnChatClickListener(int mPosition) {
             this.mPosition = mPosition;
         }
@@ -108,7 +105,6 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             chat = data.get(mPosition);
-
             ((ChatsFragment)fragment).onItemClick(chat.getId());
         }
     }
