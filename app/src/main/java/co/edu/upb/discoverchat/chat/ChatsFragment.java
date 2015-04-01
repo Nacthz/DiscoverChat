@@ -11,13 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;
-
 
 public class ChatsFragment extends Fragment {
     public static final String TAG = "chats";

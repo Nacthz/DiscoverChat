@@ -38,6 +38,15 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUserData("Luis García", "luis.garciap@upb.edu.co", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 
+    public void chatItemSelected(int chatId){
+        Fragment fragment = getFragmentManager().findFragmentByTag(ChatsFragment.TAG);
+        if (fragment == null) {
+            fragment = new ChatsFragment();
+        }
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment, ChatsFragment.TAG).commit();
+        this.setTitle("Chats");
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Fragment fragment;
