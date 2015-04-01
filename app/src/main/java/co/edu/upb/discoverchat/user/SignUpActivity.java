@@ -1,51 +1,73 @@
 package co.edu.upb.discoverchat.user;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import co.edu.upb.discoverchat.MainActivity;
 import co.edu.upb.discoverchat.R;
 
 
 public class SignUpActivity extends ActionBarActivity {
 
     ProgressDialog serverStatus;
+    boolean errors = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        EditText _email = (EditText)findViewById(R.id.etxtRegisterEmail);
-        EditText _phone = (EditText)findViewById(R.id.etxtRegisterPhone);
-        EditText _passwd = (EditText)findViewById(R.id.etxtRegisterPasswd);
-        EditText _confirmPasswd = (EditText)findViewById(R.id.etxtRegisterConfirmPasswd);
+        final EditText _email = (EditText)findViewById(R.id.etxtRegisterEmail);
+        final EditText _phone = (EditText)findViewById(R.id.etxtRegisterPhone);
+        final EditText _passwd = (EditText)findViewById(R.id.etxtRegisterPasswd);
+        final EditText _confirmPasswd = (EditText)findViewById(R.id.etxtRegisterConfirmPasswd);
 
-        String email = _email.getText().toString();
-        String phone = _phone.getText().toString();
-        String passwd = _passwd.getText().toString();
-        String confirmPasswd = _confirmPasswd.getText().toString();
 
-        UserTools.Email emailStatus;
-        UserTools.Phone phoneStatus;
-        UserTools.Password passwdStatus;
-
-        UserTools tools = new UserTools();
-        emailStatus = tools.validEmail(email);
-        phoneStatus = tools.validPhone(phone);
-        passwdStatus = tools.ValidPasswords(passwd, confirmPasswd);
-        serverStatus = new ProgressDialog(this);
-        serverStatus.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        serverStatus.setMessage("Espere un momento");
-        serverStatus.show();
         Button send = (Button)findViewById(R.id.btnRegisterSend);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errors = false;
+                String email = _email.getText().toString();
+                String phone = _phone.getText().toString();
+                String passwd = _passwd.getText().toString();
+                String confirmPasswd = _confirmPasswd.getText().toString();
 
+                UserTools.Email emailStatus;
+                UserTools.Phone phoneStatus;
+                UserTools.Password passwdStatus;
+
+                UserTools tools = new UserTools();
+                emailStatus = tools.validEmail(email);
+                phoneStatus = tools.validPhone(phone);
+                passwdStatus = tools.ValidPasswords(passwd, confirmPasswd);
+                serverStatus = new ProgressDialog(SignUpActivity.this);
+                serverStatus.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                serverStatus.setMessage("Espere un momento");
+                serverStatus.setCanceledOnTouchOutside(false);
+                serverStatus.show();
+
+                validData(emailStatus,phoneStatus,passwdStatus);
+            }
+        });
+
+        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                SignUpActivity.this.startActivity(intent);
+            }
+        });
     }
 
 
@@ -70,6 +92,36 @@ public class SignUpActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    public boolean validData(UserTools.Email emailStatus, UserTools.Phone phoneStatus, UserTools.Password passwdStatus){
+        switch (emailStatus){
+            case WRONG_EMAIL:
+                badEmail();
+                break;
+        }
+        switch (phoneStatus){
+            case TOO_LONG:
+                badPhone(UserTools.Phone.TOO_LONG.name());
+                break;
+            case TOO_SHORT:
+                badPhone(UserTools.Phone.TOO_SHORT.name());
+                break;
+        }
+        return errors;
+    }
+    public void badEmail(){
+        Toast.makeText(SignUpActivity.this, "El correo electrónico está mal escrito",Toast.LENGTH_LONG).show();
+        applyReset();
+    }
+    public void badPhone(String message){
+        String text = "El numero es: "+message;
+        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+        applyReset();
+    }
+    public void applyReset(){
+        serverStatus.cancel();
+        errors = true;
+    }
+
     // End of the main class
     public static class UserTools {
         public static enum Password {
