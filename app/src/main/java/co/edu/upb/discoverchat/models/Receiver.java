@@ -1,6 +1,9 @@
 package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
+
+import java.util.HashMap;
+
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 public class Receiver implements Model {
@@ -53,6 +56,11 @@ public class Receiver implements Model {
 
     @Override
     public Model newFromJsonString(String model) {
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Object> toHashMap() {
         return null;
     }
 }

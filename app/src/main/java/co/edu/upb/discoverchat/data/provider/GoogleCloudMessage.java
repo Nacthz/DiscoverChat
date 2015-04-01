@@ -16,17 +16,20 @@ import java.io.IOException;
 
 /**
  * Created by hatsumora on 1/04/15.
+ * Taked from android developers guide
  */
 public class GoogleCloudMessage {
 
 
-    public GoogleCloudMessage(Activity activity){
-        this.activity = activity;
+    private GoogleCloudMessage(){}
+    static final GoogleCloudMessage instance = new GoogleCloudMessage();
+    public static GoogleCloudMessage getInstance(Activity activity){
+        instance.activity = activity;
+        return instance;
     }
 
     static final String TAG = "GoogleCloudMessage";
 
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -36,15 +39,14 @@ public class GoogleCloudMessage {
 
     String SENDER_ID = "223963686640";
     GoogleCloudMessaging gcm;
-    SharedPreferences prefs;
-    private final Activity activity;
+    private Activity activity;
 
 
     public void ensureGCM(){
         if(checkPlayServices()){
-            gcm = GoogleCloudMessaging.getInstance(activity);
-            regid = getRegistrationId(activity);
-            if (regid.isEmpty()) {
+            gcm = GoogleCloudMessaging.getInstance(instance.activity);
+            regid = getRegistrationId(instance.activity);
+            if (regid.equals("") || regid.isEmpty() ) {
                 registerInBackground();
             }
         }else
@@ -59,10 +61,10 @@ public class GoogleCloudMessage {
      * the Google Play Store or enable it in the device's system settings.
      */
     private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(instance.activity);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
+                GooglePlayServicesUtil.getErrorDialog(resultCode, instance.activity,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
                 Log.i(TAG, "This device is not supported.");
@@ -80,8 +82,8 @@ public class GoogleCloudMessage {
      * @return registration ID, or empty string if there is no existing
      *         registration ID.
      */
-    public String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getGCMPreferences(context);
+    public synchronized String getRegistrationId(Context context) {
+        final SharedPreferences prefs = getGCMPreferences();
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
         if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
@@ -102,7 +104,7 @@ public class GoogleCloudMessage {
     /**
      * @return Application's {@code SharedPreferences}.
      */
-    private SharedPreferences getGCMPreferences(Context context) {
+    private SharedPreferences getGCMPreferences() {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
         return activity.getSharedPreferences(GoogleCloudMessage.class.getSimpleName(),
@@ -127,14 +129,14 @@ public class GoogleCloudMessage {
      * Stores the registration ID and app versionCode in the application's
      * shared preferences.
      */
-    private void registerInBackground() {
+    private synchronized void registerInBackground() {
         new AsyncTask<Object,Object,String>(){
             @Override
             protected String doInBackground(Object... params) {
-                String msg = "";
+                String msg;
                 try {
                     if (gcm == null) {
-                        gcm = GoogleCloudMessaging.getInstance(activity);
+                        gcm = GoogleCloudMessaging.getInstance(instance.activity);
                     }
                     regid = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regid;
@@ -150,7 +152,7 @@ public class GoogleCloudMessage {
                     // message using the 'from' address in the message.
 
                     // Persist the registration ID - no need to register again.
-                    storeRegistrationId(activity, regid);
+                    storeRegistrationId(instance.activity, regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                     // If there is an error, don't just keep trying to register.
@@ -175,13 +177,13 @@ public class GoogleCloudMessage {
      * @param regId registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
-        final SharedPreferences prefs = getGCMPreferences(context);
+        final SharedPreferences prefs = getGCMPreferences();
         int appVersion = getAppVersion(context);
         Log.i(TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP

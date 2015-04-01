@@ -2,6 +2,7 @@ package co.edu.upb.discoverchat.models;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
@@ -63,7 +64,11 @@ public class Chat implements Model {
 
     @Override
     public Model newFromJsonString(String jsonChat) {
+        return null;
+    }
 
+    @Override
+    public HashMap<String, Object> toHashMap() {
         return null;
     }
 }

@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 import co.edu.upb.discoverchat.MainActivity;
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.web.UserWeb;
 
 
 public class SignUpActivity extends ActionBarActivity {
@@ -44,6 +45,7 @@ public class SignUpActivity extends ActionBarActivity {
                 String confirmPasswd = _confirmPasswd.getText().toString();
                 prepareProgressDialog();
                 validData(email,phone,passwd, confirmPasswd);
+                registerUser(email,phone,passwd,confirmPasswd);
             }
         });
 
@@ -55,7 +57,12 @@ public class SignUpActivity extends ActionBarActivity {
             }
         });
     }
-
+    public void registerUser(String email, String phone, String passwd, String confirmPasswd){
+        UserWeb web = new UserWeb();
+        String googleCloudMessage ="";
+        web.registerNewUser(this, email,phone,passwd,confirmPasswd,googleCloudMessage);
+        serverStatus.cancel();
+    }
     private void prepareProgressDialog() {
 
         serverStatus = new ProgressDialog(SignUpActivity.this);

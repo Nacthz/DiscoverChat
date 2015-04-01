@@ -84,4 +84,9 @@ public class User implements Model {
     public Model newFromJsonString(String model) {
         return null;
     }
+
+    @Override
+    public HashMap<String, Object> toHashMap() {
+        return null;
+    }
 }

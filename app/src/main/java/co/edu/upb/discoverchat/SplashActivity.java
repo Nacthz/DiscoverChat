@@ -48,9 +48,8 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     private boolean checkUserData() {
-        GoogleCloudMessage gcm = new GoogleCloudMessage(this);
+        GoogleCloudMessage gcm = GoogleCloudMessage.getInstance(this);
         gcm.ensureGCM();
-        Toast.makeText(this,gcm.getRegistrationId(this),Toast.LENGTH_LONG).show();
         return false;
     }
 
