@@ -17,6 +17,7 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         ContactProvider cp = new ContactProvider(this);
         Cursor c = cp.getAllContacts();
         String name ="";
