@@ -43,8 +43,6 @@ public class SignUpActivity extends ActionBarActivity {
         serverStatus = new ProgressDialog(this);
         serverStatus.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         serverStatus.setMessage("Espere un momento");
-        serverStatus.setCancelable(true);
-        serverStatus.setMax(100);
         serverStatus.show();
         Button send = (Button)findViewById(R.id.btnRegisterSend);
 
