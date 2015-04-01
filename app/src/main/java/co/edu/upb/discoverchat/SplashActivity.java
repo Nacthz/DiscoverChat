@@ -45,7 +45,7 @@ public class SplashActivity extends ActionBarActivity {
 
     private boolean checkUserData() {
 
-        return true;
+        return false;
     }
 
     @Override

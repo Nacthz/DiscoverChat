@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/etxtRegisterPasswd"
         android:layout_below="@+id/etxtRegisterPhone"
         android:layout_centerHorizontal="true"
         android:hint="@string/hint_password" />
@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/etxtRegisterConfirmPasswd"
+        android:layout_below="@+id/etxtRegisterPasswd"
         android:layout_centerHorizontal="true"
         android:hint="@string/hint_confirm_password" />
 
@@ -49,15 +49,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_do_btn"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText2"
+        android:id="@+id/btnRegisterSend"
+        android:layout_below="@+id/etxtRegisterConfirmPasswd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
 
     <requestFocus
-        android:layout_alignTop="@+id/button"
+        android:layout_alignTop="@+id/btnRegisterSend"
         android:layout_centerHorizontal="true" />
 
     <requestFocus />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
