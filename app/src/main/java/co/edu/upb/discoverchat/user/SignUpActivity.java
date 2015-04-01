@@ -60,7 +60,7 @@ public class SignUpActivity extends ActionBarActivity {
     public void registerUser(String email, String phone, String passwd, String confirmPasswd){
         UserWeb web = new UserWeb();
         String googleCloudMessage ="";
-        web.registerNewUser(this, email,phone,passwd,confirmPasswd,googleCloudMessage);
+        web.registerNewUser(email,phone,passwd,confirmPasswd,googleCloudMessage);
         serverStatus.cancel();
     }
     private void prepareProgressDialog() {
