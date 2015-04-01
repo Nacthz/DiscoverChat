@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
+import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
 import co.edu.upb.discoverchat.user.SignUpActivity;
 
 
@@ -47,13 +48,9 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     private boolean checkUserData() {
-        new AsyncTask<Object,Object,Object>(){
-            @Override
-            protected Object doInBackground(Object... params) {
-
-                return null;
-            }
-        }.execute();
+        GoogleCloudMessage gcm = new GoogleCloudMessage(this);
+        gcm.ensureGCM();
+        Toast.makeText(this,gcm.getRegistrationId(this),Toast.LENGTH_LONG).show();
         return false;
     }
 
