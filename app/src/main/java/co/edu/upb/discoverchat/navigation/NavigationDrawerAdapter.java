@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.navigation;
 
 
 import android.graphics.Color;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import co.edu.upb.discoverchat.R;
 
 
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {

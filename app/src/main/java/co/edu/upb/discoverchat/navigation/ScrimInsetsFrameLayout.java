@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.navigation;
 
 
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import co.edu.upb.discoverchat.R;
 
 
 /**

@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import co.edu.upb.discoverchat.chat.ChatsFragment;
+import co.edu.upb.discoverchat.navigation.NavigationDrawerCallbacks;
+import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {

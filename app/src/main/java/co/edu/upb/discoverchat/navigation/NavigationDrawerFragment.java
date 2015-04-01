@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.navigation;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -29,6 +29,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.edu.upb.discoverchat.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

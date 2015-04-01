@@ -23,7 +23,7 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
     <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
-    <co.edu.upb.discoverchat.ScrimInsetsFrameLayout
+    <co.edu.upb.discoverchat.navigation.ScrimInsetsFrameLayout
         android:id="@+id/scrimInsetsFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,12 +33,12 @@
         android:elevation="10dp">
         <fragment
             android:id="@+id/fragment_drawer"
-            android:name="co.edu.upb.discoverchat.NavigationDrawerFragment"
+            android:name="co.edu.upb.discoverchat.navigation.NavigationDrawerFragment"
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout="@layout/fragment_navigation_drawer"/>
-    </co.edu.upb.discoverchat.ScrimInsetsFrameLayout>
+    </co.edu.upb.discoverchat.navigation.ScrimInsetsFrameLayout>
 
 
 </android.support.v4.widget.DrawerLayout>
