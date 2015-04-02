@@ -44,8 +44,10 @@ public class SignUpActivity extends ActionBarActivity {
                 String passwd = _passwd.getText().toString();
                 String confirmPasswd = _confirmPasswd.getText().toString();
                 prepareProgressDialog();
-                validData(email,phone,passwd, confirmPasswd);
-                registerUser(email,phone,passwd,confirmPasswd);
+                validData(email, phone, passwd, confirmPasswd);
+                if(!errors) {
+                    registerUser(email,phone,passwd,confirmPasswd);
+                }
             }
         });
 

@@ -9,6 +9,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,19 +28,23 @@ public class UserWeb {
     AsyncHttpClient client = new AsyncHttpClient();
 
     public String registerNewUser(String email, String phone, String passwd, String confirmPasswd, String googleCloudMessage){
-        HashMap<String,Object> data = new HashMap<>();
-        HashMap<String,Object> userData = new HashMap<>();
-
-        userData.put("email", email);
-        userData.put("celphone", phone);
-        userData.put("password", passwd);
-        userData.put("password_confirmation", confirmPasswd);
-        userData.put("google_cloud_message",googleCloudMessage);
-        data.put("user",userData);
-        RequestParams params = new RequestParams(data);
+        JSONObject userData = new JSONObject();
+        JSONObject userEnv = new JSONObject();
+        StringEntity entity = null;
+        try {
+            userData.put("email", email);
+            userData.put("password", passwd);
+            userData.put("celphone", phone);
+            userData.put("password_confirmation", confirmPasswd);
+            userData.put("google_cloud_message",googleCloudMessage);
+            userEnv.put("user",userData);
+            entity = new StringEntity(userEnv.toString());
+        }catch (Exception e){}
+        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        RequestParams params = new RequestParams();
 
         final User user = new User();
-        RestClient.get(RestClient.getRegistrationPath(),params , new JsonHttpResponseHandler(){
+        RestClient.post(RestClient.getRegistrationPath(), params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

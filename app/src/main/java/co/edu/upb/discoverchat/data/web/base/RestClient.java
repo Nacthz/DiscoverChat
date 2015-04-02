@@ -29,6 +29,6 @@ public class RestClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
-        return protocol+urlBase+portNumber;
+        return protocol+urlBase+portNumber+relativeUrl;
     }
 }
