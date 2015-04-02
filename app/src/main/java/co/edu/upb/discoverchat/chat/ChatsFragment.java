@@ -1,6 +1,7 @@
 package co.edu.upb.discoverchat.chat;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import java.util.ArrayList;
+
+import co.edu.upb.discoverchat.MessageActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;
@@ -65,6 +68,7 @@ public class ChatsFragment extends Fragment {
         chats.addAll(manager.getAll());
     }
     public void onItemClick(long mPosition) {
-        Toast.makeText(this.getActivity(), "Hola" + mPosition, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this.getActivity(), MessageActivity.class);
+        startActivity(intent);
     }
 }
