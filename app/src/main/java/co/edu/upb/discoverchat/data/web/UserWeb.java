@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
+import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.data.web.base.RestClient;
 import co.edu.upb.discoverchat.models.User;
 
@@ -31,7 +32,7 @@ import co.edu.upb.discoverchat.models.User;
 public class UserWeb extends RestClient{
     Context context;
     User user;
-    public User registerNewUser(String email, String phone, String passwd, String confirmPasswd, String googleCloudMessage){
+    public void registerNewUser(String email, String phone, String passwd, String confirmPasswd, String googleCloudMessage, final HandlerJsonRequest hanlder){
         user = new User();
         final JSONObject userData = new JSONObject();
         JSONObject userEnv = new JSONObject();
@@ -49,30 +50,20 @@ public class UserWeb extends RestClient{
 
         entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-        synchronized (user) {
-            post(context, getRegistrationPath(), entity, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    try {
-                        user.setAuthentication_token(response.getString("authentication_token"));
-                        user.setEmail(response.getString("email"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Log.e("RESPONSE JSON", response.toString());
+        post(context, getRegistrationPath(), entity, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                hanlder.handleResponse(response);
                 }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                    Log.e("ERROR", responseString);
-                }
-            });
-        }
-        synchronized (user){
-            return user;
-        }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                hanlder.handleError(responseString);
+            }
+        });
+
     }
 
     public void setContext(Context context) {

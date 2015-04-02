@@ -9,6 +9,5 @@ import java.util.HashMap;
  */
 public interface Model {
     public String toJsonString();
-    public HashMap<String, Object> toHashMap();
     public Model newFromJsonString(String model);
 }

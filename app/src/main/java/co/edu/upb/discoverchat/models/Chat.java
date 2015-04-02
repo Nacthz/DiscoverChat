@@ -66,9 +66,4 @@ public class Chat implements Model {
     public Model newFromJsonString(String jsonChat) {
         return null;
     }
-
-    @Override
-    public HashMap<String, Object> toHashMap() {
-        return null;
-    }
 }

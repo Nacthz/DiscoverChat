@@ -59,8 +59,4 @@ public class Receiver implements Model {
         return null;
     }
 
-    @Override
-    public HashMap<String, Object> toHashMap() {
-        return null;
-    }
 }

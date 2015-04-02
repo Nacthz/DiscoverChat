@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
 import co.edu.upb.discoverchat.user.SignUpActivity;
@@ -20,15 +21,6 @@ public class SplashActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ContactProvider cp = new ContactProvider(this);
-        Cursor c = cp.getAllContacts();
-        String name ="";
-        if(c.moveToFirst()){
-            do
-            name += c.getString(0) + " - ";
-            while (c.moveToNext());
-        }
-        Toast.makeText(this, name, Toast.LENGTH_LONG).show();
         if(checkUserData())
             launchMainActivity();
         else
@@ -49,7 +41,7 @@ public class SplashActivity extends ActionBarActivity {
     private boolean checkUserData() {
         GoogleCloudMessage gcm = GoogleCloudMessage.getInstance(this);
         gcm.ensureGCM();
-        return false;
+        return new UserManager(this).getAllCount()>0;
     }
 
     @Override

@@ -14,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
         android:hint="@string/hint_email"
-        android:text="a@as.co" />
+        android:text="a@as.co"
+        android:inputType="textEmailAddress|textUri" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -25,7 +26,7 @@
         android:layout_below="@+id/etxtRegisterEmail"
         android:layout_centerHorizontal="true"
         android:hint="@string/hint_phone"
-        android:text="12345667890" />
+        android:text="1234566789" />
 
     <EditText
         android:layout_width="fill_parent"

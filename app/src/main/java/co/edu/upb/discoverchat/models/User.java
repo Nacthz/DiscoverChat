@@ -2,6 +2,9 @@ package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
@@ -11,6 +14,13 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
  */
 public class User implements Model {
     private long id;
+
+    private static final String SERVER_TAG_EMAIL ="email";
+    private static final String SERVER_TAG_PHONE ="celphone";
+    private static final String SERVER_TAG_GCM ="google_cloud_message";
+    private static final String SERVER_TAG_TOKEN ="authentication_token";
+
+
     private String email;
     private String phone;
     private String google_gcm_code;
@@ -24,6 +34,17 @@ public class User implements Model {
         this.setPhone(c.getString(c.getColumnIndex(DbBase.KEY_PHONE)));
         this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
         this.setEmail(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)))  ;
+    }
+
+    public User(JSONObject response) {
+        try {
+            this.setEmail(response.getString(SERVER_TAG_EMAIL));
+            this.setAuthentication_token(response.getString(SERVER_TAG_TOKEN));
+            this.setGoogle_gcm_code(response.getString(SERVER_TAG_GCM));
+            this.setPhone(response.getString(SERVER_TAG_PHONE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public long getId() {
@@ -82,11 +103,6 @@ public class User implements Model {
 
     @Override
     public Model newFromJsonString(String model) {
-        return null;
-    }
-
-    @Override
-    public HashMap<String, Object> toHashMap() {
         return null;
     }
 }

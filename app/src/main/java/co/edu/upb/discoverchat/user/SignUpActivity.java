@@ -9,16 +9,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import co.edu.upb.discoverchat.MainActivity;
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
 import co.edu.upb.discoverchat.data.web.UserWeb;
+import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.models.User;
 
 
@@ -53,7 +56,7 @@ public class SignUpActivity extends ActionBarActivity {
             }
         });
 
-        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
@@ -65,10 +68,30 @@ public class SignUpActivity extends ActionBarActivity {
         UserWeb web = new UserWeb();
         GoogleCloudMessage gcm = GoogleCloudMessage.getInstance(this);
         String googleCloudMessage = gcm.getRegistrationId(this);
-        User res = web.registerNewUser(email,phone,passwd,confirmPasswd,googleCloudMessage);
-        Toast.makeText(this,res.getAuthentication_token(),Toast.LENGTH_LONG).show();
-        serverStatus.cancel();
+        web.registerNewUser(email, phone, passwd, confirmPasswd, googleCloudMessage, new HandlerJsonRequest() {
+            @Override
+            public void handleResponse(JSONObject response) {
+                User user = new User(response);
+                UserManager userManager = new UserManager(SignUpActivity.this);
+                userManager.add(user);
+                serverStatus.cancel();
+                loadMainActivity();
+            }
+
+            @Override
+            public void handleError(String err) {
+                serverStatus.cancel();
+                Toast.makeText(SignUpActivity.this,err,Toast.LENGTH_LONG);
+            }
+        });
+
     }
+
+    private void loadMainActivity() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
     private void prepareProgressDialog() {
 
         serverStatus = new ProgressDialog(SignUpActivity.this);
@@ -158,11 +181,11 @@ public class SignUpActivity extends ActionBarActivity {
             PASSWORDS_NOT_MATCH,
             PASSWORD_TOO_SHORT,
             OK
-        };
+        }
 
         public static enum Email{
             WRONG_EMAIL,
-            OK;
+            OK
         }
         public static enum Phone{
             OK,

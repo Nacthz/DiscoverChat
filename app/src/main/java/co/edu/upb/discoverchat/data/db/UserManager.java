@@ -34,7 +34,7 @@ public class UserManager extends DbBase implements DbInterface {
         values.put(KEY_AUTHENTICATION_TOKEN, user.getAuthentication_token());
         values.put(KEY_PHONE, user.getPhone());
 
-        long id = db.insert(TBL_CHATS, null, values);
+        long id = db.insert(TBL_USER, null, values);
         user.setId(id);
         db.close();
 
@@ -59,7 +59,7 @@ public class UserManager extends DbBase implements DbInterface {
     public List getAll() {
 
         List<User> users = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ TBL_RECEIVERS;
+        String selectQuery = "SELECT * FROM "+ TBL_USER;
         SQLiteDatabase db =  this.getReadableDatabase();
 
         Cursor c = db.rawQuery(selectQuery, null);
