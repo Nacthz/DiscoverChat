@@ -87,7 +87,8 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(bm));
             view.setOnClickListener(new OnChatClickListener(position));
         }
-        return view;    }
+        return view;
+    }
 
     public static class ViewHolder {
         public TextView user_name;
