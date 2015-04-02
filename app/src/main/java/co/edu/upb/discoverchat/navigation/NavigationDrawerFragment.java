@@ -59,7 +59,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mActionBarDrawerToggle;
-
+    private View view;
+    private LinearLayoutManager layoutManager;
     private DrawerLayout mDrawerLayout;
     private RecyclerView mDrawerList;
     private View mFragmentContainerView;
@@ -86,10 +87,12 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+        layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
         mDrawerList.setLayoutManager(layoutManager);
         mDrawerList.setHasFixedSize(true);
 
@@ -133,21 +136,18 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      * @param toolbar      The Toolbar of the activity.
      */
+
     public void setup(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
         mFragmentContainerView = (View) getActivity().findViewById(fragmentId).getParent();
         mDrawerLayout = drawerLayout;
-
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.myPrimaryDarkColor));
-
         mActionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 if (!isAdded()) return;
-
                 getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -161,7 +161,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                 getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
-
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
         if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
@@ -178,7 +177,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
     }
-
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerLayout != null) {
