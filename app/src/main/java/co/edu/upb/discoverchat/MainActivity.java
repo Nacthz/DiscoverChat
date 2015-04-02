@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import co.edu.upb.discoverchat.chat.ChatsFragment;
 import co.edu.upb.discoverchat.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
@@ -38,15 +37,6 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUserData("Luis García", "luis.garciap@upb.edu.co", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 
-    public void chatItemSelected(int chatId){
-        Fragment fragment = getFragmentManager().findFragmentByTag(ChatsFragment.TAG);
-        if (fragment == null) {
-            fragment = new ChatsFragment();
-        }
-        getFragmentManager().beginTransaction().replace(R.id.container, fragment, ChatsFragment.TAG).commit();
-        this.setTitle("Chats");
-    }
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Fragment fragment;
@@ -63,6 +53,7 @@ public class MainActivity extends ActionBarActivity
                 fragment = getFragmentManager().findFragmentByTag(StatsFragment.TAG);
                 if (fragment == null) {
                     fragment = new StatsFragment();
+                    //setMenuItems("chat");
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, StatsFragment.TAG).commit();
                 this.setTitle("Yolo");
