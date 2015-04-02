@@ -1,6 +1,8 @@
 package co.edu.upb.discoverchat.data.web;
 
 import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -12,6 +14,8 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -24,11 +28,12 @@ import co.edu.upb.discoverchat.models.User;
  * Created by hatsumora on 1/04/15.
  *
  */
-public class UserWeb {
-    AsyncHttpClient client = new AsyncHttpClient();
-
-    public String registerNewUser(String email, String phone, String passwd, String confirmPasswd, String googleCloudMessage){
-        JSONObject userData = new JSONObject();
+public class UserWeb extends RestClient{
+    Context context;
+    User user;
+    public User registerNewUser(String email, String phone, String passwd, String confirmPasswd, String googleCloudMessage){
+        user = new User();
+        final JSONObject userData = new JSONObject();
         JSONObject userEnv = new JSONObject();
         StringEntity entity = null;
         try {
@@ -37,20 +42,40 @@ public class UserWeb {
             userData.put("celphone", phone);
             userData.put("password_confirmation", confirmPasswd);
             userData.put("google_cloud_message",googleCloudMessage);
+
             userEnv.put("user",userData);
             entity = new StringEntity(userEnv.toString());
         }catch (Exception e){}
-        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-        RequestParams params = new RequestParams();
 
-        final User user = new User();
-        RestClient.post(RestClient.getRegistrationPath(), params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                user.setEmail(response.toString());
-            }
-        });
-        return user.getEmail();
+        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        synchronized (user) {
+            post(context, getRegistrationPath(), entity, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        user.setAuthentication_token(response.getString("authentication_token"));
+                        user.setEmail(response.getString("email"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.e("RESPONSE JSON", response.toString());
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.e("ERROR", responseString);
+                }
+            });
+        }
+        synchronized (user){
+            return user;
+        }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

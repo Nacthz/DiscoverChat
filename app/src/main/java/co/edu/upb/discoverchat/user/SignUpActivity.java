@@ -17,7 +17,9 @@ import java.util.regex.Pattern;
 
 import co.edu.upb.discoverchat.MainActivity;
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
 import co.edu.upb.discoverchat.data.web.UserWeb;
+import co.edu.upb.discoverchat.models.User;
 
 
 public class SignUpActivity extends ActionBarActivity {
@@ -61,8 +63,10 @@ public class SignUpActivity extends ActionBarActivity {
     }
     public void registerUser(String email, String phone, String passwd, String confirmPasswd){
         UserWeb web = new UserWeb();
-        String googleCloudMessage ="";
-        web.registerNewUser(email,phone,passwd,confirmPasswd,googleCloudMessage);
+        GoogleCloudMessage gcm = GoogleCloudMessage.getInstance(this);
+        String googleCloudMessage = gcm.getRegistrationId(this);
+        User res = web.registerNewUser(email,phone,passwd,confirmPasswd,googleCloudMessage);
+        Toast.makeText(this,res.getAuthentication_token(),Toast.LENGTH_LONG).show();
         serverStatus.cancel();
     }
     private void prepareProgressDialog() {

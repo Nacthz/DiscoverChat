@@ -13,7 +13,8 @@
         android:id="@+id/etxtRegisterEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
-        android:hint="@string/hint_email" />
+        android:hint="@string/hint_email"
+        android:text="a@as.co" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -23,7 +24,8 @@
         android:id="@+id/etxtRegisterPhone"
         android:layout_below="@+id/etxtRegisterEmail"
         android:layout_centerHorizontal="true"
-        android:hint="@string/hint_phone" />
+        android:hint="@string/hint_phone"
+        android:text="12345667890" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -33,7 +35,8 @@
         android:id="@+id/etxtRegisterPasswd"
         android:layout_below="@+id/etxtRegisterPhone"
         android:layout_centerHorizontal="true"
-        android:hint="@string/hint_password" />
+        android:hint="@string/hint_password"
+        android:text="qqqqqqqqq" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -43,7 +46,8 @@
         android:id="@+id/etxtRegisterConfirmPasswd"
         android:layout_below="@+id/etxtRegisterPasswd"
         android:layout_centerHorizontal="true"
-        android:hint="@string/hint_confirm_password" />
+        android:hint="@string/hint_confirm_password"
+        android:text="qqqqqqqqq" />
 
     <Button
         android:layout_width="wrap_content"
