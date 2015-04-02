@@ -2,9 +2,14 @@ package co.edu.upb.discoverchat;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
 
 public class MessageActivity extends Activity {
 
@@ -15,8 +20,16 @@ public class MessageActivity extends Activity {
 
         final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_messages);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+
+        actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        Bundle extras = getIntent().getExtras();
+        final TextView user_name = (TextView) findViewById(R.id.chat_txt_user_name);
+        user_name.setText("Name_chat_id_: " + extras.getLong("CHAT_ID"));
+
     }
 
     @Override
@@ -27,16 +40,13 @@ public class MessageActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

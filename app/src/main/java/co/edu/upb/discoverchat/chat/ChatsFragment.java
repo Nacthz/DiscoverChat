@@ -69,6 +69,7 @@ public class ChatsFragment extends Fragment {
     }
     public void onItemClick(long mPosition) {
         Intent intent = new Intent(this.getActivity(), MessageActivity.class);
+        intent.putExtra("CHAT_ID", mPosition);
         startActivity(intent);
     }
 }

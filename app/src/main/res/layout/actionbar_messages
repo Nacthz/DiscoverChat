@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal" >
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
-    <ImageView
-        android:id="@+id/actionBarLogo"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:longClickable="false"
-        android:src="@drawable/avatar" />
+        android:text="New Text"
+        android:id="@+id/chat_txt_user_name"
+        android:textSize="20dp"
+        android:textColor="#fff7f7f7" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_options"
+            android:src="@drawable/ic_action_filter_white"
+            android:layout_gravity="right" />
+    </FrameLayout>
 
 </LinearLayout>
