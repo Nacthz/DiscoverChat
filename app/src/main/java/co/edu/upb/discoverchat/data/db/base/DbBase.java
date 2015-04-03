@@ -1,16 +1,25 @@
 package co.edu.upb.discoverchat.data.db.base;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.models.Message;
+import co.edu.upb.discoverchat.models.Model;
+
 /**
  * Created by hatsumora on 30/03/15.
+ * :) i'm fucking good
  */
-public class DbBase extends SQLiteOpenHelper {
+@SuppressWarnings("unchecked")
+public abstract class DbBase extends SQLiteOpenHelper {
 
     protected Context context;
     protected static final int VERSION = 1;
@@ -126,6 +135,49 @@ public class DbBase extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+    }
+
+    public abstract String getTable();
+
+    protected <T extends Model> List<T> getAll(Class<T> _class){
+        List<T> models = new ArrayList<>();
+        String selectQuery = "SELECT * FROM "+ getTable();
+        SQLiteDatabase db =  this.getReadableDatabase();
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c.moveToFirst())
+            do
+                models.add((T)newInstanceFromCursor(_class,c));
+            while (c.moveToNext());
+
+        db.close();
+        return models;
+    }
+
+    protected <T extends Model> T findByField(String field, Object object, Class<T> _class){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.query(getTable(),null, field + "= ? ", new String[]{String.valueOf(object)},null,null,null,null);
+        if(c != null){
+            c.moveToFirst();
+
+            return (T)newInstanceFromCursor(_class,c);
+        }
+        return null;
+
+    }
+    protected Model get(int id, Class<? extends Model> _class) {
+        return findByField(KEY_ID, id, _class);
+    }
+
+    private <ModelChild extends Model> ModelChild newInstanceFromCursor(Class<? extends Model> _class, Cursor cursor){
+        try {
+            return (ModelChild)_class.getDeclaredConstructor(Cursor.class).newInstance(cursor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

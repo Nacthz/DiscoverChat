@@ -11,6 +11,7 @@ import android.widget.Toast;
 import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
+import co.edu.upb.discoverchat.models.User;
 import co.edu.upb.discoverchat.user.SignUpActivity;
 
 

@@ -43,4 +43,5 @@ public abstract class Model {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
 }

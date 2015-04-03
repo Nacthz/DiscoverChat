@@ -40,34 +40,14 @@ public class ChatsManager extends DbBase implements DbInterface {
         return id;
     }
 
-    // Getting single chat
+    @Override
     public Chat get(int id) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor c = db.query(TBL_LOCAL,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
-        if(c != null){
-            c.moveToFirst();
-            return loadChatFromCursor(c);
-        }
-        return null;
+        return (Chat)get(id,Chat.class);
     }
 
     // Getting All chats
     public List<Chat> getAll() {
-        List<Chat> chats = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ TBL_CHATS;
-        SQLiteDatabase db =  this.getReadableDatabase();
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if(c.moveToFirst())
-            do
-                chats.add(loadChatFromCursor(c));
-            while (c.moveToNext());
-
-        db.close();
-        return chats;
+        return getAll(Chat.class);
     }
 
     //** Getting chats Count
@@ -89,6 +69,11 @@ public class ChatsManager extends DbBase implements DbInterface {
         ReceiversManager receiversManager = new ReceiversManager(context);
         chat.setReceivers(receiversManager.getAllForChat(chat));
         return chat;
+    }
+
+    @Override
+    public String getTable() {
+        return TBL_CHATS;
     }
 
     public String getLastMessageForChat(Chat chat){

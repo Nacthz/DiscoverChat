@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,36 +39,13 @@ public class UserManager extends DbBase implements DbInterface {
         return id;
     }
 
-    public Model get(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor c = db.query(TBL_USER,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
-        if(c != null){
-            c.moveToFirst();
-            return loadUserFromCursor(c);
-        }
-        return null;
-    }
-
-    private User loadUserFromCursor(Cursor c) {
-        return new User(c);
+    @Override
+    public User get(int id) {
+        return (User)get(id,User.class);
     }
 
     public List getAll() {
-
-        List<User> users = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ TBL_USER;
-        SQLiteDatabase db =  this.getReadableDatabase();
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if(c.moveToFirst())
-            do
-                users.add(loadUserFromCursor(c));
-            while (c.moveToNext());
-
-        db.close();
-        return users;
+        return getAll(User.class);
     }
 
     public int getAllCount() {
@@ -77,5 +55,10 @@ public class UserManager extends DbBase implements DbInterface {
     @Override
     public int delete(Model model) {
         return 0;
+    }
+
+    @Override
+    public String getTable() {
+        return TBL_USER;
     }
 }

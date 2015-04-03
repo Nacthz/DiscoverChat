@@ -44,32 +44,12 @@ public class ReceiversManager extends DbBase implements DbInterface {
     }
 
     @Override
-    public Model get(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor c = db.query(TBL_RECEIVERS,null, KEY_ID + "= ? ", new String[]{String.valueOf(id)},null,null,null,null);
-        if(c != null){
-            c.moveToFirst();
-            return loadReceiverFromCursor(c);
-        }
-        return null;
+    public Receiver get(int id) {
+        return (Receiver)get(id, Receiver.class);
     }
 
-
     public List getAll() {
-        List<Receiver> receiverList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ TBL_RECEIVERS;
-        SQLiteDatabase db =  this.getReadableDatabase();
-
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if(c.moveToFirst())
-            do
-                receiverList.add(loadReceiverFromCursor(c));
-            while (c.moveToNext());
-
-        db.close();
-        return receiverList;
+        return getAll(Receiver.class);
     }
 
     /*
@@ -118,5 +98,10 @@ public class ReceiversManager extends DbBase implements DbInterface {
         }
         return null;
 
+    }
+
+    @Override
+    public String getTable() {
+        return TBL_CHATS_RECEIVERS;
     }
 }
