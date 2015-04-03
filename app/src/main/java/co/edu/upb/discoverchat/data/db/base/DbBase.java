@@ -173,7 +173,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     }
 
     public <T extends Model> T get(int id){
-        return get(id,getModelClass());
+        return (T)get(id,getModelClass());
     }
 
     public int getAllCount() {

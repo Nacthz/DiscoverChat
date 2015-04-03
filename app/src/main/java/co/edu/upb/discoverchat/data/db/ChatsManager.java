@@ -57,7 +57,7 @@ public class ChatsManager extends DbBase {
     }
 
     // Updating single chat
-    //public int updateChat(Chat chat) {return 0;}
+    //public int updateChat(Chat chat) {return 0 as;}
 
     // Deleting single chat
     public int delete(Model model) {
