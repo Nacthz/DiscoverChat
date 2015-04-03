@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class MessageAdapter extends BaseAdapter{
             message = null;
             MessageManager message_manager = new MessageManager(activity);
             message = data.get(position);
+
 
             if(message.getType().equals("TEXT")){
                 TextMessage tmessage = (TextMessage) message;

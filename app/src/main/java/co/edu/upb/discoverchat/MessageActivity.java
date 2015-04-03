@@ -9,12 +9,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.models.Message;
+import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
 
 public class MessageActivity extends Activity {
@@ -24,8 +26,6 @@ public class MessageActivity extends Activity {
     ListView messageList;
     MessageAdapter adapter;
     public ArrayList<Message> messages = new ArrayList<>();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +33,28 @@ public class MessageActivity extends Activity {
 
         loadActionBar();
 
+        TextMessage m1 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m1.setContent("Prueba 1");
+        TextMessage m2 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m2.setContent("Prueba 2");
+
+        messages.add(m1);
+        messages.add(m2);
+
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
         adapter = new MessageAdapter(this, messages,res);
-        messageList.setAdapter(adapter);
+        messageList.setAdapter((ListAdapter)adapter);
 
         /*
         ctx=this;
