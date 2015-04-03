@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import co.edu.upb.discoverchat.models.Message;
+import co.edu.upb.discoverchat.models.TextMessage;
 
 public class MessageAdapter extends BaseAdapter{
     private Activity activity;
@@ -64,10 +67,13 @@ public class MessageAdapter extends BaseAdapter{
             message = data.get(position);
 
             if(message.getType().equals("TEXT")){
-                holder.user_name.setText(chat.getName());
-                holder.message_txt.setText();
-                holder.message_img.seti
-                holder.message_date.setText();
+                TextMessage tmessage = (TextMessage) message;
+
+                holder.user_name.setText(message.whoIsSender(activity).getName());
+                holder.message_txt.setText(tmessage.getContent());
+                //TODO
+                // holder.message_img.setImageResource(R.drawable.avatar);
+                holder.message_date.setText("Date");
             }
 
 
