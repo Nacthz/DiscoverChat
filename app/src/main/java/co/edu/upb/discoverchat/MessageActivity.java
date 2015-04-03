@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import co.edu.upb.discoverchat.chat.ChatsAdapter;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
 
@@ -23,7 +22,7 @@ public class MessageActivity extends Activity {
     private Context ctx;
 
     ListView messageList;
-    ChatsAdapter adapter;
+    MessageAdapter adapter;
     public ArrayList<Message> messages = new ArrayList<>();
 
 
@@ -36,7 +35,7 @@ public class MessageActivity extends Activity {
 
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
-        adapter = new MessageAdapter(this, messages,res,this);
+        adapter = new MessageAdapter(this, messages,res);
         messageList.setAdapter(adapter);
 
         /*
