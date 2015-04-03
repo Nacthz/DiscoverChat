@@ -20,7 +20,6 @@ public abstract class Message extends Model{
     public Message(JSONObject json) {
         super(json);
     }
-
     public long getChat_id() {
         return chat_id;
     }

@@ -4,19 +4,19 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:gravity="right">
+    android:padding="5dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/message_user_name"
-        android:textColor="#ff2a0e0f"
+        android:textColor="#343434"
         android:layout_marginLeft="5dp" />
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_img"
         android:orientation="horizontal"
         android:background="@drawable/message_received"
         android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
         android:gravity="center_vertical">
         <TextView
             android:id="@+id/message_txt"
+            android:textColor="#343434"
             style="@style/chat_text_message_style"
             android:text="Discover Chat Message Text"
             android:layout_height="wrap_content"

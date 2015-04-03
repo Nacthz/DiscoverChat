@@ -69,10 +69,14 @@ public class MessageAdapter{
             message = data.get(position);
 
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
+            ;
             if(message.itsMine(activity)){
                 lp.gravity = Gravity.RIGHT;
+
             }else{
                 lp.gravity = Gravity.LEFT;
+                LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
+                ll.setBackgroundColor(R.drawable.message_received);
             }
 
             if(message.getType().equals("TEXT")){
