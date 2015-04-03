@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ public class MessageActivity extends Activity {
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
         adapter = new MessageAdapter(this, messages,res);
-        messageList.setAdapter(adapter);
+        messageList.setAdapter((ListAdapter)adapter);
 
         /*
         ctx=this;

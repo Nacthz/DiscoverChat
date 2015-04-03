@@ -171,11 +171,11 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     protected <T extends Model> T get(int id, Class<? extends Model> _class) {
         return (T)findByField(KEY_ID, id, _class);
     }
-/*
+
     public <T extends Model> T get(int id){
         return get(id,getModelClass());
     }
-*/
+
     public int getAllCount() {
         return getAll().size();
     }
