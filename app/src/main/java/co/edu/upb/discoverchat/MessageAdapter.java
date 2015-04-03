@@ -7,17 +7,17 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import co.edu.upb.discoverchat.data.db.MessagesManager;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 
-public class MessageAdapter{
+public class MessageAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList <Message> data;
     private static LayoutInflater inflater = null;
@@ -51,7 +51,7 @@ public class MessageAdapter{
     public View getView(int position, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if(view==null){
-            view = inflater.inflate(R.layout.chat_list_item,null);
+            view = inflater.inflate(R.layout.message_item,null);
             holder = new ViewHolder();
             holder.user_name = (TextView)view.findViewById(R.id.message_user_name);
             holder.message_img = (ImageView)view.findViewById(R.id.message_img);
@@ -65,11 +65,13 @@ public class MessageAdapter{
         }
         else{
             message = null;
-            MessagesManager message_manager = new MessagesManager(activity);
+            //MessagesManager message_manager = new MessagesManager(activity);
             message = data.get(position);
 
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
-            ;
+            //LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
+          LinearLayout lp = (LinearLayout) view.findViewById(R.id.layout_message);
+           lp.setGravity(Gravity.LEFT);
+            /*
             if(message.itsMine(activity)){
                 lp.gravity = Gravity.RIGHT;
 
@@ -78,12 +80,13 @@ public class MessageAdapter{
                 LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
                 ll.setBackgroundColor(R.drawable.message_received);
             }
-
-            if(message.getType().equals("TEXT")){
+            */
+            if(!message.getType().equals("TEXT")){
                 TextMessage tmessage = (TextMessage) message;
                 //holder.user_name.setText(message.whoIsSender(activity).getName());
                 holder.user_name.setText("Aldo Mora");
                 holder.message_txt.setText(tmessage.getContent());
+                //holder.message_txt.setText("hola");
                 //TODO
                 // holder.message_img.setImageResource(R.drawable.avatar);
                 holder.message_date.setText("Date");
