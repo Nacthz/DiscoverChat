@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import co.edu.upb.discoverchat.models.Model;
  * This class will handle all the data about the chats
  */
 public class ChatsManager extends DbBase implements DbInterface {
-    public static final String TBL_LOCAL = TBL_CHATS;
 
     public ChatsManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -42,12 +42,21 @@ public class ChatsManager extends DbBase implements DbInterface {
 
     @Override
     public Chat get(int id) {
-        return (Chat)get(id,Chat.class);
+        return get(id,Chat.class);
     }
 
     // Getting All chats
     public List<Chat> getAll() {
-        return getAll(Chat.class);
+        List<Chat> chats = getAll(Chat.class);
+        for (Chat c : chats){
+            fillChat(c);
+        }
+        return chats;
+    }
+
+    private void fillChat(Chat chat) {
+        ReceiversManager receiversManager = new ReceiversManager(context);
+        chat.setReceivers(receiversManager.getAllForChat(chat));
     }
 
     //** Getting chats Count
@@ -62,13 +71,6 @@ public class ChatsManager extends DbBase implements DbInterface {
         Chat chat = (Chat)model;
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
-    }
-
-    private Chat loadChatFromCursor(Cursor c){
-        Chat chat = new Chat(c);
-        ReceiversManager receiversManager = new ReceiversManager(context);
-        chat.setReceivers(receiversManager.getAllForChat(chat));
-        return chat;
     }
 
     @Override

@@ -5,13 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import co.edu.upb.discoverchat.models.Chat;
-import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
 
 /**
@@ -167,8 +164,8 @@ public abstract class DbBase extends SQLiteOpenHelper {
         return null;
 
     }
-    protected Model get(int id, Class<? extends Model> _class) {
-        return findByField(KEY_ID, id, _class);
+    protected <T extends Model> T get(int id, Class<? extends Model> _class) {
+        return (T)findByField(KEY_ID, id, _class);
     }
 
     private <ModelChild extends Model> ModelChild newInstanceFromCursor(Class<? extends Model> _class, Cursor cursor){

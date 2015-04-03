@@ -41,7 +41,7 @@ public class UserManager extends DbBase implements DbInterface {
 
     @Override
     public User get(int id) {
-        return (User)get(id,User.class);
+        return get(id,User.class);
     }
 
     public List getAll() {

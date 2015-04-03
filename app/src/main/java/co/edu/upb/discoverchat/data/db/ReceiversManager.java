@@ -45,7 +45,7 @@ public class ReceiversManager extends DbBase implements DbInterface {
 
     @Override
     public Receiver get(int id) {
-        return (Receiver)get(id, Receiver.class);
+        return get(id, Receiver.class);
     }
 
     public List getAll() {
