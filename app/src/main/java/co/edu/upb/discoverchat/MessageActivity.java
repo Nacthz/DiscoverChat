@@ -47,7 +47,7 @@ public class MessageActivity extends Activity {
 
     public void loadActionBar(){
         final ActionBar actionBar = getActionBar();
-        actionBar.setCustomView(R.layout.actionbar_messages);
+        actionBar.setCustomView(R.layout.actionbar_message);
         actionBar.setDisplayHomeAsUpEnabled(true);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
 

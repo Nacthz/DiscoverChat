@@ -23,5 +23,4 @@
             android:src="@drawable/ic_action_filter_white"
             android:layout_gravity="right" />
     </FrameLayout>
-
 </LinearLayout>

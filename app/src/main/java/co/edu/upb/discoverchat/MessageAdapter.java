@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class MessageAdapter extends ArrayAdapter{
     public View getView ( int position, View convertView, ViewGroup parent ) {
 
         /* create a new view of my layout and inflate it in the row */
-        convertView = (LinearLayout) inflater.inflate( resource, null );
+        convertView = (FrameLayout) inflater.inflate( resource, null );
 
         /* Extract the city's object to show */
         Message message = (Message) getItem(position);
