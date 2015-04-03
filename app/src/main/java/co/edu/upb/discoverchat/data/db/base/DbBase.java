@@ -22,6 +22,7 @@ public class DbBase extends SQLiteOpenHelper {
      */
     protected static final String TBL_CHATS = "chats";
     protected static final String TBL_RECEIVERS = "receivers";
+    protected static final String TBL_CHATS_RECEIVERS = "chats_receivers";
     protected static final String TBL_USER = "user";
     protected static final String TBL_MESSAGES = "messages";
     protected static final String TBL_MESSAGE_TEXT_DETAIL = "textMessages";
@@ -69,6 +70,13 @@ public class DbBase extends SQLiteOpenHelper {
                         FIELD_PHONE +" TEXT, " +
                     "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
                 ")";
+        String createChatsReceivers =
+                "CREATE TABLE "+TBL_CHATS_RECEIVERS+"(" +
+                    KEY_CHAT_ID + " INTEGER," +
+                    KEY_RECEIVER_ID + " INTEGER," +
+                    "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
+                    "FOREIGN KEY("+KEY_RECEIVER_ID+") REFERENCES " +TBL_RECEIVERS+"("+KEY_ID+")"+
+                ")";
         String createUser =
                 "CREATE TABLE "+TBL_USER+"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
@@ -97,6 +105,7 @@ public class DbBase extends SQLiteOpenHelper {
 
         queryList.add(createChats);
         queryList.add(createReceivers);
+        queryList.add(createChatsReceivers);
         queryList.add(createUser);
         queryList.add(createMessages);
         queryList.add(createTextMessages);

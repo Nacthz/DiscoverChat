@@ -11,6 +11,7 @@ import java.util.List;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
 import co.edu.upb.discoverchat.models.Receiver;
 
@@ -105,5 +106,17 @@ public class ReceiversManager extends DbBase implements DbInterface {
 
     private Receiver loadReceiverFromCursor(Cursor c){
         return new Receiver(c);
+    }
+
+    public Receiver whoSend(Message message) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.query(TBL_RECEIVERS,null, KEY_ID + "= ? ", new String[]{String.valueOf(message.getReceiver_id())},null,null,null,null);
+        if(c != null){
+            c.moveToFirst();
+            return loadReceiverFromCursor(c);
+        }
+        return null;
+
     }
 }
