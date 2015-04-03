@@ -1,12 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal">
-
-    <TextView
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:background="@drawable/message_received"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/message_txt" />
-</LinearLayout>
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:gravity="bottom">
+        <TextView
+            android:id="@+id/message_txt"
+            style="@style/chat_text_message_style"
+            android:text="Rahul Agrawal is a good boy but he does not know what he wants."
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:maxWidth="285dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/user_reply_timing"
+                style="@style/chat_timings"
+                android:textColor="#C6C6C6"
+                android:text="17:10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|right" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
+
+

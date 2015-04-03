@@ -2,7 +2,7 @@ package co.edu.upb.discoverchat;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,11 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import java.util.ArrayList;
+import java.util.List;
+import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
 
 public class MessageActivity extends Activity {
-    ListView messageList;
+    private ListView listViewMessage;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +26,19 @@ public class MessageActivity extends Activity {
 
         loadActionBar();
 
-        setMessageList();
-        Resources res = getResources();
-        messageList = (ListView) findViewById(R.id.message_lst);
+        ctx=this;
+        List listMessage= new ArrayList();
+        listMessage.add(new Message((long) 1,"Hola puto", true));
+        listMessage.add(new Message((long) 2,"Carenalga", true));
+        listMessage.add(new Message((long) 3,"Que paso? weon", false));
+        listMessage.add(new Message((long) 2,"La wea fome weon", true));
+        listMessage.add(new Message((long) 3,"Pongase a trabajar...", false));
+        listMessage.add(new Message((long) 3,"Mejor", false));
+        listMessage.add(new Message((long) 3,"Oe no me deje en visto", false));
+        listMessage.add(new Message((long) 3,"Puto", false));
 
+        listViewMessage = ( ListView ) findViewById( R.id.message_lst);
+        listViewMessage.setAdapter( new MessageAdapter(ctx, R.layout.message_item, listMessage));
     }
 
     public void setMessageList(){
