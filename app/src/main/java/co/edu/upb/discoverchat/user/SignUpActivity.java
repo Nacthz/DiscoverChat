@@ -38,7 +38,6 @@ public class SignUpActivity extends ActionBarActivity {
         final EditText _passwd = (EditText)findViewById(R.id.etxtRegisterPasswd);
         final EditText _confirmPasswd = (EditText)findViewById(R.id.etxtRegisterConfirmPasswd);
 
-
         Button send = (Button)findViewById(R.id.btnRegisterSend);
         send.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,24 +2,26 @@ package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
 
-import java.util.HashMap;
+import org.json.JSONObject;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
-public class Receiver implements Model {
-    private long id;
+public class Receiver extends Model {
     private long chatId;
     private String name;
     private String phone;
 
-    public Receiver(Cursor c) {
-        this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
-        this.setName(c.getString(c.getColumnIndex(DbBase.KEY_NAME)));
-        this.setChatId(c.getInt(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
-        this.setPhone(c.getString(c.getColumnIndex(DbBase.KEY_PHONE)));
-    }
     public Receiver(){
 
+    }
+    public Receiver(Cursor c) {
+        this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
+        this.setName(c.getString(c.getColumnIndex(DbBase.FIELD_NAME)));
+        this.setChatId(c.getInt(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
+        this.setPhone(c.getString(c.getColumnIndex(DbBase.FIELD_PHONE)));
+    }
+    public Receiver(JSONObject jsonObject){
+        super(jsonObject);
     }
     public long getId() {return id;}
 
@@ -46,17 +48,13 @@ public class Receiver implements Model {
     }
     public Receiver setPhone(String phone) {
         this.phone = phone;
+        JSONObject jsonObject=new JSONObject();
+        Receiver r = new Receiver(jsonObject);
         return this;
     }
 
     @Override
-    public String toJsonString() {
-        return null;
-    }
+    protected void parseJsonObject(JSONObject json) {
 
-    @Override
-    public Model newFromJsonString(String model) {
-        return null;
     }
-
 }
