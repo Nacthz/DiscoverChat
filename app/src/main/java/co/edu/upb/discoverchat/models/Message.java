@@ -35,7 +35,7 @@ public abstract class Message extends Model{
     }
 
     public Receiver whoIsSender(Context context){
-        Receiver receiver = null;
+        Receiver receiver;
         ReceiversManager receiversManager = new ReceiversManager(context);
         receiver = receiversManager.whoSend(this);
         return receiver;

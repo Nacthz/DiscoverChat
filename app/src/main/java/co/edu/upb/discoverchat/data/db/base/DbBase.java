@@ -16,7 +16,7 @@ import co.edu.upb.discoverchat.models.Model;
  * :) i'm fucking good
  */
 @SuppressWarnings("unchecked")
-public abstract class DbBase extends SQLiteOpenHelper {
+public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
     protected static final int VERSION = 1;
@@ -152,6 +152,10 @@ public abstract class DbBase extends SQLiteOpenHelper {
         return models;
     }
 
+    public <T extends Model> List<T> getAll(){
+        return getAll(getModelClass());
+    }
+
     protected <T extends Model> T findByField(String field, Object object, Class<T> _class){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -168,6 +172,14 @@ public abstract class DbBase extends SQLiteOpenHelper {
         return (T)findByField(KEY_ID, id, _class);
     }
 
+    public <T extends Model> T get(int id){
+        return get(id,getModelClass());
+    }
+
+    public int getAllCount() {
+        return getAll().size();
+    }
+
     private <ModelChild extends Model> ModelChild newInstanceFromCursor(Class<? extends Model> _class, Cursor cursor){
         try {
             return (ModelChild)_class.getDeclaredConstructor(Cursor.class).newInstance(cursor);
@@ -176,5 +188,5 @@ public abstract class DbBase extends SQLiteOpenHelper {
         }
         return null;
     }
-
+    protected abstract Class getModelClass();
 }

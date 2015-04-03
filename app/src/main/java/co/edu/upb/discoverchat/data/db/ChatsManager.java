@@ -18,7 +18,7 @@ import co.edu.upb.discoverchat.models.Model;
  * Created by hatsumora on 30/03/15.
  * This class will handle all the data about the chats
  */
-public class ChatsManager extends DbBase implements DbInterface {
+public class ChatsManager extends DbBase {
 
     public ChatsManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -40,12 +40,9 @@ public class ChatsManager extends DbBase implements DbInterface {
         return id;
     }
 
-    @Override
-    public Chat get(int id) {
-        return get(id,Chat.class);
-    }
-
     // Getting All chats
+
+    @Override
     public List<Chat> getAll() {
         List<Chat> chats = getAll(Chat.class);
         for (Chat c : chats){
@@ -59,10 +56,6 @@ public class ChatsManager extends DbBase implements DbInterface {
         chat.setReceivers(receiversManager.getAllForChat(chat));
     }
 
-    //** Getting chats Count
-    public int getAllCount() {
-        return getAll().size();
-    }
     // Updating single chat
     //public int updateChat(Chat chat) {return 0;}
 
@@ -76,6 +69,11 @@ public class ChatsManager extends DbBase implements DbInterface {
     @Override
     public String getTable() {
         return TBL_CHATS;
+    }
+
+    @Override
+    protected Class getModelClass() {
+        return Chat.class;
     }
 
     public String getLastMessageForChat(Chat chat){

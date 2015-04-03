@@ -14,14 +14,6 @@ public interface DbInterface {
     // Adding new chat
     public long add(Model model);
 
-    // Getting single chat
-    public  Model get(int id);
-
-    // Getting All chats
-    public List getAll();
-
-    // Getting chats Count
-    public int getAllCount();
     // Updating single chat
     //public int updateChat(Chat chat) {return 0;}
 

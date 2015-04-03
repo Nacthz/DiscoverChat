@@ -19,7 +19,7 @@ import co.edu.upb.discoverchat.models.Receiver;
  * Created by hatsumora on 30/03/15.
  * This class handle all the conections whit db for the receivers model
  */
-public class ReceiversManager extends DbBase implements DbInterface {
+public class ReceiversManager extends DbBase {
     public ReceiversManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
@@ -43,15 +43,6 @@ public class ReceiversManager extends DbBase implements DbInterface {
         return id;
     }
 
-    @Override
-    public Receiver get(int id) {
-        return get(id, Receiver.class);
-    }
-
-    public List getAll() {
-        return getAll(Receiver.class);
-    }
-
     /*
     * query(
     *    java.lang.String table,
@@ -72,10 +63,6 @@ public class ReceiversManager extends DbBase implements DbInterface {
             while (c.moveToNext());
         db.close();
         return receiverList;
-    }
-
-    public int getAllCount() {
-        return getAll().size();
     }
 
     public int delete(Model model) {
@@ -102,6 +89,11 @@ public class ReceiversManager extends DbBase implements DbInterface {
 
     @Override
     public String getTable() {
-        return TBL_CHATS_RECEIVERS;
+        return TBL_RECEIVERS;
+    }
+
+    @Override
+    protected Class getModelClass() {
+        return Receiver.class;
     }
 }

@@ -2,22 +2,16 @@ package co.edu.upb.discoverchat.data.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Model;
 import co.edu.upb.discoverchat.models.User;
 
 /**
  * Created by hatsumora on 31/03/15.
  */
-public class UserManager extends DbBase implements DbInterface {
+public class UserManager extends DbBase{
     public UserManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
@@ -40,19 +34,6 @@ public class UserManager extends DbBase implements DbInterface {
     }
 
     @Override
-    public User get(int id) {
-        return get(id,User.class);
-    }
-
-    public List getAll() {
-        return getAll(User.class);
-    }
-
-    public int getAllCount() {
-        return getAll().size();
-    }
-
-    @Override
     public int delete(Model model) {
         return 0;
     }
@@ -60,5 +41,10 @@ public class UserManager extends DbBase implements DbInterface {
     @Override
     public String getTable() {
         return TBL_USER;
+    }
+
+    @Override
+    protected Class getModelClass() {
+        return User.class;
     }
 }
