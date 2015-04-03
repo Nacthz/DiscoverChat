@@ -38,14 +38,14 @@ public class MessageActivity extends Activity {
                 return Type.TEXT;
             }
         };
-        m1.setContent("Prueba 1");
+        m1.setContent("Prueba1");
         TextMessage m2 = new TextMessage() {
             @Override
             public Type getType() {
                 return Type.TEXT;
             }
         };
-        m2.setContent("Prueba 2");
+        m2.setContent("Prueba2");
 
         messages.add(m1);
         messages.add(m2);

@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import co.edu.upb.discoverchat.data.db.MessagesManager;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 
@@ -52,7 +51,7 @@ public class MessageAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if(view==null){
-            view = inflater.inflate(R.layout.chat_list_item,null);
+            view = inflater.inflate(R.layout.message_item,null);
             holder = new ViewHolder();
             holder.user_name = (TextView)view.findViewById(R.id.message_user_name);
             holder.message_img = (ImageView)view.findViewById(R.id.message_img);
@@ -66,11 +65,10 @@ public class MessageAdapter extends BaseAdapter {
         }
         else{
             message = null;
-            MessagesManager message_manager = new MessagesManager(activity);
+            //MessagesManager message_manager = new MessagesManager(activity);
             message = data.get(position);
 
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
-            ;
+            /*
             if(message.itsMine(activity)){
                 lp.gravity = Gravity.RIGHT;
 
@@ -79,16 +77,31 @@ public class MessageAdapter extends BaseAdapter {
                 LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
                 ll.setBackgroundColor(R.drawable.message_received);
             }
+            */
 
-            if(message.getType().equals("TEXT")){
-                TextMessage tmessage = (TextMessage) message;
+            LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
+
+            TextMessage tmessage = (TextMessage) message;
+            if(tmessage.getContent().equals("Prueba1")){
                 //holder.user_name.setText(message.whoIsSender(activity).getName());
                 holder.user_name.setText("Aldo Mora");
-                holder.message_txt.setText(tmessage.getContent());
+                //holder.message_txt.setText(tmessage.getContent());
+                holder.message_txt.setText("Hola que hace");
                 //TODO
                 // holder.message_img.setImageResource(R.drawable.avatar);
-                holder.message_date.setText("Date");
+                holder.message_date.setText("17:30");
+                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
+                mainLayout.setGravity(Gravity.LEFT);
+                ll.setBackgroundResource(R.drawable.message_received);
+            }else{
+                holder.user_name.setText("Yo");
+                holder.message_txt.setText("Guat da fuak");
+                holder.message_date.setText("17:31");
+                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
+                mainLayout.setGravity(Gravity.RIGHT);
+                ll.setBackgroundResource(R.drawable.message_send);
             }
+
         }
         return view;
     }
