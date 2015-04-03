@@ -30,7 +30,7 @@ public class ChatsManager extends DbBase implements DbInterface {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, chat.getName());
+        values.put(FIELD_NAME, chat.getName());
         values.put(KEY_ROOM_IMAGE_PATH,chat.getRoomImagePath());
 
         long id = db.insert(TBL_CHATS, null, values);
@@ -70,7 +70,7 @@ public class ChatsManager extends DbBase implements DbInterface {
         return chats;
     }
 
-    // Getting chats Count
+    //** Getting chats Count
     public int getAllCount() {
         return getAll().size();
     }

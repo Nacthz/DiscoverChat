@@ -12,8 +12,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
 /**
  * Created by hatsumora on 30/03/15.
  */
-public class User implements Model {
-    private long id;
+public class User extends Model {
 
     private static final String SERVER_TAG_EMAIL ="email";
     private static final String SERVER_TAG_PHONE ="celphone";
@@ -30,21 +29,14 @@ public class User implements Model {
     public User(){}
     public User(Cursor c) {
         this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
-        this.setGoogle_gcm_code(c.getString(c.getColumnIndex(DbBase.KEY_GOOGLE_CLOUD_MESSAGE)));
-        this.setPhone(c.getString(c.getColumnIndex(DbBase.KEY_PHONE)));
-        this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)));
-        this.setEmail(c.getString(c.getColumnIndex(DbBase.KEY_EMAIL)))  ;
+        this.setGoogle_gcm_code(c.getString(c.getColumnIndex(DbBase.FIELD_GOOGLE_CLOUD_MESSAGE)));
+        this.setPhone(c.getString(c.getColumnIndex(DbBase.FIELD_PHONE)));
+        this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.FIELD_EMAIL)));
+        this.setEmail(c.getString(c.getColumnIndex(DbBase.FIELD_EMAIL)))  ;
     }
 
     public User(JSONObject response) {
-        try {
-            this.setEmail(response.getString(SERVER_TAG_EMAIL));
-            this.setAuthentication_token(response.getString(SERVER_TAG_TOKEN));
-            this.setGoogle_gcm_code(response.getString(SERVER_TAG_GCM));
-            this.setPhone(response.getString(SERVER_TAG_PHONE));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        super(response);
     }
 
     public long getId() {
@@ -96,13 +88,16 @@ public class User implements Model {
     public void ensureGCM(){
 
     }
-    @Override
-    public String toJsonString() {
-        return null;
-    }
 
     @Override
-    public Model newFromJsonString(String model) {
-        return null;
+    protected void parseJsonObject(JSONObject json) {
+        try {
+            this.setEmail(json.getString(SERVER_TAG_EMAIL));
+            this.setAuthentication_token(json.getString(SERVER_TAG_TOKEN));
+            this.setGoogle_gcm_code(json.getString(SERVER_TAG_GCM));
+            this.setPhone(json.getString(SERVER_TAG_PHONE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

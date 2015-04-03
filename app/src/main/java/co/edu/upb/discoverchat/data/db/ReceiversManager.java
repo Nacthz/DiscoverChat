@@ -16,6 +16,7 @@ import co.edu.upb.discoverchat.models.Receiver;
 
 /**
  * Created by hatsumora on 30/03/15.
+ * This class handle all the conections whit db for the receivers model
  */
 public class ReceiversManager extends DbBase implements DbInterface {
     public ReceiversManager(Context context){
@@ -29,10 +30,10 @@ public class ReceiversManager extends DbBase implements DbInterface {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, receiver.getName());
+        values.put(FIELD_NAME, receiver.getName());
         values.put(KEY_CHAT_ID, receiver.getChatId());
-        values.put(KEY_NAME, receiver.getName());
-        values.put(KEY_PHONE, receiver.getPhone());
+        values.put(FIELD_NAME, receiver.getName());
+        values.put(FIELD_PHONE, receiver.getPhone());
 
         long id = db.insert(TBL_RECEIVERS, null, values);
         receiver.setId(id);
@@ -80,7 +81,7 @@ public class ReceiversManager extends DbBase implements DbInterface {
          java.lang.String having,
          java.lang.String orderBy
          */
-    public List getAllForChat(Chat chat){
+    public List<Receiver> getAllForChat(Chat chat){
         List<Receiver> receiverList = new ArrayList<>();
         SQLiteDatabase db =  this.getReadableDatabase();
         Cursor c = db.query(TBL_RECEIVERS,null,KEY_CHAT_ID+" = ?", new String[]{String.valueOf(chat.getId())},null,null,null);

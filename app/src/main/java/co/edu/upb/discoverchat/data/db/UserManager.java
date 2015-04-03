@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.apache.http.MethodNotSupportedException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Model;
-import co.edu.upb.discoverchat.models.Receiver;
 import co.edu.upb.discoverchat.models.User;
 
 /**
@@ -29,10 +26,10 @@ public class UserManager extends DbBase implements DbInterface {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_EMAIL, user.getEmail());
-        values.put(KEY_GOOGLE_CLOUD_MESSAGE, user.getGoogle_gcm_code());
+        values.put(FIELD_EMAIL, user.getEmail());
+        values.put(FIELD_GOOGLE_CLOUD_MESSAGE, user.getGoogle_gcm_code());
         values.put(KEY_AUTHENTICATION_TOKEN, user.getAuthentication_token());
-        values.put(KEY_PHONE, user.getPhone());
+        values.put(FIELD_PHONE, user.getPhone());
 
         long id = db.insert(TBL_USER, null, values);
         user.setId(id);
