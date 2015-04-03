@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import co.edu.upb.discoverchat.data.db.MessagesManager;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 
-public class MessageAdapter{
+public class MessageAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList <Message> data;
     private static LayoutInflater inflater = null;
