@@ -28,6 +28,13 @@ public class UserManager extends DbBase{
 
         long id = db.insert(TBL_USER, null, values);
         user.setId(id);
+
+        values = new ContentValues();
+        values.put(KEY_ID, 1);
+        values.put(FIELD_PHONE, user.getPhone());
+        values.put(FIELD_NAME, "Yo");
+
+        db.replace(TBL_RECEIVERS, null, values);
         db.close();
 
         return id;

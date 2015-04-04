@@ -31,7 +31,6 @@ public class ReceiversManager extends DbBase {
 
         ContentValues values = new ContentValues();
         values.put(FIELD_NAME, receiver.getName());
-        values.put(FIELD_NAME, receiver.getName());
         values.put(FIELD_PHONE, receiver.getPhone());
 
         long id = db.insert(TBL_RECEIVERS, null, values);
