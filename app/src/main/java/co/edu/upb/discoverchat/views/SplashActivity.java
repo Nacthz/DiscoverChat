@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.UserManager;
-import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
+import co.edu.upb.discoverchat.data.web.gcm.GoogleCloudMessage;
 import co.edu.upb.discoverchat.views.user.SignUpActivity;
 
 

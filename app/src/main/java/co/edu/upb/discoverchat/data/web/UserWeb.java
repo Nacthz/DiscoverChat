@@ -1,26 +1,15 @@
 package co.edu.upb.discoverchat.data.web;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
-import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
 import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.data.web.base.RestClient;
 import co.edu.upb.discoverchat.models.User;

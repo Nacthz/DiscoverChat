@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.data.provider;
+package co.edu.upb.discoverchat.data.web.gcm;
 
 import android.app.Activity;
 import android.content.Context;

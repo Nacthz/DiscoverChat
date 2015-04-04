@@ -10,6 +10,7 @@ import co.edu.upb.discoverchat.models.User;
 
 /**
  * Created by hatsumora on 31/03/15.
+ * Handle the user data and his image as receiver.
  */
 public class UserManager extends DbBase{
     public UserManager(Context context){
@@ -34,7 +35,7 @@ public class UserManager extends DbBase{
         values.put(FIELD_PHONE, user.getPhone());
         values.put(FIELD_NAME, "Yo");
 
-        db.replace(TBL_RECEIVERS, null, values);
+        db.insertWithOnConflict(TBL_RECEIVERS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
 
         return id;

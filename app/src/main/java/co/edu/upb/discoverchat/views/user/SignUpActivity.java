@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import co.edu.upb.discoverchat.views.MainActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.UserManager;
-import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
+import co.edu.upb.discoverchat.data.web.gcm.GoogleCloudMessage;
 import co.edu.upb.discoverchat.data.web.UserWeb;
 import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.models.User;

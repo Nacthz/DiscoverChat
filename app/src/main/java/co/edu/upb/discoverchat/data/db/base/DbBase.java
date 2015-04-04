@@ -165,6 +165,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
             return (T)newInstanceFromCursor(_class,c);
         }
+        db.close();
         return null;
 
     }

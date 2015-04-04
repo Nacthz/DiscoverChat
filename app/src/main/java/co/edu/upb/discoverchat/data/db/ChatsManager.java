@@ -64,7 +64,9 @@ public class ChatsManager extends DbBase {
     public int delete(Model model) {
         Chat chat = (Chat)model;
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
+        int res = db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
+        db.close();
+        return res;
     }
 
     public Chat getOneChatFor(Receiver param){
@@ -75,7 +77,8 @@ public class ChatsManager extends DbBase {
             long id = c.getLong(0);
             return get(id);
         }
-        return null;
+        db.close();
+        return newForReceiver(param);
     }
     @Override
     public String getTable() {
@@ -94,5 +97,28 @@ public class ChatsManager extends DbBase {
     public String getLastDateForChat(Chat chat){
         //TODO
         return "Date";
+    }
+
+    public Chat newForReceiver(Receiver receiver) {
+        Chat chat = new Chat();
+        ArrayList<Receiver> receivers = new ArrayList<>();
+        receivers.add(receiver);
+        chat.setReceivers(receivers);
+        chat.setName(receiver.getName());
+        this.add(chat);
+
+        newChatReceiver(chat,receiver);
+
+        return chat;
+    }
+    private void newChatReceiver(Chat chat, Receiver receiver){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CHAT_ID, chat.getId());
+        values.put(KEY_RECEIVER_ID,receiver.getId());
+
+        db.insert(TBL_CHATS_RECEIVERS, null, values);
+        db.close();
     }
 }
