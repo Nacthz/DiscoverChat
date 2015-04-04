@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class MessageActivity extends Activity {
                 return Type.TEXT;
             }
         };
-        m4.setContent("Prueba2");
+        m4.setContent("Prueba1");
         TextMessage m5 = new TextMessage() {
             @Override
             public Type getType() {
@@ -123,18 +124,22 @@ public class MessageActivity extends Activity {
         messages.add(m4);
         messages.add(m5);
         messages.add(m6);
-        messages.add(m7);
+        messages.add(m7);/*
         messages.add(m8);
         messages.add(m9);
         messages.add(m10);
         messages.add(m11);
-        messages.add(m12);
-        
+        messages.add(m12);*/
+
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
         messageList.setDivider(null);
         messageList.setDividerHeight(0);
         adapter = new MessageAdapter(this, messages,res);
+
+        View v = getLayoutInflater().inflate(R.layout.activity_message_footer,null);
+        messageList.addFooterView(v);
+
         messageList.setAdapter(adapter);
 
         /*
