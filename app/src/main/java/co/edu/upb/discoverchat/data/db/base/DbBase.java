@@ -71,10 +71,9 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         String createReceivers =
                 "CREATE TABLE "+ TBL_RECEIVERS +" ( " +
                     KEY_ID+" INTEGER PRIMARY KEY, " +
-                    KEY_CHAT_ID+" INTEGER, " +
-                        FIELD_NAME +" TEXT, " +
-                        FIELD_PHONE +" TEXT, " +
-                    "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
+                    FIELD_NAME +" TEXT, " +
+                    FIELD_PHONE +" TEXT " +
+                    //"FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
                 ")";
         String createChatsReceivers =
                 "CREATE TABLE "+TBL_CHATS_RECEIVERS+"(" +
@@ -125,6 +124,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
@@ -168,11 +168,14 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         return null;
 
     }
-    protected <T extends Model> T get(int id, Class<? extends Model> _class) {
+    public <T extends Model> T findByField(String field, Object object){
+        return (T)findByField(field, object, getModelClass());
+    }
+    protected <T extends Model> T get(long id, Class<? extends Model> _class) {
         return (T)findByField(KEY_ID, id, _class);
     }
 
-    public <T extends Model> T get(int id){
+    public <T extends Model> T get(long id){
         return (T)get(id,getModelClass());
     }
 

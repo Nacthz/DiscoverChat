@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.views.message;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 
@@ -69,20 +70,10 @@ public class MessageAdapter extends BaseAdapter {
             //MessagesManager message_manager = new MessagesManager(activity);
             message = data.get(position);
 
-            /*
-            if(message.itsMine(activity)){
-                lp.gravity = Gravity.RIGHT;
-
-            }else{
-                lp.gravity = Gravity.LEFT;
-                LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
-                ll.setBackgroundColor(R.drawable.message_received);
-            }
-            */
-
             LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
             TextMessage tmessage = (TextMessage) message;
             TextView tw = (TextView) view.findViewById(R.id.message_date);
+            if(tmessage!=null) // TODO LUIS SI VE ESTO PREGUNTELE A ALDO POR ESTO
             if(tmessage.getContent().equals("Prueba1")){
                 //holder.user_name.setText(message.whoIsSender(activity).getName());
                 holder.user_name.setText("Aldo Mora");

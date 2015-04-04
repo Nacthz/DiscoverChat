@@ -25,9 +25,6 @@ public class Chat extends Model {
         this.setRoomImagePath(c.getString(c.getColumnIndex(DbBase.KEY_ROOM_IMAGE_PATH)));
     }
 
-    public long getId(){
-    	return id;
-    }
     public Chat setId(long id){
     	this.id = id;
         return this;
@@ -53,6 +50,7 @@ public class Chat extends Model {
             group = true;
         return this;
     }
+
 
     public boolean isGroup(){
         return group;

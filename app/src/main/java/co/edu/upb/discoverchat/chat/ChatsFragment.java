@@ -14,7 +14,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import co.edu.upb.discoverchat.MessageActivity;
+import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.models.Chat;

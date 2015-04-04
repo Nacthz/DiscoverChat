@@ -13,6 +13,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Model;
+import co.edu.upb.discoverchat.models.Receiver;
 
 /**
  * Created by hatsumora on 30/03/15.
@@ -66,6 +67,16 @@ public class ChatsManager extends DbBase {
         return db.delete(TBL_CHATS,KEY_ID + " =? ", new String[]{String.valueOf(chat.getId())});
     }
 
+    public Chat getOneChatFor(Receiver param){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.query(TBL_CHATS_RECEIVERS,null, KEY_RECEIVER_ID + "= ? ", new String[]{String.valueOf(param.getId())},null,null,null,null);
+        if(c.moveToFirst()){
+            long id = c.getLong(0);
+            return get(id);
+        }
+        return null;
+    }
     @Override
     public String getTable() {
         return TBL_CHATS;

@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.views;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import co.edu.upb.discoverchat.R;
 
 /**
  * Created by poliveira on 11/03/2015.

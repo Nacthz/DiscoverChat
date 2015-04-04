@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.views;
 
 import android.app.Fragment;
 import android.graphics.BitmapFactory;
@@ -8,9 +8,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.chat.ChatsFragment;
-import co.edu.upb.discoverchat.navigation.NavigationDrawerCallbacks;
-import co.edu.upb.discoverchat.navigation.NavigationDrawerFragment;
+import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
+import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {

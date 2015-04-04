@@ -17,7 +17,6 @@ public class Receiver extends Model {
     public Receiver(Cursor c) {
         this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
         this.setName(c.getString(c.getColumnIndex(DbBase.FIELD_NAME)));
-        this.setChatId(c.getInt(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
         this.setPhone(c.getString(c.getColumnIndex(DbBase.FIELD_PHONE)));
     }
     public Receiver(JSONObject jsonObject){
@@ -29,15 +28,11 @@ public class Receiver extends Model {
         this.id = id;
         return this;
     }
-    public long getChatId() {
-        return chatId;
-    }
-    public Receiver setChatId(long chatId) {
-        this.chatId = chatId;
-        return this;
-    }
     public String getName() {
-        return name;
+        if(name!=null)
+            return name;
+        else
+            return phone;
     }
     public Receiver setName(String name) {
         this.name = name;

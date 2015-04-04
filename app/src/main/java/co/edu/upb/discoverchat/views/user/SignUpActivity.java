@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.user;
+package co.edu.upb.discoverchat.views.user;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import co.edu.upb.discoverchat.MainActivity;
+import co.edu.upb.discoverchat.views.MainActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;

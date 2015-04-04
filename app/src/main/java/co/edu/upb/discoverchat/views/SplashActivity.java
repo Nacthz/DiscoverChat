@@ -1,18 +1,15 @@
-package co.edu.upb.discoverchat;
+package co.edu.upb.discoverchat.views;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.UserManager;
-import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.provider.GoogleCloudMessage;
-import co.edu.upb.discoverchat.models.User;
-import co.edu.upb.discoverchat.user.SignUpActivity;
+import co.edu.upb.discoverchat.views.user.SignUpActivity;
 
 
 public class SplashActivity extends ActionBarActivity {

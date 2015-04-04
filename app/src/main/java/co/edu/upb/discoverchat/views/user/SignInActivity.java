@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.user;
+package co.edu.upb.discoverchat.views.user;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

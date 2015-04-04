@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
@@ -32,7 +31,6 @@ public class ReceiversManager extends DbBase {
 
         ContentValues values = new ContentValues();
         values.put(FIELD_NAME, receiver.getName());
-        values.put(KEY_CHAT_ID, receiver.getChatId());
         values.put(FIELD_NAME, receiver.getName());
         values.put(FIELD_PHONE, receiver.getPhone());
 
@@ -56,10 +54,10 @@ public class ReceiversManager extends DbBase {
     public List<Receiver> getAllForChat(Chat chat){
         List<Receiver> receiverList = new ArrayList<>();
         SQLiteDatabase db =  this.getReadableDatabase();
-        Cursor c = db.query(TBL_RECEIVERS,null,KEY_CHAT_ID+" = ?", new String[]{String.valueOf(chat.getId())},null,null,null);
+        Cursor c = db.query(TBL_CHATS_RECEIVERS, null,KEY_CHAT_ID+" = ?", new String[]{String.valueOf(chat.getId())},null,null,null);
         if(c.moveToFirst())
             do
-                receiverList.add(loadReceiverFromCursor(c));
+                receiverList.add((Receiver)get(c.getLong(c.getColumnIndex(KEY_RECEIVER_ID))));
             while (c.moveToNext());
         db.close();
         return receiverList;
@@ -86,7 +84,6 @@ public class ReceiversManager extends DbBase {
         return null;
 
     }
-
     @Override
     public String getTable() {
         return TBL_RECEIVERS;

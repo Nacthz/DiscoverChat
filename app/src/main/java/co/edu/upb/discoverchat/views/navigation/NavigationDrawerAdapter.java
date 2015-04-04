@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.navigation;
+package co.edu.upb.discoverchat.views.navigation;
 
 
 import android.graphics.Color;

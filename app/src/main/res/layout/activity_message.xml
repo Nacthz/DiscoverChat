@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:id="@+id/textView1"
-        android:background="#717171"/>
-
-    <ListView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/message_lst"
-        android:background="#EEEEEE" />
-</LinearLayout>
+        android:layout_marginBottom="55dp">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/message_lst"
+            android:background="#EEEEEE" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#b9d4d2e0"
+        android:layout_marginTop="2dp">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/message"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/border_for_icons"
+            android:layout_marginBottom="2dp"
+            android:paddingTop="2dp"  />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageButton"
+            android:src="@drawable/ic_action_send_now" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -23,4 +23,9 @@ public class ContactProvider {
 
         return c;
     }
+
+    public String nameOfPhone(String phone){
+        //todo
+        return null;
+    }
 }

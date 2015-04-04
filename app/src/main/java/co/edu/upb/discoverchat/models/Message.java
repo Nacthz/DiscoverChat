@@ -16,21 +16,24 @@ public abstract class Message extends Model{
     }
     public Message() {
     }
-
+    public Message(Cursor c) {
+    }
     public Message(JSONObject json) {
         super(json);
     }
+    public Message setId(long id){this.id = id; return this;}
     public long getChat_id() {
         return chat_id;
     }
-    public void setChat_id(long chat_id) {
+    public Message setChat_id(long chat_id) {
         this.chat_id = chat_id;
+        return this;
     }
     public long getReceiver_id() {
         return receiver_id;
     }
-    public void setReceiver_id(long receiver_id) {
-        this.receiver_id = receiver_id;
+    public Message setReceiver_id(long receiver_id) {
+        this.receiver_id = receiver_id; return  this;
     }
 
     public Receiver whoIsSender(Context context){
@@ -46,9 +49,7 @@ public abstract class Message extends Model{
             return sender.getId() < 2;
         return true;
     }
-    public Message(Cursor c) {
-        super(c);
-    }
+
 
     @Override
     protected void parseJsonObject(JSONObject json) {
