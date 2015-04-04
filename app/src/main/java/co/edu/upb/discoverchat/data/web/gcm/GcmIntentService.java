@@ -53,9 +53,9 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
+
                 // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
+                sendNotification("Received: " + extras.getString(""));
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -72,7 +72,7 @@ public class GcmIntentService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_action_person)
-                        .setContentTitle("GCM Notification")
+                        .setContentTitle("DiscoverChat")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setContentText(msg);

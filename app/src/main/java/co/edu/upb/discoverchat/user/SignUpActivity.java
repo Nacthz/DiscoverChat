@@ -89,6 +89,7 @@ public class SignUpActivity extends ActionBarActivity {
     private void loadMainActivity() {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void prepareProgressDialog() {

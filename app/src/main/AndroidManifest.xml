@@ -50,6 +50,15 @@
             android:label="@string/title_activity_message"
             android:theme="@style/CustomActionBarTheme" >
         </activity>
+        <receiver
+            android:name=".data.web.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="co.edu.upb.discoverchat" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".data.web.gcm.GcmIntentService" />
     </application>
 
 </manifest>

@@ -105,7 +105,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                 "CREATE TABLE " + TBL_MESSAGE_TEXT_DETAIL +"(" +
                     KEY_ID+" INTEGER PRIMARY KEY, " +
                     KEY_MESSAGE_ID + " INTEGER, " +
-                    FIELD_CONTENT + " TEXT" +
+                    FIELD_CONTENT + " TEXT, " +
                     "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+")"+
                 ")";
 
