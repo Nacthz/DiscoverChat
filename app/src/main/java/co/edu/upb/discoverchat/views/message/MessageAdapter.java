@@ -75,17 +75,15 @@ public class MessageAdapter extends BaseAdapter {
             TextView tw = (TextView) view.findViewById(R.id.message_date);
             if(tmessage!=null) // TODO LUIS SI VE ESTO PREGUNTELE A ALDO POR ESTO
             {
-
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
                 if (message.itsMine(activity)) {
                     mainLayout.setGravity(Gravity.RIGHT);
-                    tw.setTextColor(Color.parseColor("#BBBBBB"));
-
-                    ll.setBackgroundResource(R.drawable.message_received);
-                }else{
-                    mainLayout.setGravity(Gravity.LEFT);
                     tw.setTextColor(Color.parseColor("#92A95C"));
                     ll.setBackgroundResource(R.drawable.message_send);
+                }else{
+                    mainLayout.setGravity(Gravity.LEFT);
+                    tw.setTextColor(Color.parseColor("#BBBBBB"));
+                    ll.setBackgroundResource(R.drawable.message_received);
                 }
                 holder.user_name.setText(message.whoIsSender(activity).getName());
                 if(message.getType() == Message.Type.TEXT) {
