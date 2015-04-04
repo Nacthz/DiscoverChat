@@ -3,6 +3,7 @@ package co.edu.upb.discoverchat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +81,8 @@ public class MessageAdapter extends BaseAdapter {
             */
 
             LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
-
             TextMessage tmessage = (TextMessage) message;
+            TextView tw = (TextView) view.findViewById(R.id.message_date);
             if(tmessage.getContent().equals("Prueba1")){
                 //holder.user_name.setText(message.whoIsSender(activity).getName());
                 holder.user_name.setText("Aldo Mora");
@@ -92,6 +93,7 @@ public class MessageAdapter extends BaseAdapter {
                 holder.message_date.setText("17:30");
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
                 mainLayout.setGravity(Gravity.LEFT);
+                tw.setTextColor(Color.parseColor("#BBBBBB"));
                 ll.setBackgroundResource(R.drawable.message_received);
             }else{
                 holder.user_name.setText("Yo");
@@ -99,8 +101,11 @@ public class MessageAdapter extends BaseAdapter {
                 holder.message_date.setText("17:31");
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
                 mainLayout.setGravity(Gravity.RIGHT);
+
+                tw.setTextColor(Color.parseColor("#92A95C"));
                 ll.setBackgroundResource(R.drawable.message_send);
             }
+            ll.setPadding(10,5,10,5);
 
         }
         return view;

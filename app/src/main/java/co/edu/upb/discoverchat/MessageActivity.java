@@ -46,12 +46,94 @@ public class MessageActivity extends Activity {
             }
         };
         m2.setContent("Prueba2");
+        TextMessage m3 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m3.setContent("Prueba1");
+        TextMessage m4 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m4.setContent("Prueba2");
+        TextMessage m5 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m5.setContent("Prueba1");
+        TextMessage m6 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m6.setContent("Prueba2");
+        TextMessage m7 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m7.setContent("Prueba1");
+        TextMessage m8 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m8.setContent("Prueba2");
+        TextMessage m9 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m9.setContent("Prueba1");
+        TextMessage m10 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m10.setContent("Prueba2");
+        TextMessage m11 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m11.setContent("Prueba1");
+        TextMessage m12 = new TextMessage() {
+            @Override
+            public Type getType() {
+                return Type.TEXT;
+            }
+        };
+        m12.setContent("Prueba2");
 
         messages.add(m1);
         messages.add(m2);
-
+        messages.add(m3);
+        messages.add(m4);
+        messages.add(m5);
+        messages.add(m6);
+        messages.add(m7);
+        messages.add(m8);
+        messages.add(m9);
+        messages.add(m10);
+        messages.add(m11);
+        messages.add(m12);
+        
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
+        messageList.setDivider(null);
+        messageList.setDividerHeight(0);
         adapter = new MessageAdapter(this, messages,res);
         messageList.setAdapter(adapter);
 

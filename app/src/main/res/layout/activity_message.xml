@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
@@ -7,18 +7,35 @@ android:layout_height="match_parent">
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="1px"
-        android:text="New Text"
-        android:id="@+id/textView"
+        android:id="@+id/textView1"
         android:background="#717171"/>
 
     <ListView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/message_lst"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:background="#EEEEEE"
-        android:layout_marginTop="1px" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_lst"
+        android:background="#EEEEEE" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:id="@+id/textView"
+            android:background="#717171"/>
+
+        <EditText
+            android:id="@+id/chatLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Say:"
+            android:imeOptions="actionSend"
+            android:singleLine="true" />
+    </LinearLayout>
+
+</LinearLayout>
