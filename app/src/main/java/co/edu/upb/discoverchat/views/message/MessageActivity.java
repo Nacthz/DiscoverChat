@@ -32,70 +32,6 @@ public class MessageActivity extends Activity {
         loadActionBar();
         setMessageList();
 
-        TextMessage m1 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m1.setContent("Prueba1");
-        TextMessage m2 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m2.setContent("Prueba2");
-        TextMessage m3 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m3.setContent("Prueba1");
-        TextMessage m4 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m4.setContent("Prueba1");
-        TextMessage m5 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m5.setContent("Prueba1");
-        TextMessage m6 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m6.setContent("Prueba2");
-        TextMessage m7 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-        m7.setContent("Prueba1");
-        TextMessage m8 = new TextMessage() {
-            @Override
-            public Type getType() {
-                return Type.TEXT;
-            }
-        };
-
-        messages.add(m1);
-        messages.add(m2);
-        messages.add(m3);
-        messages.add(m4);
-        messages.add(m5);
-        messages.add(m6);
-        messages.add(m7);
-
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
         messageList.setDivider(null);
@@ -103,27 +39,11 @@ public class MessageActivity extends Activity {
         adapter = new MessageAdapter(this, messages,res);
 
         messageList.setAdapter(adapter);
-
-        /*
-        ctx=this;
-        List listMessage= new ArrayList();
-        listMessage.add(new Message((long) 1,"Hola puto", true));
-        listMessage.add(new Message((long) 2,"Carenalga", true));
-        listMessage.add(new Message((long) 3,"Que paso? weon", false));
-        listMessage.add(new Message((long) 2,"La wea fome weon", true));
-        listMessage.add(new Message((long) 3,"Pongase a trabajar...", false));
-        listMessage.add(new Message((long) 3,"Mejor", false));
-        listMessage.add(new Message((long) 3,"Oe no me deje en visto", false));
-        listMessage.add(new Message((long) 3,"Puto", false));
-
-        listViewMessage = ( ListView ) findViewById( R.id.message_lst);
-        listViewMessage.setAdapter( new MessageAdapter(ctx, R.layout.message_item, listMessage));
-        */
     }
 
     private void setMessageList(){
         TextMessagesManager textMessagesManager = new TextMessagesManager(this);
-        // messages.addAll(textMessagesManager.<TextMessage>getAll());
+        messages.addAll(textMessagesManager.<TextMessage>getAll());
     }
 
     public void loadActionBar(){

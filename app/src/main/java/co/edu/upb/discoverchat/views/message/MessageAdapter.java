@@ -74,29 +74,26 @@ public class MessageAdapter extends BaseAdapter {
             TextMessage tmessage = (TextMessage) message;
             TextView tw = (TextView) view.findViewById(R.id.message_date);
             if(tmessage!=null) // TODO LUIS SI VE ESTO PREGUNTELE A ALDO POR ESTO
-            if(tmessage.getContent().equals("Prueba1")){
-                //holder.user_name.setText(message.whoIsSender(activity).getName());
-                holder.user_name.setText("Aldo Mora");
-                //holder.message_txt.setText(tmessage.getContent());
-                holder.message_txt.setText("Hola que hace");
-                //TODO
-                // holder.message_img.setImageResource(R.drawable.avatar);
-                holder.message_date.setText("17:30");
-                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
-                mainLayout.setGravity(Gravity.LEFT);
-                tw.setTextColor(Color.parseColor("#BBBBBB"));
-                ll.setBackgroundResource(R.drawable.message_received);
-            }else{
-                holder.user_name.setText("Yo");
-                holder.message_txt.setText("Guat da fuak");
-                holder.message_date.setText("17:31");
-                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
-                mainLayout.setGravity(Gravity.RIGHT);
+            {
 
-                tw.setTextColor(Color.parseColor("#92A95C"));
-                ll.setBackgroundResource(R.drawable.message_send);
+                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
+                if (message.itsMine(activity)) {
+                    mainLayout.setGravity(Gravity.RIGHT);
+                    tw.setTextColor(Color.parseColor("#BBBBBB"));
+
+                    ll.setBackgroundResource(R.drawable.message_received);
+                }else{
+                    mainLayout.setGravity(Gravity.LEFT);
+                    tw.setTextColor(Color.parseColor("#92A95C"));
+                    ll.setBackgroundResource(R.drawable.message_send);
+                }
+                holder.user_name.setText(message.whoIsSender(activity).getName());
+                if(message.getType() == Message.Type.TEXT) {
+                    holder.message_txt.setText(((TextMessage) message).getContent());
+                    holder.message_date.setText(((TextMessage) message).getDate().toString());
+                }
+                ll.setPadding(10, 5, 10, 5);
             }
-            ll.setPadding(10,5,10,5);
 
         }
         return view;

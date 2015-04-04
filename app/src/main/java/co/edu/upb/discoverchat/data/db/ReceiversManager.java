@@ -76,9 +76,8 @@ public class ReceiversManager extends DbBase {
     public Receiver whoSend(Message message) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.query(TBL_RECEIVERS,null, KEY_ID + "= ? ", new String[]{String.valueOf(message.getReceiver_id())},null,null,null,null);
-        if(c != null){
-            c.moveToFirst();
+        Cursor c = db.query(TBL_RECEIVERS,null, KEY_ID + " = ? ", new String[]{String.valueOf(message.getReceiver_id())},null,null,null,null);
+        if(c.moveToFirst()){
             return loadReceiverFromCursor(c);
         }
         return null;

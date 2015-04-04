@@ -3,6 +3,8 @@ package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
@@ -19,7 +21,16 @@ public class TextMessage extends Message {
 
     }
     public TextMessage(Cursor c){
-
+        this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
+        this.setChat_id(c.getLong(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
+        this.setReceiver_id(c.getLong(c.getColumnIndex(DbBase.KEY_RECEIVER_ID)));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            this.date = dateFormat.parse(c.getString(c.getColumnIndex(DbBase.FIELD_DATE)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.setContent(c.getString(c.getColumnIndex(DbBase.FIELD_CONTENT)));
     }
 
     public String getContent() {

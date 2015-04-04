@@ -43,11 +43,6 @@ public class TextMessagesManager extends DbBase {
     }
 
     @Override
-    public <T extends Model> List<T> getAll() {
-        return super.getAll();
-    }
-
-    @Override
     public int delete(Model model) {
         // TODO
         return 0;
@@ -55,11 +50,11 @@ public class TextMessagesManager extends DbBase {
 
     @Override
     public String getTable() {
-        return TBL_MESSAGES;
+        return TBL_MESSAGES+" JOIN "+TBL_MESSAGE_TEXT_DETAIL+" ON "+TBL_MESSAGES+"."+KEY_ID+" == " + TBL_MESSAGE_TEXT_DETAIL+"."+KEY_MESSAGE_ID;
     }
 
     @Override
     protected Class getModelClass() {
-        return Message.class;
+        return TextMessage.class;
     }
 }

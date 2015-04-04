@@ -10,13 +10,12 @@ import co.edu.upb.discoverchat.data.db.ReceiversManager;
 public abstract class Message extends Model{
     private long chat_id;
     private long receiver_id;
+    private Receiver receiver;
     public enum Type{
         TEXT,
         IMAGE
     }
     public Message() {
-    }
-    public Message(Cursor c) {
     }
     public Message(JSONObject json) {
         super(json);
@@ -44,10 +43,11 @@ public abstract class Message extends Model{
     }
 
     public boolean itsMine(Context context){
-        Receiver sender = whoIsSender(context);
-        if(sender!=null)
-            return sender.getId() < 2;
-        return true;
+        if(this.receiver==null)
+            this.receiver = whoIsSender(context);
+
+        return this.receiver == null || this.receiver.getId() < 2;
+
     }
 
 
