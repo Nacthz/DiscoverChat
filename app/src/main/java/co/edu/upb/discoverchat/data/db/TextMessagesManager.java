@@ -39,7 +39,7 @@ public class TextMessagesManager extends DbBase {
         values.put(KEY_MESSAGE_ID, textMessage.getId());
         db.insert(TBL_MESSAGE_TEXT_DETAIL, null, values);
 
-        return 0;
+        return id;
     }
 
     @Override

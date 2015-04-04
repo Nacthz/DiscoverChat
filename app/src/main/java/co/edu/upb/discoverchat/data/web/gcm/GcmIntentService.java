@@ -66,7 +66,6 @@ public class GcmIntentService extends IntentService {
                 TextMessagesManager textMessagesManager = new TextMessagesManager(this);
 
                 Receiver receiver;
-                Log.e("Handling","Incoming");
                 if(extras.getString("type").equals("text")){
                     TextMessage textMessage = new TextMessage();
                     textMessage.setContent(extras.getString("content"));
