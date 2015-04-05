@@ -31,7 +31,7 @@ public class User extends Model {
         this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
         this.setGoogle_gcm_code(c.getString(c.getColumnIndex(DbBase.FIELD_GOOGLE_CLOUD_MESSAGE)));
         this.setPhone(c.getString(c.getColumnIndex(DbBase.FIELD_PHONE)));
-        this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.FIELD_EMAIL)));
+        this.setAuthentication_token(c.getString(c.getColumnIndex(DbBase.KEY_AUTHENTICATION_TOKEN)));
         this.setEmail(c.getString(c.getColumnIndex(DbBase.FIELD_EMAIL)))  ;
     }
 

@@ -78,17 +78,18 @@ public class MessageWeb extends RestClient {
         JSONArray messages = new JSONArray();
         ArrayList<Message> pendingMessages = new ArrayList<>();
         StringEntity entity = null;
-
+        TextMessagesManager textMessagesManager = null;
         pendingMessages.add(message);
         if(message.getType() == Message.Type.TEXT){
-            TextMessagesManager textMessagesManager = new TextMessagesManager(context);
+            textMessagesManager = new TextMessagesManager(context);
             pendingMessages.addAll(textMessagesManager.getAllNotSend());
         }else{
             //Todo [images]
         }
         try {
             for(Message m: pendingMessages)
-                messages.put(m.toJson());
+                messages.put(new JSONObject().put("message",m.toJson().put("to",textMessagesManager.phoneDestination(m))));
+
             addAuthenticate(request);
             request.put("messages",messages);
             entity = new StringEntity(request.toString());

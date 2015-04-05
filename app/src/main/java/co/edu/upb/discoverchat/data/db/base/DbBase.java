@@ -20,7 +20,7 @@ import co.edu.upb.discoverchat.models.TextMessage;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 2;
+    protected static final int VERSION = 3;
     protected static final String DATABASE_NAME = "DiscoverChat";
 
     /**

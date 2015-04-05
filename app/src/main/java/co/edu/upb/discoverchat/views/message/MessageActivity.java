@@ -14,12 +14,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.web.MessageWeb;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Receiver;
@@ -39,8 +41,8 @@ public class MessageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        loadActionBar();
         loadChat();
+        loadActionBar();
         setMessageList();
 
         Resources res = getResources();
@@ -59,13 +61,22 @@ public class MessageActivity extends Activity {
         sendMessage = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = ((EditText) findViewById(R.id.message_txt_field)).toString();
+                EditText messageETxt = (EditText) findViewById(R.id.message_txt_field);
+                String content = messageETxt.getText().toString();
                 TextMessage message = new TextMessage();
                 ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
+                TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
+
                 message.setContent(content);
                 message.setChat_id(chat.getId());
                 message.setReceiver(receiversManager.get(1));
-
+                message.setDate(GregorianCalendar.getInstance().getTime());
+                textMessagesManager.add(message);
+                MessageWeb web = new MessageWeb(MessageActivity.this);
+                web.sendTextMessage(chat,message,null);
+                messages.add(message);
+                adapter.notifyDataSetChanged();
+                messageETxt.setText("");
             }
         };
     }

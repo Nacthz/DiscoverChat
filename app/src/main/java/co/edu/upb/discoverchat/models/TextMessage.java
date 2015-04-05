@@ -46,6 +46,10 @@ public class TextMessage extends Message {
     public Date getDate() {
         return date;
     }
+    public Message setDate(Date date){
+        this.date = date;
+        return this;
+    }
     @Override
     public Type getType() {
         return Type.TEXT;
@@ -55,7 +59,8 @@ public class TextMessage extends Message {
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
         json
-                .put(DbBase.FIELD_CONTENT,getContent());
+                .put(DbBase.FIELD_CONTENT,getContent())
+                .put(DbBase.FIELD_TYPE,"text");
         return json;
     }
 }

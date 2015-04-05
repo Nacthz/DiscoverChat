@@ -35,13 +35,15 @@ public class RestClient {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                responseHandler.handleResponse(response);
+                if(responseHandler != null)
+                    responseHandler.handleResponse(response);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                responseHandler.handleResponse(errorResponse);
+                if(responseHandler != null)
+                    responseHandler.handleResponse(errorResponse);
             }
         });
 
