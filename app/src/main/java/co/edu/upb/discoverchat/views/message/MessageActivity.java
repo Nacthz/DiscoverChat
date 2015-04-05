@@ -53,6 +53,8 @@ public class MessageActivity extends Activity {
 
         messageList.setAdapter(adapter);
         findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
+
+        scrollChat();
     }
 
     private View.OnClickListener sendMessage;
@@ -77,10 +79,13 @@ public class MessageActivity extends Activity {
                 messages.add(message);
                 adapter.notifyDataSetChanged();
                 messageETxt.setText("");
+                scrollChat();
             }
         };
     }
-
+    private void scrollChat(){
+        messageList.setSelection(messageList.getCount()-1);
+    }
     private void loadChat() {
         Bundle extras = getIntent().getExtras();
         chat = new ChatsManager(this).get(extras.getLong(KEY_CHAT_ID));
@@ -88,7 +93,6 @@ public class MessageActivity extends Activity {
 
     private void setMessageList(){
         TextMessagesManager textMessagesManager = new TextMessagesManager(this);
-        //messages.addAll();
         messages.addAll(textMessagesManager.getAllBy(KEY_CHAT_ID,chat.getId()));
     }
 

@@ -2,17 +2,17 @@
 classified 142 filesDuplicate file check 142 files (131 known unique)Unique:      100 files                                               136 unique files.                              
 Counting:  100      45 files ignored.
 
-http://cloc.sourceforge.net v 1.62  T=0.55 s (217.7 files/s, 9392.2 lines/s)
+http://cloc.sourceforge.net v 1.62  T=0.43 s (279.3 files/s, 12126.6 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                            35            470            275           2323
-XML                             31             93             31            700
+Java                            35            472            275           2353
+XML                             31             93             31            701
 Ruby                            41            176            437            296
 HTML                             4             15              3            183
 YAML                             5             11             48             83
 CSS                              2              0             19              0
 Javascript                       2              0             15              0
 -------------------------------------------------------------------------------
-SUM:                           120            765            828           3585
+SUM:                           120            767            828           3616
 -------------------------------------------------------------------------------
