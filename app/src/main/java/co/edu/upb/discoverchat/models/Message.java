@@ -6,11 +6,13 @@ import android.database.Cursor;
 import org.json.JSONObject;
 
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
+import co.edu.upb.discoverchat.views.message.MessageActivity;
 
 public abstract class Message extends Model{
     private long chat_id;
     private long receiver_id;
     private Receiver receiver;
+    private boolean sent = false;
     public enum Type{
         TEXT,
         IMAGE
@@ -33,6 +35,21 @@ public abstract class Message extends Model{
     }
     public Message setReceiver_id(long receiver_id) {
         this.receiver_id = receiver_id; return  this;
+    }
+    public Receiver getReceiver() {
+        return receiver;
+    }
+    public Message setReceiver(Receiver receiver) {
+        this.receiver = receiver;
+        this.receiver_id = receiver.getId();
+        return this;
+    }
+    public boolean isSent() {
+        return sent;
+    }
+    public Message setSent(boolean sent) {
+        this.sent = sent;
+        return this;
     }
 
     public Receiver whoIsSender(Context context){

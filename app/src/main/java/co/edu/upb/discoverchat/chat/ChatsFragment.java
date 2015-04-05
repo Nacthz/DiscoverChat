@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
@@ -69,7 +70,7 @@ public class ChatsFragment extends Fragment {
     }
     public void onItemClick(long mPosition) {
         Intent intent = new Intent(this.getActivity(), MessageActivity.class);
-        intent.putExtra("CHAT_ID", mPosition);
+        intent.putExtra(DbBase.KEY_CHAT_ID, mPosition);
         startActivity(intent);
     }
 }

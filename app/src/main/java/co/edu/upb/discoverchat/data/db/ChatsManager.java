@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.db.base.DbInterface;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Model;
 import co.edu.upb.discoverchat.models.Receiver;
@@ -77,6 +75,7 @@ public class ChatsManager extends DbBase {
             long id = c.getLong(0);
             return get(id);
         }
+        c.close();
         db.close();
         return newForReceiver(param);
     }

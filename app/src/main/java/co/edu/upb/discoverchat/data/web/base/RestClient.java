@@ -3,7 +3,9 @@ import android.content.Context;
 
 import com.loopj.android.http.*;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.json.JSONObject;
 
 /**
  * Created by hatsumora on 1/04/15.
@@ -28,8 +30,21 @@ public class RestClient {
     public static void get(String url, RequestParams params, ResponseHandlerInterface responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
-    public static void post(Context context, String url, HttpEntity entity,ResponseHandlerInterface responseHandler){
-        client.post(null,getAbsoluteUrl(url),entity, APPLICATION_JSON, responseHandler);
+    public static void post(Context context, String url, HttpEntity entity, final HandlerJsonRequest responseHandler){
+        client.post(null,getAbsoluteUrl(url),entity, APPLICATION_JSON, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                responseHandler.handleResponse(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                responseHandler.handleResponse(errorResponse);
+            }
+        });
+
 
     }
 //    public static void post(Context)

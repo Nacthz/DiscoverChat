@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.models.Model;
+import co.edu.upb.discoverchat.models.TextMessage;
 
 /**
  * Created by hatsumora on 30/03/15.
@@ -19,7 +20,7 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 1;
+    protected static final int VERSION = 2;
     protected static final String DATABASE_NAME = "DiscoverChat";
 
     /**
@@ -49,6 +50,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public static final String FIELD_GOOGLE_CLOUD_MESSAGE = "google_cloud_message";
     public static final String KEY_AUTHENTICATION_TOKEN= "authentication_token";
     public static final String FIELD_TYPE = "type";
+    public static final String FIELD_SENT = "sent";
     public static final String FIELD_CONTENT = "content";
     public static final String FIELD_DATE = "date_of";
 
@@ -79,7 +81,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                 "CREATE TABLE "+TBL_CHATS_RECEIVERS+"(" +
                     KEY_CHAT_ID + " INTEGER," +
                     KEY_RECEIVER_ID + " INTEGER," +
-                    "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
+                    "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+"),"+
                     "FOREIGN KEY("+KEY_RECEIVER_ID+") REFERENCES " +TBL_RECEIVERS+"("+KEY_ID+")"+
                 ")";
         String createUser =
@@ -96,13 +98,14 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                     KEY_CHAT_ID+" INTEGER, " +
                     KEY_RECEIVER_ID + " INTEGER, " +
                     FIELD_TYPE + " INTEGER, " +
+                    FIELD_SENT + " INTEGER DEFAULT 0, " +
                     FIELD_DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+"), "+
                     "FOREIGN KEY("+KEY_RECEIVER_ID+") REFERENCES " +TBL_RECEIVERS+"("+KEY_ID+")"+
                 ")";
         String createTextMessages =
                 "CREATE TABLE " + TBL_MESSAGE_TEXT_DETAIL +"(" +
-                    KEY_ID+" INTEGER PRIMARY KEY, " +
+                    //KEY_ID+" INTEGER PRIMARY KEY, " +
                     KEY_MESSAGE_ID + " INTEGER, " +
                     FIELD_CONTENT + " TEXT, " +
                     "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+")"+
@@ -151,25 +154,41 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         db.close();
         return models;
     }
-
     public <T extends Model> List<T> getAll(){
         return getAll(getModelClass());
     }
 
-    protected <T extends Model> T findByField(String field, Object object, Class<T> _class){
-        SQLiteDatabase db = this.getReadableDatabase();
+    protected <T extends Model> List<T> getAllBy(String field,Object query, Class<T> _class){
+        List<T> models = new ArrayList<>();
+        SQLiteDatabase db =  this.getReadableDatabase();
 
-        Cursor c = db.query(getTable(),null, field + "= ? ", new String[]{String.valueOf(object)},null,null,null,null);
-        if(c != null){
-            c.moveToFirst();
-
-            return (T)newInstanceFromCursor(_class,c);
-        }
+        Cursor c = db.query(getTable(),null,field +" = ?", new String[]{query.toString()},null,null,null);
+        if(c.moveToFirst())
+            do
+                models.add((T)newInstanceFromCursor(_class,c));
+            while (c.moveToNext());
         db.close();
-        return null;
+        return models;
+    }
+    public <T extends Model> List<T> getAllBy(String field,Object query){
+        return getAllBy(field,query,getModelClass());
+    }
+
+
+    protected <T extends Model> T findByField(String field, Object object, Class<T> _class){
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    Cursor c = db.query(getTable(),null, field + "= ? ", new String[]{String.valueOf(object)},null,null,null,null);
+    if(c != null){
+        c.moveToFirst();
+
+        return (T)newInstanceFromCursor(_class,c);
+    }
+    db.close();
+    return null;
 
     }
-    public <T extends Model> T findByField(String field, Object object){
+    public <T extends Model> T findBy(String field, Object object){
         return (T)findByField(field, object, getModelClass());
     }
     protected <T extends Model> T get(long id, Class<? extends Model> _class) {

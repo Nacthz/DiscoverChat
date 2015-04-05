@@ -35,24 +35,13 @@ public class UserWeb extends RestClient{
 
             userEnv.put("user",userData);
             entity = new StringEntity(userEnv.toString());
-        }catch (Exception e){}
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-        post(context, getRegistrationPath(), entity, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                hanlder.handleResponse(response);
-                }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                hanlder.handleError(responseString);
-            }
-        });
-
+        post(context, getRegistrationPath(), entity, hanlder);
     }
 
     public void setContext(Context context) {

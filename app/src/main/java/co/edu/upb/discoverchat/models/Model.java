@@ -36,6 +36,10 @@ public abstract class Model {
     }
 
     protected abstract void parseJsonObject(JSONObject json);
+    public JSONObject toJson() throws JSONException{
+        throw new NotImplementedMethod();
+    }
+
 
     @SuppressWarnings("UnusedParameters")
     public Model(Cursor c){

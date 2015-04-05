@@ -40,16 +40,21 @@ public class ReceiversManager extends DbBase {
         return id;
     }
 
+    @Override
+    public Receiver get(long id) {
+        return (Receiver)super.get(id);
+    }
+
     /*
-    * query(
-    *    java.lang.String table,
-         java.lang.String[] columns,
-         java.lang.String selection,
-         java.lang.String[] selectionArgs,
-         java.lang.String groupBy,
-         java.lang.String having,
-         java.lang.String orderBy
-         */
+        * query(
+        *    java.lang.String table,
+             java.lang.String[] columns,
+             java.lang.String selection,
+             java.lang.String[] selectionArgs,
+             java.lang.String groupBy,
+             java.lang.String having,
+             java.lang.String orderBy
+             */
     public List<Receiver> getAllForChat(Chat chat){
         List<Receiver> receiverList = new ArrayList<>();
         SQLiteDatabase db =  this.getReadableDatabase();

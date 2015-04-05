@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
@@ -31,7 +32,7 @@ public class TextMessagesManager extends DbBase {
         values.put(KEY_CHAT_ID,textMessage.getChat_id());
         values.put(KEY_RECEIVER_ID,textMessage.getReceiver_id());
         values.put(FIELD_TYPE,textMessage.getType().toString());
-
+        values.put(FIELD_SENT,textMessage.isSent());
         long id = db.insert(TBL_MESSAGES,null,values);
         values = new ContentValues();
         textMessage.setId(id);
@@ -39,7 +40,13 @@ public class TextMessagesManager extends DbBase {
         values.put(KEY_MESSAGE_ID, textMessage.getId());
         db.insert(TBL_MESSAGE_TEXT_DETAIL, null, values);
 
+
         return id;
+    }
+
+    @Override
+    public List<TextMessage> getAllBy(String field, Object query) {
+        return super.getAllBy(field, query);
     }
 
     @Override
@@ -56,5 +63,9 @@ public class TextMessagesManager extends DbBase {
     @Override
     protected Class getModelClass() {
         return TextMessage.class;
+    }
+
+    public Collection<? extends Message> getAllNotSend() {
+        return getAllBy(FIELD_SENT,false);
     }
 }

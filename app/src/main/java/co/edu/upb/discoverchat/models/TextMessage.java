@@ -3,6 +3,9 @@ package co.edu.upb.discoverchat.models;
 
 import android.database.Cursor;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +18,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
  */
 public class TextMessage extends Message {
 
+    private static final String FIELD_TO = "to";
     private String content;
     protected Date date;
     public TextMessage(){
@@ -36,17 +40,22 @@ public class TextMessage extends Message {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
-
     public Date getDate() {
         return date;
     }
-
     @Override
     public Type getType() {
         return Type.TEXT;
+    }
+
+    @Override
+    public JSONObject toJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json
+                .put(DbBase.FIELD_CONTENT,getContent());
+        return json;
     }
 }

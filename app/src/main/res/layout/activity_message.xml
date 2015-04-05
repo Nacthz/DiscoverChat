@@ -30,7 +30,7 @@ android:layout_height="fill_parent">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:id="@+id/message"
+            android:id="@+id/message_txt_field"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/border_for_icons"
@@ -40,7 +40,7 @@ android:layout_height="fill_parent">
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="fill_parent"
-            android:id="@+id/imageButton"
+            android:id="@+id/message_send_btn"
             android:src="@drawable/ic_action_send_now" />
 
     </LinearLayout>

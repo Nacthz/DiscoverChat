@@ -8,28 +8,39 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
+import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
+import co.edu.upb.discoverchat.models.Receiver;
 import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
+
+import static co.edu.upb.discoverchat.data.db.base.DbBase.KEY_CHAT_ID;
 
 public class MessageActivity extends Activity {
 
     ListView messageList;
     MessageAdapter adapter;
     public ArrayList<Message> messages = new ArrayList<>();
+    private Chat chat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
         loadActionBar();
+        loadChat();
         setMessageList();
 
         Resources res = getResources();
@@ -39,11 +50,35 @@ public class MessageActivity extends Activity {
         adapter = new MessageAdapter(this, messages,res);
 
         messageList.setAdapter(adapter);
+        findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
+    }
+
+    private View.OnClickListener sendMessage;
+
+    {
+        sendMessage = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = ((EditText) findViewById(R.id.message_txt_field)).toString();
+                TextMessage message = new TextMessage();
+                ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
+                message.setContent(content);
+                message.setChat_id(chat.getId());
+                message.setReceiver(receiversManager.get(1));
+
+            }
+        };
+    }
+
+    private void loadChat() {
+        Bundle extras = getIntent().getExtras();
+        chat = new ChatsManager(this).get(extras.getLong(KEY_CHAT_ID));
     }
 
     private void setMessageList(){
         TextMessagesManager textMessagesManager = new TextMessagesManager(this);
-        messages.addAll(textMessagesManager.<TextMessage>getAll());
+        //messages.addAll();
+        messages.addAll(textMessagesManager.getAllBy(KEY_CHAT_ID,chat.getId()));
     }
 
     public void loadActionBar(){
@@ -57,9 +92,8 @@ public class MessageActivity extends Activity {
         actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-        Bundle extras = getIntent().getExtras();
         final TextView user_name = (TextView) findViewById(R.id.chat_txt_user_name);
-        user_name.setText("Name_chat_id_: " + extras.getLong("CHAT_ID"));
+        user_name.setText(chat.getName());
     }
 
     @Override
