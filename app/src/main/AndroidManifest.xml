@@ -35,7 +35,8 @@
         </activity>
         <activity
             android:name=".views.user.SignUpActivity"
-            android:label="@string/title_activity_sign_up" >
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/CustomActionBarTheme" >
         </activity>
         <activity
             android:name=".views.user.SignInActivity"
