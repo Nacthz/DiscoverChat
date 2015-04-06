@@ -12,16 +12,14 @@ android:layout_height="fill_parent">
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text=""
-            android:id="@+id/line"
-            android:background="#EBEBEB"/>
+            android:background="#A4A4A4"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="73px"
         android:layout_marginTop="1px">
 
         <ListView
@@ -29,34 +27,49 @@ android:layout_height="fill_parent">
             android:layout_height="match_parent"
             android:id="@+id/message_lst"
             android:background="#EEEEEE"
-            android:transcriptMode="alwaysScroll" />
+            android:transcriptMode="alwaysScroll"
+            android:paddingBottom="3dp" />
 
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="72px"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#A4A4A4"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#b9d4d2e0">
+        android:background="#FFFFFF"
+        android:minHeight="72px">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/message_txt_field"
             android:layout_gravity="center_vertical"
+            android:hint="Escribe un mensaje"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/border_for_icons"
-            android:layout_marginBottom="2dp"
-            android:paddingTop="2dp"  />
+            android:textColor="#ff000000"
+            android:background="@null"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/message_send_btn"
-            android:src="@drawable/ic_action_send_now" />
-
+            android:src="@drawable/ic_action_send_now"
+            android:layout_width="wrap_content" />
     </LinearLayout>
 
 </RelativeLayout>
