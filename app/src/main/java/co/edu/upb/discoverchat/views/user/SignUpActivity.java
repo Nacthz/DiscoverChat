@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -78,9 +79,12 @@ public class SignUpActivity extends Activity {
         if (null != actionBar) {
             actionBar.setCustomView(R.layout.actionbar_message);
         }
+
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         final TextView actionbar_title = (TextView) findViewById(R.id.chat_txt_user_name);
         actionbar_title.setText("Nueva cuenta");
     }

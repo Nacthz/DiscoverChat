@@ -12,15 +12,4 @@
         android:id="@+id/chat_txt_user_name"
         android:textSize="20dp"
         android:textColor="#212121" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/menu_options"
-            android:src="@drawable/ic_action_new_picture"
-            android:layout_gravity="right" />
-    </FrameLayout>
 </LinearLayout>

@@ -7,8 +7,22 @@ android:layout_height="fill_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
+        android:layout_height="1px">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text=""
+            android:id="@+id/line"
+            android:background="#EBEBEB"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="55dp">
+        android:layout_marginBottom="55dp"
+        android:layout_marginTop="1px">
 
         <ListView
             android:layout_width="fill_parent"
@@ -26,8 +40,7 @@ android:layout_height="fill_parent">
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#b9d4d2e0"
-        android:layout_marginTop="2dp">
+        android:background="#b9d4d2e0">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
