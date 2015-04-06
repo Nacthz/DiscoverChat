@@ -2,10 +2,14 @@ package co.edu.upb.discoverchat.views.message;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Messenger;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +26,9 @@ import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
+import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
-import co.edu.upb.discoverchat.models.Receiver;
 import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 
@@ -36,6 +40,8 @@ public class MessageActivity extends Activity {
     MessageAdapter adapter;
     public ArrayList<Message> messages = new ArrayList<>();
     private Chat chat;
+    public static final String MESSENGER = "messenger";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,7 @@ public class MessageActivity extends Activity {
         loadChat();
         loadActionBar();
         setMessageList();
+        setForReceiveUpdates();
 
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
@@ -55,6 +62,35 @@ public class MessageActivity extends Activity {
         findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
 
         scrollChat();
+    }
+
+    private void setForReceiveUpdates() {
+        Intent intent = new Intent(this, GcmIntentService.class);
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(android.os.Message msg) {
+                super.handleMessage(msg);
+                Bundle bundle = msg.getData();
+                Log.d("##############",bundle.toString());
+                if(bundle.containsKey(DbBase.KEY_MESSAGE_ID)){
+                    long id = bundle.getLong(DbBase.KEY_MESSAGE_ID);
+                    if(id>0) {
+                        TextMessage textMessage = new TextMessagesManager(MessageActivity.this).get(id);
+                        if(textMessage.getChat_id()==chat.getId()){
+                            addNewMessage(textMessage);
+                        }
+                    }
+                }
+            }
+        };
+        intent.putExtra(MESSENGER, new Messenger(handler));
+        Log.d("##############", "This will handle running services".toString());
+        startService(intent);
+    }
+
+    private void addNewMessage(TextMessage textMessage) {
+        messages.add(textMessage);
+        adapter.notifyDataSetChanged();
     }
 
     private View.OnClickListener sendMessage;

@@ -38,7 +38,7 @@ public class MessageWeb extends RestClient {
         this.context = context;
     }
 
-    public void receiveMessage(Bundle extras){
+    public long receiveMessage(Bundle extras){
         chatsManager = new ChatsManager(context);
         receiversManager = new ReceiversManager(context);
         TextMessagesManager textMessagesManager = new TextMessagesManager(context);
@@ -63,8 +63,10 @@ public class MessageWeb extends RestClient {
 
                 textMessage.setChat_id(chat.getId());
                 textMessagesManager.add(textMessage);
+                return textMessage.getId();
             }
         }
+        return -1;
     }
     /*Example of expected json request to /messages/ship
     {
