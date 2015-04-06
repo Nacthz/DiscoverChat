@@ -27,8 +27,6 @@ public class GcmIntentService extends IntentService {
 
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    public static final String BROADCAST_ACTION = "co.edu.upb.discoverchat.updatemessagegui";
-    NotificationCompat.Builder builder;
     private String TAG = "GcmIntent";
     public GcmIntentService() {
         super("GcmIntentService");
@@ -83,6 +81,7 @@ public class GcmIntentService extends IntentService {
                     e.printStackTrace();
                 }
             }
+        Object o = extras.get(MessageActivity.MESSENGER);
         return true;
     }
 

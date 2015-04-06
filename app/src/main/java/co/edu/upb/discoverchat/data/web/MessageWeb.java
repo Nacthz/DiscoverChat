@@ -54,9 +54,7 @@ public class MessageWeb extends RestClient {
             }else{
                 receiver = receiversManager.findBy(ReceiversManager.FIELD_PHONE, extras.get("receiver"));
                 if(receiver==null){
-
                     receiver = receiverFromBundle(extras);
-
                 }
                 textMessage.setReceiver_id(receiver.getId());
                 Chat chat = chatsManager.getOneChatFor(receiver);

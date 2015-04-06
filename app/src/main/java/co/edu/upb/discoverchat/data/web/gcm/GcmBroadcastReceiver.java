@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+import co.edu.upb.discoverchat.views.message.MessageActivity;
+
 /**
  * Created by hatsumora on 3/04/15.
  */

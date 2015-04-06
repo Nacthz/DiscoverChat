@@ -26,6 +26,7 @@ import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
+import co.edu.upb.discoverchat.data.web.gcm.GcmBroadcastReceiver;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
@@ -84,7 +85,6 @@ public class MessageActivity extends Activity {
             }
         };
         intent.putExtra(MESSENGER, new Messenger(handler));
-        Log.d("##############", "This will handle running services".toString());
         startService(intent);
     }
 
