@@ -1,7 +1,12 @@
 package co.edu.upb.discoverchat.views.user;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -23,9 +29,10 @@ import co.edu.upb.discoverchat.data.web.gcm.GoogleCloudMessage;
 import co.edu.upb.discoverchat.data.web.UserWeb;
 import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.models.User;
+import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 
 
-public class SignUpActivity extends ActionBarActivity {
+public class SignUpActivity extends Activity {
 
     ProgressDialog serverStatus;
     boolean errors = false;
@@ -33,6 +40,9 @@ public class SignUpActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        loadActionBar();
+
         final EditText _email = (EditText)findViewById(R.id.etxtRegisterEmail);
         final EditText _phone = (EditText)findViewById(R.id.etxtRegisterPhone);
         final EditText _passwd = (EditText)findViewById(R.id.etxtRegisterPasswd);
@@ -63,6 +73,22 @@ public class SignUpActivity extends ActionBarActivity {
             }
         });
     }
+
+    public void loadActionBar(){
+        final ActionBar actionBar = getActionBar();
+        if (null != actionBar) {
+            actionBar.setCustomView(R.layout.actionbar_message);
+        }
+
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setIcon(
+                new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        final TextView actionbar_title = (TextView) findViewById(R.id.chat_txt_user_name);
+        actionbar_title.setText("Nueva cuenta");
+    }
+
     public void registerUser(String email, String phone, String passwd, String confirmPasswd){
         UserWeb web = new UserWeb();
         GoogleCloudMessage gcm = GoogleCloudMessage.getInstance(this);

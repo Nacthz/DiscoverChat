@@ -20,7 +20,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_sign_in">SignInActivity</string>
-    <string name="register_do_btn">Enviar</string>
+    <string name="register_do_btn">Registrarse</string>
     <string name="hint_email">Email</string>
     <string name="hint_phone">Telefono</string>
     <string name="hint_password">Contraseña</string>
