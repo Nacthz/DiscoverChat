@@ -2,13 +2,17 @@ package co.edu.upb.discoverchat.views.message;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +30,6 @@ import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
-import co.edu.upb.discoverchat.data.web.gcm.GcmBroadcastReceiver;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
@@ -51,7 +54,9 @@ public class MessageActivity extends Activity {
         loadChat();
         loadActionBar();
         setMessageList();
-        setForReceiveUpdates();
+        //setForReceiveUpdates();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("msg"));
 
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
@@ -64,6 +69,15 @@ public class MessageActivity extends Activity {
 
         scrollChat();
     }
+
+    private BroadcastReceiver onNotice= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            TextMessage tsm = new TextMessage();
+            tsm.setContent("Holisss");
+            addNewMessage(tsm);
+        }
+    };
 
     private void setForReceiveUpdates() {
         Intent intent = new Intent(this, GcmIntentService.class);
