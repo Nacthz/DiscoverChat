@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import co.edu.upb.discoverchat.R;
-import co.edu.upb.discoverchat.chat.ChatsFragment;
+import co.edu.upb.discoverchat.views.chat.ChatsFragment;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 

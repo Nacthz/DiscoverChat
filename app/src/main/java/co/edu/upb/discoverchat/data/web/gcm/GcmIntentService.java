@@ -27,10 +27,29 @@ public class GcmIntentService extends IntentService {
 
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
+    private static Messenger mMessenger;
     private String TAG = "GcmIntent";
     public GcmIntentService() {
         super("GcmIntentService");
     }
+
+    public static void setmMessenger(Messenger _mMessenger) {
+        mMessenger = _mMessenger;
+        Log.e("Service: ", "Binded a new Messenger"+_mMessenger.toString());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("Service: ", "Stoped");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.e("Service: ", "Running");
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
@@ -55,7 +74,8 @@ public class GcmIntentService extends IntentService {
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // This loop represents the service doing some work.
+                // This loop represents the service doing some work
+                // En los extras: {receiver: 3142946469, content: "Un mensaje bien chingon", type: text}.
                 MessageWeb web = new MessageWeb(this);
                 long id = web.receiveMessage(extras);
                 // Post notification of received message.
@@ -70,18 +90,20 @@ public class GcmIntentService extends IntentService {
     }
 
     private boolean updateGUI(Bundle extras) {
-        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0)
-            if(extras.containsKey(MessageActivity.MESSENGER)){
-                Messenger messenger = (Messenger)extras.get(MessageActivity.MESSENGER);
+        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0) {
+            if(mMessenger!=null){
+                Messenger messenger = mMessenger;
                 Message message = Message.obtain();
                 message.setData(extras);
                 try {
                     messenger.send(message);
+                    return false;
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
-        Object o = extras.get(MessageActivity.MESSENGER);
+            Object o = extras.get(MessageActivity.MESSENGER);
+        }
         return true;
     }
 

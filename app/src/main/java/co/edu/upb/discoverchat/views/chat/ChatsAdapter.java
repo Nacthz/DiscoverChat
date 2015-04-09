@@ -1,4 +1,4 @@
-package co.edu.upb.discoverchat.chat;
+package co.edu.upb.discoverchat.views.chat;
 
 import android.app.Activity;
 import android.app.Fragment;

@@ -1,5 +1,6 @@
 package co.edu.upb.discoverchat.data.web.base;
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.*;
 
@@ -12,9 +13,9 @@ import org.json.JSONObject;
  * Base for all rest clients
  */
 public class RestClient {
-    private static final String protocol = "http://";
-    private static final String urlBase = "drake.ngrok.com";
-    private static final String portNumber = ":80/";
+    private static final String protocol = "https://";
+    private static final String urlBase = "10.154.12.17";
+    private static final String portNumber = ":443/";
     private static final String APPLICATION_JSON = "application/json";
     private static final String registrationPath = "users.json";
     private static String shipMessagePath = "messages/ship.json";
@@ -42,8 +43,10 @@ public class RestClient {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.e("ERROR JSON:",throwable.getMessage());
+                throwable.getCause().printStackTrace();
                 if(responseHandler != null)
-                    responseHandler.handleResponse(errorResponse);
+                    responseHandler.handleError(errorResponse.toString());
             }
         });
 

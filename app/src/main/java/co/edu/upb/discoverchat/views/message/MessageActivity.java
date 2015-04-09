@@ -46,6 +46,8 @@ public class MessageActivity extends Activity {
     private Chat chat;
     public static final String MESSENGER = "messenger";
 
+    private  Messenger mMessenger;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,6 @@ public class MessageActivity extends Activity {
         loadChat();
         loadActionBar();
         setMessageList();
-        //setForReceiveUpdates();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("msg"));
 
@@ -80,13 +81,11 @@ public class MessageActivity extends Activity {
     };
 
     private void setForReceiveUpdates() {
-        Intent intent = new Intent(this, GcmIntentService.class);
         Handler handler = new Handler(){
             @Override
             public void handleMessage(android.os.Message msg) {
                 super.handleMessage(msg);
                 Bundle bundle = msg.getData();
-                Log.d("##############",bundle.toString());
                 if(bundle.containsKey(DbBase.KEY_MESSAGE_ID)){
                     long id = bundle.getLong(DbBase.KEY_MESSAGE_ID);
                     if(id>0) {
@@ -98,8 +97,8 @@ public class MessageActivity extends Activity {
                 }
             }
         };
-        intent.putExtra(MESSENGER, new Messenger(handler));
-        startService(intent);
+        GcmIntentService.setmMessenger(new Messenger(handler));
+
     }
 
     private void addNewMessage(TextMessage textMessage) {
@@ -115,21 +114,23 @@ public class MessageActivity extends Activity {
             public void onClick(View v) {
                 EditText messageETxt = (EditText) findViewById(R.id.message_txt_field);
                 String content = messageETxt.getText().toString();
-                TextMessage message = new TextMessage();
-                ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
-                TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
+                if(!content.equals("")) {
+                    TextMessage message = new TextMessage();
+                    ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
+                    TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
 
-                message.setContent(content);
-                message.setChat_id(chat.getId());
-                message.setReceiver(receiversManager.get(1));
-                message.setDate(GregorianCalendar.getInstance().getTime());
-                textMessagesManager.add(message);
-                MessageWeb web = new MessageWeb(MessageActivity.this);
-                web.sendTextMessage(chat,message,null);
-                messages.add(message);
-                adapter.notifyDataSetChanged();
-                messageETxt.setText("");
-                scrollChat();
+                    message.setContent(content);
+                    message.setChat_id(chat.getId());
+                    message.setReceiver(receiversManager.get(1));
+                    message.setDate(GregorianCalendar.getInstance().getTime());
+                    textMessagesManager.add(message);
+                    MessageWeb web = new MessageWeb(MessageActivity.this);
+                    web.sendTextMessage(chat, message, null);
+                    messages.add(message);
+                    adapter.notifyDataSetChanged();
+                    messageETxt.setText("");
+                    scrollChat();
+                }
             }
         };
     }
@@ -177,5 +178,17 @@ public class MessageActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GcmIntentService.setmMessenger(null);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setForReceiveUpdates();
     }
 }
