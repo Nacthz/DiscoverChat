@@ -129,7 +129,7 @@ public class MessageActivity extends Activity {
                 }
             }
         };
-        GcmIntentService.setmMessenger(new Messenger(handler));
+        GcmIntentService.bindMessenger(new Messenger(handler));
 
     }
 
@@ -213,8 +213,8 @@ public class MessageActivity extends Activity {
 
     @Override
     protected void onStop() {
+        GcmIntentService.unbindMessenger();
         super.onStop();
-        GcmIntentService.setmMessenger(null);
     }
 
     @Override

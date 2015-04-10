@@ -33,9 +33,12 @@ public class GcmIntentService extends IntentService {
         super("GcmIntentService");
     }
 
-    public static void setmMessenger(Messenger _mMessenger) {
+    public static void bindMessenger(Messenger _mMessenger) {
         mMessenger = _mMessenger;
-        Log.e("Service: ", "Binded a new Messenger"+_mMessenger.toString());
+    }
+
+    public static void unbindMessenger() {
+        mMessenger = null;
     }
 
     @Override
