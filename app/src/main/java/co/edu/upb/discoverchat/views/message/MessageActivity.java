@@ -2,18 +2,16 @@ package co.edu.upb.discoverchat.views.message;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,8 +43,9 @@ public class MessageActivity extends Activity {
     public ArrayList<Message> messages = new ArrayList<>();
     private Chat chat;
     public static final String MESSENGER = "messenger";
-
+    EditText txtSend;
     private  Messenger mMessenger;
+    static final int REQUEST_IMAGE_GET = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +55,6 @@ public class MessageActivity extends Activity {
         loadChat();
         loadActionBar();
         setMessageList();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("msg"));
 
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
@@ -69,16 +66,59 @@ public class MessageActivity extends Activity {
         findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
 
         scrollChat();
+        setFocusChanges();
     }
 
-    private BroadcastReceiver onNotice= new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            TextMessage tsm = new TextMessage();
-            tsm.setContent("Holisss");
-            addNewMessage(tsm);
+    public void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_IMAGE_GET);
         }
-    };
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+
+                //TODO u get a url, wtf do?
+        }
+    }
+
+    public String getPath(Uri uri) {
+        // just some safety built in
+        if( uri == null ) {
+            return null;
+        }
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here
+        return uri.getPath();
+    }
+
+    private void setFocusChanges(){
+        txtSend = (EditText) findViewById(R.id.message_txt_field);
+        txtSend.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    txtSend.setVisibility(View.VISIBLE);
+                }else{
+                    txtSend.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
 
     private void setForReceiveUpdates() {
         Handler handler = new Handler(){
@@ -154,7 +194,6 @@ public class MessageActivity extends Activity {
         }
         actionBar.setDisplayHomeAsUpEnabled(true);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-
         actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);

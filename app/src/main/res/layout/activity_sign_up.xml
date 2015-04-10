@@ -15,115 +15,124 @@
             android:background="#A4A4A4"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="1px"
-        android:background="#EEEEEE"
-        android:gravity="center">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2px"
+        android:layout_centerInParent="true">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/message_received"
-            android:layout_marginBottom="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp">
 
-            <EditText
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="39dp"
-                android:id="@+id/etxtRegisterEmail"
-                android:layout_centerHorizontal="true"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress|textUri"
-                android:background="@null"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/message_received"
+                android:layout_marginBottom="20dp">
 
-            <TextView
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/etxtRegisterEmail"
+                    android:layout_centerHorizontal="true"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress|textUri"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="#A4A4A4"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/etxtRegisterPhone"
+                    android:layout_below="@+id/etxtRegisterEmail"
+                    android:layout_centerHorizontal="true"
+                    android:hint="@string/hint_phone"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="#A4A4A4"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/etxtRegisterPasswd"
+                    android:layout_below="@+id/etxtRegisterPhone"
+                    android:layout_centerHorizontal="true"
+                    android:hint="@string/hint_password"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="#A4A4A4"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/etxtRegisterConfirmPasswd"
+                    android:layout_below="@+id/etxtRegisterPasswd"
+                    android:layout_centerHorizontal="true"
+                    android:hint="@string/hint_confirm_password"
+                    android:background="@null"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+
+                <requestFocus
+                    android:layout_alignTop="@+id/btnRegisterSend"
+                    android:layout_centerHorizontal="true" />
+
+                <requestFocus />
+
+            </LinearLayout>
+
+            <Button
                 android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#A4A4A4"/>
+                android:layout_height="wrap_content"
+                android:text="@string/register_do_btn"
+                android:id="@+id/btnRegisterSend"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/sign_up_button"
+                android:textColor="#ffffffff" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="39dp"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/etxtRegisterPhone"
-                android:layout_below="@+id/etxtRegisterEmail"
-                android:layout_centerHorizontal="true"
-                android:hint="@string/hint_phone"
-                android:background="@null"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#A4A4A4"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="39dp"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/etxtRegisterPasswd"
-                android:layout_below="@+id/etxtRegisterPhone"
-                android:layout_centerHorizontal="true"
-                android:hint="@string/hint_password"
-                android:background="@null"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#A4A4A4"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="39dp"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/etxtRegisterConfirmPasswd"
-                android:layout_below="@+id/etxtRegisterPasswd"
-                android:layout_centerHorizontal="true"
-                android:hint="@string/hint_confirm_password"
-                android:background="@null"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
-
-            <requestFocus
-                android:layout_alignTop="@+id/btnRegisterSend"
-                android:layout_centerHorizontal="true" />
-
-            <requestFocus />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test"
+                android:id="@+id/button2" />
 
         </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_do_btn"
-            android:id="@+id/btnRegisterSend"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/sign_up_button"
-            android:textColor="#ffffffff" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test"
-            android:id="@+id/button2" />
-
-    </LinearLayout>
 </RelativeLayout>

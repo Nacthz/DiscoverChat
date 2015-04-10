@@ -19,7 +19,7 @@ android:layout_height="fill_parent">
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="54dp"
         android:layout_marginTop="1px">
 
         <ListView
@@ -34,25 +34,22 @@ android:layout_height="fill_parent">
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:layout_marginBottom="72px"
-        android:layout_alignParentBottom="true">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="#A4A4A4"/>
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
-        android:minHeight="72px">
+        android:measureWithLargestChild="false"
+        android:minHeight="54dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:layout_height="wrap_content"
+            android:id="@+id/message_send_upload_img"
+            android:src="@drawable/ic_action_camera"
+            android:layout_width="wrap_content"
+            android:background="@null"/>
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -69,7 +66,9 @@ android:layout_height="fill_parent">
             android:layout_height="wrap_content"
             android:id="@+id/message_send_btn"
             android:src="@drawable/ic_action_send_now"
-            android:layout_width="wrap_content" />
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:visibility="visible" />
     </LinearLayout>
 
 </RelativeLayout>
