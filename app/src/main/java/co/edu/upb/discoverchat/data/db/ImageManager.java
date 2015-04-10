@@ -3,6 +3,7 @@ package co.edu.upb.discoverchat.data.db;
 import android.content.Context;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.models.Image;
 import co.edu.upb.discoverchat.models.Model;
 
 /**
@@ -21,11 +22,13 @@ public class ImageManager extends DbBase {
 
     @Override
     protected Class getModelClass() {
-        return null;
+        return Image.class;
     }
 
     @Override
     public long add(Model model) {
+        Image imagen = (Image)model;
+        
         return 0;
     }
 

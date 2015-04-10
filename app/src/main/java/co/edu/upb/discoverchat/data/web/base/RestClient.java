@@ -1,6 +1,5 @@
 package co.edu.upb.discoverchat.data.web.base;
 import android.content.Context;
-import android.util.Log;
 
 import com.loopj.android.http.*;
 
@@ -15,7 +14,7 @@ import org.json.JSONObject;
 public class RestClient {
     private static final String protocol = "http://";
     private static final String urlBase = "drake.ngrok.com";
-    private static final String portNumber = ":80/";
+    private static final String mods = ":80/api/";
     private static final String APPLICATION_JSON = "application/json";
     private static final String registrationPath = "users.json";
     private static String shipMessagePath = "messages/ship.json";
@@ -53,6 +52,6 @@ public class RestClient {
     }
 //    public static void post(Context)
     private static String getAbsoluteUrl(String relativeUrl) {
-        return protocol+urlBase+portNumber+relativeUrl;
+        return protocol+urlBase+ mods +relativeUrl;
     }
 }
