@@ -36,6 +36,7 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:background">#FFFFFF</item>
     </style>
 
