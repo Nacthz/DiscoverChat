@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 
@@ -91,13 +92,12 @@ public class MessageAdapter extends BaseAdapter {
 
                 if(message.getType() == Message.Type.TEXT){
                     TextMessage tmessage = (TextMessage) message;
-                    holder.message_txt.setText(((TextMessage) message).getContent());
-                    holder.message_date.setText(((TextMessage) message).getDate().toString());
+                    holder.message_txt.setText(tmessage.getContent());
+                    holder.message_date.setText(tmessage.getDate().toString());
                 }else{
-                    //ImageMessage imessage = (ImageMessage) message;
-                    //TODO AGREGAR IMAGEN EN CHAT
-                    //holder.message_img.setImageBitmap();
-                    holder.message_date.setText(((TextMessage) message).getDate().toString());
+                    ImageMessage imessage = (ImageMessage) message;
+                    holder.message_img.setImageBitmap(imessage.getBitmap());
+                    holder.message_date.setText(imessage.getDate().toString());
                 }
                 ll.setPadding(15,10,15,10);
             }
