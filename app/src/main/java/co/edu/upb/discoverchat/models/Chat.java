@@ -25,10 +25,6 @@ public class Chat extends Model {
         this.setRoomImagePath(c.getString(c.getColumnIndex(DbBase.KEY_ROOM_IMAGE_PATH)));
     }
 
-    public Chat setId(long id){
-    	this.id = id;
-        return this;
-    }
     public String getName(){
     	return name;
     }

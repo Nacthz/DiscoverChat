@@ -23,11 +23,6 @@ public class Receiver extends Model {
         super(jsonObject);
     }
     public long getId() {return id;}
-
-    public Receiver setId(long id) {
-        this.id = id;
-        return this;
-    }
     public String getName() {
         if(name!=null)
             return name;

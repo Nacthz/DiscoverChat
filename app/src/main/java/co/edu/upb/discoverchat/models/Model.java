@@ -34,6 +34,10 @@ public abstract class Model {
     public long getId() {
         return id;
     }
+    public Model setId(long id){
+        this.id = id;
+        return this;
+    }
 
     protected abstract void parseJsonObject(JSONObject json);
     public JSONObject toJson() throws JSONException{

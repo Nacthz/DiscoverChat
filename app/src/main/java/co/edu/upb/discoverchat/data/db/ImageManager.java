@@ -1,6 +1,8 @@
 package co.edu.upb.discoverchat.data.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.models.Image;
@@ -28,8 +30,17 @@ public class ImageManager extends DbBase {
     @Override
     public long add(Model model) {
         Image imagen = (Image)model;
-        
-        return 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+
+        long id = db.insert(TBL_IMAGES, null, values);
+
+        imagen.setId(id);
+        db.close();
+
+        return id;
     }
 
     @Override

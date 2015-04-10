@@ -22,7 +22,6 @@ public abstract class Message extends Model{
     public Message(JSONObject json) {
         super(json);
     }
-    public Message setId(long id){this.id = id; return this;}
     public long getChat_id() {
         return chat_id;
     }

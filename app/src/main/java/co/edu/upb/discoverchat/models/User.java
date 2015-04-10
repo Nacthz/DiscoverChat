@@ -38,13 +38,6 @@ public class User extends Model {
     public User(JSONObject response) {
         super(response);
     }
-
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
     public String getGoogle_gcm_code() {
         return google_gcm_code;
     }
@@ -74,19 +67,6 @@ public class User extends Model {
     }
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int register(HashMap<String, Object> data){
-        // TODO Not implemented
-        return 0;
-    }
-    public int logIn(String email, String password){
-        // TODO Not implemented
-        return 0;
-    }
-
-    public void ensureGCM(){
-
     }
 
     @Override
