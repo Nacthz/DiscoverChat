@@ -13,9 +13,9 @@ import org.json.JSONObject;
  * Base for all rest clients
  */
 public class RestClient {
-    private static final String protocol = "https://";
-    private static final String urlBase = "10.154.12.17";
-    private static final String portNumber = ":443/";
+    private static final String protocol = "http://";
+    private static final String urlBase = "drake.ngrok.com";
+    private static final String portNumber = ":80/";
     private static final String APPLICATION_JSON = "application/json";
     private static final String registrationPath = "users.json";
     private static String shipMessagePath = "messages/ship.json";
