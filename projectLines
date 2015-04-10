@@ -1,13 +1,13 @@
-      67 text files.
-classified 67 files      67 unique files.                              
-       0 files ignored.
+      68 text files.
+classified 68 files      67 unique files.                              
+       1 file ignored.
 
-http://cloc.sourceforge.net v 1.62  T=0.22 s (298.0 files/s, 18268.2 lines/s)
+http://cloc.sourceforge.net v 1.62  T=4.34 s (15.4 files/s, 978.2 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                            35            483            276           2444
-XML                             32            103             31            770
+Java                            35            489            276           2541
+XML                             32            113             31            799
 -------------------------------------------------------------------------------
-SUM:                            67            586            307           3214
+SUM:                            67            602            307           3340
 -------------------------------------------------------------------------------
