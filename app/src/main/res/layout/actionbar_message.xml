@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="#2CB89E">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,5 +12,5 @@
         android:text="New Text"
         android:id="@+id/chat_txt_user_name"
         android:textSize="20dp"
-        android:textColor="#212121" />
+        android:textColor="#ffffffff" />
 </LinearLayout>

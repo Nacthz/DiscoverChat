@@ -37,7 +37,7 @@
     <!-- ActionBar styles -->
     <style name="MyActionBar"
         parent="@android:style/Widget.Holo.ActionBar">
-        <item name="android:background">#FFFFFF</item>
+        <item name="android:background">#2CB89E</item>
     </style>
 
     <style name="chat_text_message_style">
