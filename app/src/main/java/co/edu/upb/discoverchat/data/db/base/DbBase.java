@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.models.Model;
-import co.edu.upb.discoverchat.models.TextMessage;
 
 /**
  * Created by hatsumora on 30/03/15.
@@ -22,29 +21,31 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     protected Context context;
     protected static final int VERSION = 3;
     protected static final String DATABASE_NAME = "DiscoverChat";
-
     /**
      * All the tables presents on the application
      *
      */
     protected static final String TBL_CHATS = "chats";
+
     protected static final String TBL_RECEIVERS = "receivers";
     protected static final String TBL_CHATS_RECEIVERS = "chats_receivers";
     protected static final String TBL_USER = "user";
     protected static final String TBL_MESSAGES = "messages";
     protected static final String TBL_MESSAGE_TEXT_DETAIL = "textMessages";
-    protected static final String TBL_IMAGE_DETAIL = "images";
-
+    protected static final String TBL_MESSAGE_IMAGE_DETAIL = "imageMessages";
+    protected static final String TBL_IMAGES = "images";
     /**
      * This keys are for all tables
      */
     public static final String KEY_ID = "id";
+
     public static final String KEY_ROOM_IMAGE_PATH = "room_image_path";
     public static final String KEY_CHAT_ID = "chat_id";
     public static final String KEY_RECEIVER_ID = "receiver_id";
     public static final String KEY_MESSAGE_ID = "message_id";
-
+    public static final String KEY_IMAGE_ID = "image_id";
     public static final String FIELD_NAME = "name";
+
     public static final String FIELD_EMAIL = "email";
     public static final String FIELD_PHONE = "phone";
     public static final String FIELD_GOOGLE_CLOUD_MESSAGE = "google_cloud_message";
@@ -53,6 +54,9 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public static final String FIELD_SENT = "sent";
     public static final String FIELD_CONTENT = "content";
     public static final String FIELD_DATE = "date_of";
+    public static final String FIELD_PATH_TO_IMAGE = "image_path";
+    public static final String FIELD_LONGITUDE = "longitude";
+    public static final String FIELD_LATITUDE = "latitude";
 
     @SuppressWarnings("UnusedParameters")
     public DbBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -75,7 +79,6 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                     KEY_ID+" INTEGER PRIMARY KEY, " +
                     FIELD_NAME +" TEXT, " +
                     FIELD_PHONE +" TEXT " +
-                    //"FOREIGN KEY("+KEY_CHAT_ID+") REFERENCES " +TBL_CHATS+"("+KEY_ID+")"+
                 ")";
         String createChatsReceivers =
                 "CREATE TABLE "+TBL_CHATS_RECEIVERS+"(" +
@@ -105,10 +108,23 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                 ")";
         String createTextMessages =
                 "CREATE TABLE " + TBL_MESSAGE_TEXT_DETAIL +"(" +
-                    //KEY_ID+" INTEGER PRIMARY KEY, " +
                     KEY_MESSAGE_ID + " INTEGER, " +
                     FIELD_CONTENT + " TEXT, " +
                     "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+")"+
+                ")";
+        String createImageMessages =
+                "CREATE TABLE "+TBL_MESSAGE_IMAGE_DETAIL+"(" +
+                        KEY_MESSAGE_ID+" INTEGER, " +
+                        KEY_IMAGE_ID+" INTEGER," +
+                        "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+")"+
+                        "FOREIGN KEY("+KEY_IMAGE_ID+") REFERENCES " + TBL_IMAGES +"("+KEY_ID+")"+
+                ")";
+        String createImages =
+                "CREATE TABLE " + TBL_IMAGES +"(" +
+                    KEY_ID + " INTEGER PRIMARY KEY, " +
+                    FIELD_PATH_TO_IMAGE + " TEXT, " +
+                    FIELD_LATITUDE + " TEXT, " +
+                    FIELD_LONGITUDE + " TEXT"+
                 ")";
 
         queryList.add(createChats);
@@ -117,6 +133,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         queryList.add(createUser);
         queryList.add(createMessages);
         queryList.add(createTextMessages);
+        queryList.add(createImageMessages);
+        queryList.add(createImages);
 
         for(String query: queryList)
             db.execSQL(query);
@@ -131,7 +149,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGE_DETAIL);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGES);
 
         // Create tables again
         onCreate(db);

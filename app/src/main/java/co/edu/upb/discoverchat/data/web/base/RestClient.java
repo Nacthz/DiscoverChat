@@ -43,8 +43,7 @@ public class RestClient {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.e("ERROR JSON:",throwable.getMessage());
-                throwable.getCause().printStackTrace();
+                throwable.printStackTrace();
                 if(responseHandler != null)
                     responseHandler.handleError(errorResponse.toString());
             }
