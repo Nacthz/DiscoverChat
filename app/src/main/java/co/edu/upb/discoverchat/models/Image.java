@@ -1,5 +1,7 @@
 package co.edu.upb.discoverchat.models;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONObject;
 
 /**
@@ -9,6 +11,7 @@ public class Image extends Model {
     private String path;
     private double latitude;
     private double longitude;
+    private Bitmap bitmap;
 
     public String getPath() {
         return path;
@@ -24,14 +27,14 @@ public class Image extends Model {
         this.latitude = latitude;
         return this;
     }
-    public double getLongitude() {
-        return longitude;
-    }
+    public double getLongitude() {return longitude;}
+    public Bitmap getBitmap() {return bitmap;}
+
+
     public Image setLongitude(double longitude) {
         this.longitude = longitude;
         return this;
     }
-
 
     @Override
     protected void parseJsonObject(JSONObject json) {

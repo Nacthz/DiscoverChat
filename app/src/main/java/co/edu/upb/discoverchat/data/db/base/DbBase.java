@@ -124,7 +124,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                     KEY_ID + " INTEGER PRIMARY KEY, " +
                     FIELD_PATH_TO_IMAGE + " TEXT, " +
                     FIELD_LATITUDE + " TEXT, " +
-                    FIELD_LONGITUDE + " TEXT"+
+                    FIELD_LONGITUDE + " TEXT "+
                 ")";
 
         queryList.add(createChats);
@@ -143,12 +143,12 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
-        db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
+        //db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGES);
 

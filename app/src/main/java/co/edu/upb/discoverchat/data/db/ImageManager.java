@@ -10,6 +10,7 @@ import co.edu.upb.discoverchat.models.Model;
 
 /**
  * Created by hatsumora on 10/04/15.
+ * This class handles all the information about the images on the app
  */
 public class ImageManager extends DbBase {
 
@@ -34,6 +35,9 @@ public class ImageManager extends DbBase {
 
         ContentValues values = new ContentValues();
 
+        values.put(FIELD_PATH_TO_IMAGE,imagen.getPath());
+        values.put(FIELD_LATITUDE,imagen.getLatitude());
+        values.put(FIELD_LONGITUDE, imagen.getLongitude());
 
         long id = db.insert(TBL_IMAGES, null, values);
 
