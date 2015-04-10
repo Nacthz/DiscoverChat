@@ -7,7 +7,7 @@
     android:id="@+id/layout_message_main"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:paddingBottom="1dp">
+    android:paddingBottom="4dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,11 +21,11 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout_img"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/message_received"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|right"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:paddingRight="15dp"
@@ -38,23 +38,18 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:maxWidth="250dp"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:layout_gravity="left" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/message_img"
             android:maxWidth="285dp"
-            android:maxHeight="285dp"/>
+            android:maxHeight="285dp"
+            android:layout_gravity="left" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom"
-            android:paddingLeft="5dp">
-
-            <TextView
+        <TextView
                 android:id="@+id/message_date"
                 style="@style/chat_timings"
                 android:textColor="#C6C6C6"
@@ -63,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom|right"
                 android:maxLength="10"/>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 

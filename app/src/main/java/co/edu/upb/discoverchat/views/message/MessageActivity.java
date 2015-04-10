@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -99,7 +101,15 @@ public class MessageActivity extends Activity {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
                 Uri selectedImageUri = data.getData();
                 String selectedImagePath = getPath(selectedImageUri);
+                if(selectedImagePath==null){
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    //setImageBitmap(imageBitmap);
+                }else{
+                   // setImageURI(selectedImageUri);
+                }
 
+                Toast.makeText(this, "-" + selectedImagePath + "-", Toast.LENGTH_LONG).show();
                 //TODO u get a url, wtf do?
         }
     }

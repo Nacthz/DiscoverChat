@@ -27,47 +27,67 @@ android:layout_height="fill_parent">
             android:layout_height="match_parent"
             android:id="@+id/message_lst"
             android:background="#EEEEEE"
-            android:transcriptMode="alwaysScroll"
-            android:paddingBottom="3dp" />
+            android:transcriptMode="alwaysScroll" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        android:measureWithLargestChild="false"
-        android:minHeight="54dp"
-        android:gravity="center_vertical">
+        android:minHeight="54dp">
 
-        <ImageButton
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/message_send_upload_img"
-            android:src="@drawable/ic_action_camera"
-            android:layout_width="wrap_content"
-            android:background="@null"/>
+            android:background="#A4A4A4"
+            android:height="1px"/>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/message_txt_field"
-            android:layout_gravity="center_vertical"
-            android:hint="Escribe un mensaje"
-            android:layout_weight="1"
-            android:textColor="#ff000000"
-            android:background="@null"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
-
-        <ImageButton
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/message_send_btn"
-            android:src="@drawable/ic_action_send_now"
-            android:layout_width="wrap_content"
-            android:background="@null"/>
+            android:background="#FFFFFF"
+            android:measureWithLargestChild="false"
+            android:minHeight="53dp"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:id="@+id/message_send_upload_img"
+                android:src="@drawable/ic_action_camera"
+                android:layout_width="wrap_content"
+                android:background="@null"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/message_img_send"
+                android:maxHeight="250dp"
+                android:maxWidth="250dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/message_txt_field"
+                android:layout_gravity="center_vertical"
+                android:hint="Escribe un mensaje"
+                android:layout_weight="1"
+                android:textColor="#ff000000"
+                android:background="@null"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:id="@+id/message_send_btn"
+                android:src="@drawable/ic_action_send_now"
+                android:layout_width="wrap_content"
+                android:background="@null"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
