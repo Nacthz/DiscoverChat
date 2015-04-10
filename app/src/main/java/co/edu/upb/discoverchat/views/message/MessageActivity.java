@@ -114,7 +114,9 @@ public class MessageActivity extends Activity {
                 if (hasFocus) {
                     txtSend.setVisibility(View.VISIBLE);
                 }else{
-                    txtSend.setVisibility(View.INVISIBLE);
+                    if(txtSend.getText().equals("")){
+                        txtSend.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
