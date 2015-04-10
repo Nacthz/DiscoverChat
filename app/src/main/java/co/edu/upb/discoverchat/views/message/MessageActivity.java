@@ -64,17 +64,23 @@ public class MessageActivity extends Activity {
 
         messageList.setAdapter(adapter);
         findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
+        findViewById(R.id.message_send_upload_img).setOnClickListener(selectImage);
 
         scrollChat();
-        setFocusChanges();
     }
 
-    public void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_GET);
-        }
+    private View.OnClickListener selectImage;
+    {
+        selectImage = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, REQUEST_IMAGE_GET);
+                }
+            }
+        };
     }
 
     @Override
@@ -104,22 +110,6 @@ public class MessageActivity extends Activity {
         }
         // this is our fallback here
         return uri.getPath();
-    }
-
-    private void setFocusChanges(){
-        txtSend = (EditText) findViewById(R.id.message_txt_field);
-        txtSend.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    txtSend.setVisibility(View.VISIBLE);
-                }else{
-                    if(txtSend.getText().equals("")){
-                        txtSend.setVisibility(View.INVISIBLE);
-                    }
-                }
-            }
-        });
     }
 
     private void setForReceiveUpdates() {
