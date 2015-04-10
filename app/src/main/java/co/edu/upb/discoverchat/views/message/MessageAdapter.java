@@ -88,6 +88,7 @@ public class MessageAdapter extends BaseAdapter {
                     user_name.setTextColor(Color.parseColor("#BBBBBB"));
                     ll.setBackgroundResource(R.drawable.message_received);
                 }
+
                 holder.user_name.setText(message.whoIsSender(activity).getName());
 
                 if(message.getType() == Message.Type.TEXT){

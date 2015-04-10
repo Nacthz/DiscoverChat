@@ -1,17 +1,18 @@
 package co.edu.upb.discoverchat.models;
 
 import android.content.Context;
-import android.database.Cursor;
 
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
-import co.edu.upb.discoverchat.views.message.MessageActivity;
 
 public abstract class Message extends Model{
     private long chat_id;
     private long receiver_id;
     private Receiver receiver;
+    protected Date date;
     private boolean sent = false;
     public enum Type{
         TEXT,
@@ -50,7 +51,13 @@ public abstract class Message extends Model{
         this.sent = sent;
         return this;
     }
-
+    public Date getDate() {
+        return date;
+    }
+    public Message setDate(Date date){
+        this.date = date;
+        return this;
+    }
     public Receiver whoIsSender(Context context){
         Receiver receiver;
         ReceiversManager receiversManager = new ReceiversManager(context);

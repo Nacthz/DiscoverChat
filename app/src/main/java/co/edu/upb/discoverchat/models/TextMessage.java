@@ -18,9 +18,10 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
  */
 public class TextMessage extends Message {
 
+
     private static final String FIELD_TO = "to";
     private String content;
-    protected Date date;
+
     public TextMessage(){
 
     }
@@ -43,13 +44,7 @@ public class TextMessage extends Message {
     public void setContent(String content) {
         this.content = content;
     }
-    public Date getDate() {
-        return date;
-    }
-    public Message setDate(Date date){
-        this.date = date;
-        return this;
-    }
+
     @Override
     public Type getType() {
         return Type.TEXT;

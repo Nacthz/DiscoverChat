@@ -1,5 +1,6 @@
 package co.edu.upb.discoverchat.models;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 
 import org.json.JSONObject;
@@ -11,13 +12,21 @@ import java.util.Date;
  */
 public class ImageMessage extends Message {
     protected Date date;
+    Image image;
+
+    public ImageMessage(Bitmap bitmap){
+        image = new Image();
+        image.setBitmap(bitmap);
+    }
+
+    public ImageMessage() {
+        image = new Image();
+    }
 
     @Override
     public Type getType() {
         return Type.IMAGE;
     }
-
-    Image image;
 
     public Image getImage() {
         return image;
@@ -31,9 +40,6 @@ public class ImageMessage extends Message {
         return image.getBitmap();
     }
 
-    public Date getDate() {
-        return date;
-    }
     @Override
     protected void parseJsonObject(JSONObject json) {
 

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -32,6 +34,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
@@ -99,18 +102,22 @@ public class MessageActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap image=null;
+            if(extras != null && extras.containsKey("data")){
+                image = (Bitmap)extras.get("data");
+            }else{
                 Uri selectedImageUri = data.getData();
-                String selectedImagePath = getPath(selectedImageUri);
-                if(selectedImagePath==null){
-                    Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    //setImageBitmap(imageBitmap);
-                }else{
-                   // setImageURI(selectedImageUri);
+                try {
+                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                Toast.makeText(this, "-" + selectedImagePath + "-", Toast.LENGTH_LONG).show();
-                //TODO u get a url, wtf do?
+            }
+            ImageMessage imageMessage= new ImageMessage(image);
+            prepareMessage(imageMessage);
+            messages.add(imageMessage);
+            //TODO u get a url, wtf do?
         }
     }
 
@@ -186,6 +193,10 @@ public class MessageActivity extends Activity {
                 }
             }
         };
+    }
+
+    private void prepareMessage(Message message){
+
     }
     private void scrollChat(){
         messageList.setSelection(messageList.getCount()-1);

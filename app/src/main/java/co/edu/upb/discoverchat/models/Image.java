@@ -36,6 +36,10 @@ public class Image extends Model {
         return this;
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
     @Override
     protected void parseJsonObject(JSONObject json) {
 
