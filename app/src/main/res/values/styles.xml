@@ -31,7 +31,7 @@
     <style name="CustomActionBarTheme"
         parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:actionBarSize">84px</item>
+        <item name="android:actionBarSize">55dp</item>
     </style>
 
     <!-- ActionBar styles -->

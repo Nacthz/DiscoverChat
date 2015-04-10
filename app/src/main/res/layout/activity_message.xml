@@ -19,7 +19,7 @@ android:layout_height="fill_parent">
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="55dp"
         android:layout_marginTop="1px">
 
         <ListView
@@ -37,7 +37,8 @@ android:layout_height="fill_parent">
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:minHeight="54dp">
+        android:minHeight="55dp"
+        android:measureWithLargestChild="false">
 
         <TextView
             android:layout_width="fill_parent"
@@ -51,7 +52,7 @@ android:layout_height="fill_parent">
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:measureWithLargestChild="false"
-            android:minHeight="53dp"
+            android:minHeight="54dp"
             android:gravity="center_vertical">
 
             <ImageButton
