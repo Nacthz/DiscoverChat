@@ -208,7 +208,7 @@ public class MessageActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
         actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_previous_item);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         final TextView user_name = (TextView) findViewById(R.id.chat_txt_user_name);
