@@ -12,15 +12,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +45,6 @@ public class MessageActivity extends Activity {
     public ArrayList<Message> messages = new ArrayList<>();
     private Chat chat;
     public static final String MESSENGER = "messenger";
-    EditText txtSend;
-    private  Messenger mMessenger;
     static final int REQUEST_IMAGE_GET = 1;
 
     @Override
@@ -117,7 +112,8 @@ public class MessageActivity extends Activity {
             ImageMessage imageMessage= new ImageMessage(image);
             prepareMessage(imageMessage);
             messages.add(imageMessage);
-            //TODO u get a url, wtf do?
+            scrollChat();
+            //TODO u get a url, wtf do?s
         }
     }
 
@@ -163,7 +159,7 @@ public class MessageActivity extends Activity {
 
     private void addNewMessage(TextMessage textMessage) {
         messages.add(textMessage);
-        adapter.notifyDataSetChanged();
+
     }
 
     private View.OnClickListener sendMessage;
@@ -176,18 +172,13 @@ public class MessageActivity extends Activity {
                 String content = messageETxt.getText().toString();
                 if(!content.equals("")) {
                     TextMessage message = new TextMessage();
-                    ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
                     TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
-
+                    prepareMessage(message);
                     message.setContent(content);
-                    message.setChat_id(chat.getId());
-                    message.setReceiver(receiversManager.get(1));
-                    message.setDate(GregorianCalendar.getInstance().getTime());
                     textMessagesManager.add(message);
                     MessageWeb web = new MessageWeb(MessageActivity.this);
                     web.sendTextMessage(chat, message, null);
                     messages.add(message);
-                    adapter.notifyDataSetChanged();
                     messageETxt.setText("");
                     scrollChat();
                 }
@@ -196,10 +187,16 @@ public class MessageActivity extends Activity {
     }
 
     private void prepareMessage(Message message){
+        ReceiversManager receiversManager = new ReceiversManager(MessageActivity.this);
+
+        message.setDate(GregorianCalendar.getInstance().getTime());
+        message.setChat_id(chat.getId());
+        message.setReceiver(receiversManager.get(1));
 
     }
     private void scrollChat(){
         messageList.setSelection(messageList.getCount()-1);
+        adapter.notifyDataSetChanged();
     }
     private void loadChat() {
         Bundle extras = getIntent().getExtras();
@@ -215,12 +212,12 @@ public class MessageActivity extends Activity {
         final ActionBar actionBar = getActionBar();
         if (null != actionBar) {
             actionBar.setCustomView(R.layout.actionbar_message);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+            actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayShowCustomEnabled(true);
         }
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
-        actionBar.setIcon(new NavigationDrawerFragment.RoundImage(bm));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
         final TextView user_name = (TextView) findViewById(R.id.chat_txt_user_name);
         user_name.setText(chat.getName());
     }

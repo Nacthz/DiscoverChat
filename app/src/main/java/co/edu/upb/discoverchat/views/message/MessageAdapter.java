@@ -89,8 +89,6 @@ public class MessageAdapter extends BaseAdapter {
                     ll.setBackgroundResource(R.drawable.message_received);
                 }
 
-                holder.user_name.setText(message.whoIsSender(activity).getName());
-
                 if(message.getType() == Message.Type.TEXT){
                     TextMessage tmessage = (TextMessage) message;
                     holder.message_txt.setText(tmessage.getContent());
