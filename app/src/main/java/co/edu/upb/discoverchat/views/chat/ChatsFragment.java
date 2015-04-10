@@ -1,6 +1,8 @@
 package co.edu.upb.discoverchat.views.chat;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class ChatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
 
@@ -43,25 +47,53 @@ public class ChatsFragment extends Fragment {
         chatList.setAdapter(adapter);
     }
 
+    public void makeGroup(){
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        View groupView = li.inflate(R.layout.dialog_group, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setView(groupView);
+
+        final EditText userInput = (EditText) groupView.findViewById(R.id.group_txt_name);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Salir",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton("Crear",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                //TODO CREAR GRUPO
+                                getActivity().setTitle(userInput.getText().toString());
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.menu_chats, menu);
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_group:
+                    makeGroup();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void setChatListData() {

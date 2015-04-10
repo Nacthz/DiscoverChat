@@ -67,32 +67,33 @@ public class MessageAdapter extends BaseAdapter {
         }
         else{
             message = null;
-            //MessagesManager message_manager = new MessagesManager(activity);
             message = data.get(position);
 
             LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
-            TextMessage tmessage = (TextMessage) message;
-            TextView tw = (TextView) view.findViewById(R.id.message_date);
-            if(tmessage!=null) // TODO LUIS SI VE ESTO PREGUNTELE A ALDO POR ESTO
-            {
-                LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
-                if (message.itsMine(activity)) {
-                    mainLayout.setGravity(Gravity.RIGHT);
-                    tw.setTextColor(Color.parseColor("#92A95C"));
-                    ll.setBackgroundResource(R.drawable.message_send);
-                }else{
-                    mainLayout.setGravity(Gravity.LEFT);
-                    tw.setTextColor(Color.parseColor("#BBBBBB"));
-                    ll.setBackgroundResource(R.drawable.message_received);
-                }
-                holder.user_name.setText(message.whoIsSender(activity).getName());
-                if(message.getType() == Message.Type.TEXT) {
-                    holder.message_txt.setText(((TextMessage) message).getContent());
-                    holder.message_date.setText(((TextMessage) message).getDate().toString());
-                }
-                ll.setPadding(10, 5, 10, 5);
-            }
+            TextView user_name = (TextView) view.findViewById(R.id.message_date);
+            LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
 
+            if (message.itsMine(activity)) {
+                mainLayout.setGravity(Gravity.RIGHT);
+                user_name.setTextColor(Color.parseColor("#92A95C"));
+                ll.setBackgroundResource(R.drawable.message_send);
+            }else{
+                mainLayout.setGravity(Gravity.LEFT);
+                user_name.setTextColor(Color.parseColor("#BBBBBB"));
+                ll.setBackgroundResource(R.drawable.message_received);
+            }
+            holder.user_name.setText(message.whoIsSender(activity).getName());
+
+            if(message.getType() == Message.Type.TEXT){
+                TextMessage tmessage = (TextMessage) message;
+                holder.message_txt.setText(((TextMessage) message).getContent());
+                holder.message_date.setText(((TextMessage) message).getDate().toString());
+            }else{
+                //ImageMessage imessage = (ImageMessage) message;
+                //TODO AGREGAR IMAGEN EN CHAT
+                //holder.message_img.setImageBitmap();
+                holder.message_date.setText(((TextMessage) message).getDate().toString());
+            }
         }
         return view;
     }

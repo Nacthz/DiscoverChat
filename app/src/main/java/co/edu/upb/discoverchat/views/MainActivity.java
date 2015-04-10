@@ -22,6 +22,8 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
+    boolean flag = false;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,11 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("Luis García", "luis.garciap@upb.edu.co", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+        mNavigationDrawerFragment.setUserData("User", "E-Mail", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Fragment fragment;
         switch (position) {
             case 0: //search//todo
                 fragment = getFragmentManager().findFragmentByTag(ChatsFragment.TAG);
@@ -49,6 +50,7 @@ public class MainActivity extends ActionBarActivity
                     fragment = new ChatsFragment();
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, ChatsFragment.TAG).commit();
+                flag = true;
                 this.setTitle("Chats");
                 break;
             case 1: //stats
@@ -58,6 +60,7 @@ public class MainActivity extends ActionBarActivity
                     //setMenuItems("chat");
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, StatsFragment.TAG).commit();
+                flag = false;
                 this.setTitle("Yolo");
                 break;
             case 2: //my account //todo
@@ -76,31 +79,23 @@ public class MainActivity extends ActionBarActivity
             super.onBackPressed();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_group:
+                if(flag){
+                    ChatsFragment chat = (ChatsFragment) fragment;
+                    chat.makeGroup();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
-
-
 }
