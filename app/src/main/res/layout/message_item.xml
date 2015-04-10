@@ -47,6 +47,7 @@
             android:id="@+id/message_img"
             android:maxWidth="285dp"
             android:maxHeight="285dp"
+            android:adjustViewBounds= "true"
             android:layout_gravity="left" />
 
         <TextView
