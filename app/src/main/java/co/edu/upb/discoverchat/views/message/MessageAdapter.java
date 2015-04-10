@@ -51,25 +51,29 @@ public class MessageAdapter extends BaseAdapter {
 
 
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
-        if(view==null){
-            view = inflater.inflate(R.layout.message_item,null);
-            holder = new ViewHolder();
-            holder.user_name = (TextView)view.findViewById(R.id.message_user_name);
-            holder.message_img = (ImageView)view.findViewById(R.id.message_img);
-            holder.message_txt = (TextView)view.findViewById(R.id.message_txt);
-            holder.message_date =(TextView)view.findViewById(R.id.message_date);
-            view.setTag(holder);
-        }else
-            holder = (ViewHolder)view.getTag();
-        if(data.size()<=0){
-            //Noting
-        }
-        else{
-            message = null;
+        message = null;
+        try {
             message = data.get(position);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
 
-            if(message!=null){
+        if(message!=null){
+            ViewHolder holder;
+            if(view==null){
+                view = inflater.inflate(R.layout.message_item,null);
+                holder = new ViewHolder();
+                holder.user_name = (TextView)view.findViewById(R.id.message_user_name);
+                holder.message_img = (ImageView)view.findViewById(R.id.message_img);
+                holder.message_txt = (TextView)view.findViewById(R.id.message_txt);
+                holder.message_date =(TextView)view.findViewById(R.id.message_date);
+                view.setTag(holder);
+            }else
+                holder = (ViewHolder)view.getTag();
+            if(data.size()<=0){
+                //Noting
+            }
+            else{
                 LinearLayout ll = (LinearLayout) view.findViewById(R.id.layout_img);
                 TextView user_name = (TextView) view.findViewById(R.id.message_date);
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
