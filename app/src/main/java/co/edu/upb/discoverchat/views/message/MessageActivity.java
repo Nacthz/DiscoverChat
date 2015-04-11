@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -111,29 +110,11 @@ public class MessageActivity extends Activity {
             }
             ImageMessage imageMessage= new ImageMessage(image);
             prepareMessage(imageMessage);
+            MessageWeb web = new MessageWeb(MessageActivity.this);
+            web.sendTextMessage(chat, imageMessage, null);
             messages.add(imageMessage);
             scrollChat();
-            //TODO u get a url, wtf do?s
         }
-    }
-
-    public String getPath(Uri uri) {
-        // just some safety built in
-        if( uri == null ) {
-            return null;
-        }
-        // try to retrieve the image from the media store first
-        // this will only work for images selected from gallery
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if( cursor != null ){
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        // this is our fallback here
-        return uri.getPath();
     }
 
     private void setForReceiveUpdates() {

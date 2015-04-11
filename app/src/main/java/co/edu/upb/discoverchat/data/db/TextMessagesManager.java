@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
@@ -18,7 +19,7 @@ import co.edu.upb.discoverchat.models.TextMessage;
 /**
  * Created by hatsumora on 3/04/15.
  */
-public class TextMessagesManager extends DbBase {
+public class TextMessagesManager extends MessageManager {
 
     public TextMessagesManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -70,11 +71,5 @@ public class TextMessagesManager extends DbBase {
         return getAllBy(FIELD_SENT,false);
     }
 
-    public String phoneDestination(Message m) {
-        long chatId = m.getChat_id();
-        ReceiversManager receiversManager = new ReceiversManager(context);
 
-        //todo extend for group chats
-        return receiversManager.getAllForChat(new ChatsManager(context).<Chat>get(chatId)).get(0).getPhone();
-    }
 }

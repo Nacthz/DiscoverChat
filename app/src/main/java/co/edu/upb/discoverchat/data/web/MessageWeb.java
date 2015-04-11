@@ -3,6 +3,8 @@ package co.edu.upb.discoverchat.data.web;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.loopj.android.http.RequestParams;
+
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
@@ -10,9 +12,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ImageManager;
+import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.UserManager;
@@ -21,6 +27,8 @@ import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.data.web.base.RestClient;
 import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.models.Image;
+import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Receiver;
 import co.edu.upb.discoverchat.models.TextMessage;
@@ -83,12 +91,10 @@ public class MessageWeb extends RestClient {
         if(message.getType() == Message.Type.TEXT){
             textMessagesManager = new TextMessagesManager(context);
             pendingMessages.addAll(textMessagesManager.getAllNotSend());
-        }else{
-            //Todo [images]
         }
         try {
             for(Message m: pendingMessages)
-                messages.put(new JSONObject().put("message",m.toJson().put("to",textMessagesManager.phoneDestination(m))));
+                messages.put(new JSONObject().put("message",m.toJson().put(FIELD_DESTINATION,textMessagesManager.phoneDestination(m))));
 
             addAuthenticate(request);
             request.put("messages",messages);
@@ -99,6 +105,27 @@ public class MessageWeb extends RestClient {
         }
 
         post(context,getShipMessagePath(),entity,handlerJsonRequest);
+    }
+    public synchronized void sendImageMessage(Chat chat, ImageMessage message, final HandlerJsonRequest handlerJsonRequest){
+        UserManager userManager = new UserManager(context);
+        ImageManager imageManager = new ImageManager(context);
+        ImageMessagesManager imageMessagesManager = new ImageMessagesManager(context);
+
+        Image image = message.getImage();
+        imageManager.add(image);
+
+        RequestParams params = new RequestParams();
+
+        File imageFile = new File(image.getPath());
+        try {
+            params.put(FIELD_IMAGE,imageFile);
+            params.put(FIELD_DESTINATION,imageMessagesManager.phoneDestination(message));
+            params.put(FIELD_TYPE,Message.Type.IMAGE.name());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.put(DbBase.KEY_AUTHENTICATION_TOKEN,userManager.getToken());
+
     }
 
     private Receiver receiverFromBundle(Bundle extras){
@@ -111,7 +138,6 @@ public class MessageWeb extends RestClient {
     }
     private void addAuthenticate(JSONObject request) throws JSONException {
         UserManager userManager = new UserManager(context);
-        User user = userManager.get(1);
-        request.put(DbBase.KEY_AUTHENTICATION_TOKEN, user.getAuthentication_token());
+        request.put(DbBase.KEY_AUTHENTICATION_TOKEN, userManager.getToken());
     }
 }

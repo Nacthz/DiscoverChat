@@ -7,6 +7,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.json.JSONObject;
 
+import co.edu.upb.discoverchat.data.db.base.DbBase;
+
 /**
  * Created by hatsumora on 1/04/15.
  * Base for all rest clients
@@ -19,13 +21,16 @@ public class RestClient {
     private static final String registrationPath = "users.json";
     private static String shipMessagePath = "messages/ship.json";
 
+    protected static final String FIELD_IMAGE = "image";
+    protected static final String FIELD_DESTINATION = "to";
+    protected static final String FIELD_TYPE = DbBase.FIELD_TYPE;
+
     public static String getRegistrationPath(){
         return registrationPath;}
     public static String getShipMessagePath(){
         return shipMessagePath;};
 
     private static AsyncHttpClient client = new AsyncHttpClient();
-    private static SyncHttpClient syncHttpClient = new SyncHttpClient();
 
     public static void get(String url, RequestParams params, ResponseHandlerInterface responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);

@@ -5,14 +5,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.db.base.MessageManager;
+import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.ImageMessage;
+import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
 
 /**
  * Created by hatsumora on 10/04/15.
  * This references all the images on the chats as ImageMessages
  */
-public class ImageMessagesManager extends DbBase {
+public class ImageMessagesManager extends MessageManager {
 
     public ImageMessagesManager (Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -55,4 +58,5 @@ public class ImageMessagesManager extends DbBase {
     public int delete(Model model) {
         return 0;
     }
+
 }

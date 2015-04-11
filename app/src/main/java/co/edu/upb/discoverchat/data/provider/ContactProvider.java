@@ -14,9 +14,7 @@ public class ContactProvider {
     public ContactProvider(Context context){
         this.context = context;
     }
-    String[] dataSearched = {
-            ContactsContract.CommonDataKinds.Phone.NUMBER
-    };
+
     Context context;
     public Cursor getAllContacts(){
 
@@ -30,7 +28,13 @@ public class ContactProvider {
     }
 
     public String nameOfPhone(String phone){
-        //todo
+        Cursor c = getAllContacts();
+        if(c.moveToFirst()){
+            int indexName = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            int indexNumber = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            if(c.getString(indexNumber).equals(phone))
+                return c.getString(indexName);
+        }
         return null;
     }
 }

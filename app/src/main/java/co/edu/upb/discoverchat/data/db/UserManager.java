@@ -16,6 +16,15 @@ public class UserManager extends DbBase{
     public UserManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
+    private User user = null;
+
+    @Override
+    public User get(long id) {
+        if(user==null)
+            user = super.get(id);
+        return user;
+    }
+
     @Override
     public long add(Model model) {
         User user = (User)model;
@@ -54,5 +63,9 @@ public class UserManager extends DbBase{
     @Override
     protected Class getModelClass() {
         return User.class;
+    }
+
+    public String getToken(){
+        return ((User) this.get(1)).getAuthentication_token();
     }
 }

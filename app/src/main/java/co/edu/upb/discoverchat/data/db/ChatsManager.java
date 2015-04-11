@@ -55,9 +55,6 @@ public class ChatsManager extends DbBase {
         chat.setReceivers(receiversManager.getAllForChat(chat));
     }
 
-    // Updating single chat
-    //public int updateChat(Chat chat) {return 0 as;}
-
     // Deleting single chat
     public int delete(Model model) {
         Chat chat = (Chat)model;
