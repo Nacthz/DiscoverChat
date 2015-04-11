@@ -37,7 +37,6 @@ public class ChatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
 
