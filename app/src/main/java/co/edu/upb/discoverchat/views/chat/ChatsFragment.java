@@ -5,9 +5,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,15 +16,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.provider.ContactProvider;
-import co.edu.upb.discoverchat.models.Receiver;
-import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.models.Chat;
+import co.edu.upb.discoverchat.views.message.MessageActivity;
 
 public class ChatsFragment extends Fragment {
     public static final String TAG = "chats";
@@ -45,23 +40,6 @@ public class ChatsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         setChatListData();
-        ContactProvider cp = new ContactProvider(getActivity());
-        Cursor c = cp.getAllContacts();
-        if(c.moveToFirst()){
-            int indexName = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            int indexNumber = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            do {
-                Receiver r = new Receiver();
-
-                r.setName(c.getString(indexName)).setPhone(c.getString(indexNumber));
-                Chat chat = new Chat();
-                List<Receiver> ress = new ArrayList();
-                ress.add(r);
-                chat.setReceivers(ress);
-                chat.setName(r.getName());
-                chats.add(chat);
-            }while (c.moveToNext());
-        }
         Resources res = getResources();
         chatList = (ListView)getActivity().findViewById(R.id.chats_lst);
         adapter = new ChatsAdapter(this.getActivity(), chats,res,this);
