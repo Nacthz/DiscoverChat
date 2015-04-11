@@ -40,6 +40,7 @@ public class Chat extends Model {
         return this;
     }
     public List<Receiver> getReceivers(){ return receivers; }
+
     public Chat setReceivers(List<Receiver> receivers) {
         this.receivers = receivers;
         if (receivers.size() > 1)
