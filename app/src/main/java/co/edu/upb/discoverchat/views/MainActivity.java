@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.db.UserManager;
+import co.edu.upb.discoverchat.models.User;
 import co.edu.upb.discoverchat.views.chat.ChatsFragment;
+import co.edu.upb.discoverchat.views.chat.ContactFragment;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
-import co.edu.upb.discoverchat.views.chat.ContactFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
@@ -39,7 +41,11 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar);
         // populate the navigation drawer
-        mNavigationDrawerFragment.setUserData("User", "E-Mail", BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
+
+        UserManager um = new UserManager(this);
+        User user = um.get(1);
+        int a  = 2+2;
+        mNavigationDrawerFragment.setUserData("User", user.getEmail(), BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 
     @Override
