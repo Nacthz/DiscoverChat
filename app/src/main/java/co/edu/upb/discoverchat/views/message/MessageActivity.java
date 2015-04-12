@@ -134,7 +134,7 @@ public class MessageActivity extends Activity {
     public Bitmap getResize() {
         // Get the dimensions of the View
         int targetW = 285;
-        int targetH = 285;
+        int targetH = 380;
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
