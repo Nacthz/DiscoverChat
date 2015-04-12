@@ -46,7 +46,7 @@ public class MessageAdapter extends BaseAdapter {
 
     public int getCount() {
         if(data.size()<=0)
-            return 0;
+            return 1;
         return data.size();
     }
 

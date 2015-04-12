@@ -96,7 +96,7 @@ public class GcmIntentService extends IntentService {
                 TextMessage tm = messagesManager.get(id);
                 // Post notification of received message.
                 extras.putLong(DbBase.KEY_MESSAGE_ID, id);
-                extras.putLong(DbBase.KEY_CHAT_ID, tm.getChat_id());
+
                 if(updateGUI(extras))
                     sendNotification(extras.getString("content"));
                 Log.i(TAG, "Received: " + extras.toString());
@@ -107,7 +107,7 @@ public class GcmIntentService extends IntentService {
     }
 
     private boolean updateGUI(Bundle extras) {
-        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0)
+        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0) {
             if(messageMessenger !=null){
                 Messenger messenger = messageMessenger;
                 Message message = Message.obtain();
@@ -118,9 +118,9 @@ public class GcmIntentService extends IntentService {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-            }else if(chatMessenger!=null){
-
             }
+            Object o = extras.get(MessageActivity.MESSENGER);
+        }
         return true;
     }
 

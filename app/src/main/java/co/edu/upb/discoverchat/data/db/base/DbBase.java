@@ -19,7 +19,7 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 5;
+    protected static final int VERSION = 6;
     protected static final String DATABASE_NAME = "DiscoverChat";
     /**
      * All the tables presents on the application
@@ -132,7 +132,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         queryList.add(createChats);
         queryList.add(createReceivers);
         queryList.add(createChatsReceivers);
-      //  queryList.add(createUser);
+        queryList.add(createUser);
         queryList.add(createMessages);
         queryList.add(createTextMessages);
         queryList.add(createImageMessages);
@@ -148,7 +148,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
