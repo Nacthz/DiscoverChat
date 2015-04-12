@@ -204,7 +204,7 @@ public class MessageActivity extends Activity {
 
     private void addNewMessage(TextMessage textMessage) {
         messages.add(textMessage);
-
+        scrollChat();
     }
 
     private View.OnClickListener sendMessage;
