@@ -54,9 +54,7 @@ public class MainActivity extends ActionBarActivity
                 flag = true;
                 this.setTitle("Chats");
                 break;
-            case 1: //stats
-                break;
-            case 2:
+            case 1:
                 fragment = getFragmentManager().findFragmentByTag(ContactFragment.TAG);
                 if (fragment == null) {
                     fragment = new ContactFragment();
@@ -65,6 +63,9 @@ public class MainActivity extends ActionBarActivity
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, ContactFragment.TAG).commit();
                 flag = false;
                 this.setTitle("Contactos");
+                break;
+            case 2:
+
                 break;
             case 3: //settings //todo
                 break;

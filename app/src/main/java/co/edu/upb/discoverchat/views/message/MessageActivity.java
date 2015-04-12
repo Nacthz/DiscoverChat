@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
@@ -18,8 +19,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import co.edu.upb.discoverchat.R;
@@ -77,8 +81,23 @@ public class MessageActivity extends Activity {
                 Intent pickIntent = new Intent();
                 pickIntent.setType("image/*");
                 pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if (takePhotoIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        camera = true;
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(photoFile));
+                    }
+                }
 
                 String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
@@ -87,27 +106,72 @@ public class MessageActivity extends Activity {
                                 Intent.EXTRA_INITIAL_INTENTS,
                                 new Intent[] { takePhotoIntent }
                         );
-
-                startActivityForResult(chooserIntent, REQUEST_IMAGE_GET);
+               startActivityForResult(chooserIntent, REQUEST_IMAGE_GET);
             }
         };
+    }
+
+    String mCurrentPhotoPath;
+    Boolean camera = false;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    public Bitmap getResize() {
+        // Get the dimensions of the View
+        int targetW = 285;
+        int targetH = 380;
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        return bitmap;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap image=null;
-            if(extras != null && extras.containsKey("data")){
-                image = (Bitmap)extras.get("data");
-            }else{
+            Bitmap image = null;
+            image = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+            if(image==null){
                 Uri selectedImageUri = data.getData();
                 try {
                     image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else{
+                image= getResize();
             }
+
             ImageMessage imageMessage= new ImageMessage(image);
             prepareMessage(imageMessage);
             MessageWeb web = new MessageWeb(MessageActivity.this);
