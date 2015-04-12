@@ -287,7 +287,7 @@ public class MessageActivity extends Activity {
 
     @Override
     protected void onStop() {
-        GcmIntentService.unbindMessenger();
+        GcmIntentService.unbindMessageMessenger();
         super.onStop();
     }
 

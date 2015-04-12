@@ -28,7 +28,7 @@
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:text="N"
-                android:id="@+id/chat_txt_message_count"
+                android:id="@+id/chat_txt_new_message"
                 android:background="@drawable/message_count"
                 android:textColor="#ffffffff"
                 android:gravity="center_vertical|center_horizontal"

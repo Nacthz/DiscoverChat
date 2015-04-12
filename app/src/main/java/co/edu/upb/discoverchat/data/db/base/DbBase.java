@@ -19,7 +19,7 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 3;
+    protected static final int VERSION = 5;
     protected static final String DATABASE_NAME = "DiscoverChat";
     /**
      * All the tables presents on the application
@@ -52,6 +52,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public static final String KEY_AUTHENTICATION_TOKEN= "authentication_token";
     public static final String FIELD_TYPE = "type";
     public static final String FIELD_SENT = "sent";
+    public static final String FIELD_READED = "readed";
     public static final String FIELD_CONTENT = "content";
     public static final String FIELD_DATE = "date_of";
     public static final String FIELD_PATH_TO_IMAGE = "image_path";
@@ -72,6 +73,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
                 "CREATE TABLE " + TBL_CHATS +"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
                     FIELD_NAME + " TEXT, " +
+                    FIELD_READED + " INTEGER DEFAULT 0, " +
                     KEY_ROOM_IMAGE_PATH + " TEXT" +
                 ")";
         String createReceivers =
@@ -130,7 +132,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         queryList.add(createChats);
         queryList.add(createReceivers);
         queryList.add(createChatsReceivers);
-        queryList.add(createUser);
+      //  queryList.add(createUser);
         queryList.add(createMessages);
         queryList.add(createTextMessages);
         queryList.add(createImageMessages);
@@ -143,12 +145,12 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_RECEIVERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_CHATS_RECEIVERS);
         //db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
-        //db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGES);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGES);
 

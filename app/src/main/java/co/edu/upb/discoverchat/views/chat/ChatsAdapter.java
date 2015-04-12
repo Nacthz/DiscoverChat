@@ -70,6 +70,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.user_name = (TextView)view.findViewById(R.id.chat_txt_user_name);
             holder.lastMessage = (TextView)view.findViewById(R.id.chat_txt_last_message);
             holder.lastMessage_date =(TextView)view.findViewById(R.id.chat_txt_last_message_date);
+            holder.chat_txt_message = (TextView)view.findViewById(R.id.chat_txt_new_message);
             view.setTag(holder);
         }else
             holder = (ViewHolder)view.getTag();
@@ -82,6 +83,10 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             holder.user_name.setText(chat.getName());
             holder.lastMessage.setText(chat_manager.getLastMessageForChat(chat));
             holder.lastMessage_date.setText(chat_manager.getLastDateForChat(chat));
+            if(chat.isHasNewMessages())
+                holder.chat_txt_message.setVisibility(View.VISIBLE);
+            else
+                holder.chat_txt_message.setVisibility(View.INVISIBLE);
             //TODO Image Profile
             Bitmap bm = BitmapFactory.decodeResource(activity.getResources(), R.drawable.avatar);
             holder.profile.setImageDrawable(new NavigationDrawerFragment.RoundImage(bm));
@@ -95,6 +100,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
         public TextView user_name;
         public ImageView profile;
         public TextView lastMessage;
+        public TextView chat_txt_message;
         public TextView lastMessage_date;
     }
 

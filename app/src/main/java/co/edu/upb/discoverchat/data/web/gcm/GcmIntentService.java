@@ -14,8 +14,11 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
+import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 
@@ -27,20 +30,28 @@ public class GcmIntentService extends IntentService {
 
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    private static Messenger mMessenger;
+    private static Messenger messageMessenger;
+    private static Messenger chatMessenger;
+
     private String TAG = "GcmIntent";
     public GcmIntentService() {
         super("GcmIntentService");
     }
 
     public static void bindMessenger(Messenger _mMessenger) {
-        mMessenger = _mMessenger;
+        messageMessenger = _mMessenger;
     }
 
-    public static void unbindMessenger() {
-        mMessenger = null;
+    public static void unbindMessageMessenger() {
+        messageMessenger = null;
     }
 
+    public static void bindChatMessenger(Messenger chatMessenger){
+        GcmIntentService.chatMessenger = chatMessenger;
+    }
+    public static void unbindChatMessenger(){
+        GcmIntentService.chatMessenger = null;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -81,8 +92,11 @@ public class GcmIntentService extends IntentService {
                 // En los extras: {receiver: 3142946469, content: "Un mensaje bien chingon", type: text}.
                 MessageWeb web = new MessageWeb(this);
                 long id = web.receiveMessage(extras);
+                TextMessagesManager messagesManager = new TextMessagesManager(this);
+                TextMessage tm = messagesManager.get(id);
                 // Post notification of received message.
                 extras.putLong(DbBase.KEY_MESSAGE_ID, id);
+                extras.putLong(DbBase.KEY_CHAT_ID, tm.getChat_id());
                 if(updateGUI(extras))
                     sendNotification(extras.getString("content"));
                 Log.i(TAG, "Received: " + extras.toString());
@@ -93,9 +107,9 @@ public class GcmIntentService extends IntentService {
     }
 
     private boolean updateGUI(Bundle extras) {
-        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0) {
-            if(mMessenger!=null){
-                Messenger messenger = mMessenger;
+        if(extras.getLong(DbBase.KEY_MESSAGE_ID)>0)
+            if(messageMessenger !=null){
+                Messenger messenger = messageMessenger;
                 Message message = Message.obtain();
                 message.setData(extras);
                 try {
@@ -104,9 +118,9 @@ public class GcmIntentService extends IntentService {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
+            }else if(chatMessenger!=null){
+
             }
-            Object o = extras.get(MessageActivity.MESSENGER);
-        }
         return true;
     }
 

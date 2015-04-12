@@ -11,6 +11,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
 public class Chat extends Model {
     private String name;
     private boolean group = false;
+    private boolean hasNewMessages = false;
     private String roomImagePath;
     private List<Receiver> receivers;
 
@@ -23,6 +24,7 @@ public class Chat extends Model {
         this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
         this.setName(c.getString(c.getColumnIndex(DbBase.FIELD_NAME)));
         this.setRoomImagePath(c.getString(c.getColumnIndex(DbBase.KEY_ROOM_IMAGE_PATH)));
+        this.setHasNewMessages(c.getInt(c.getColumnIndex(DbBase.FIELD_READED))!=0);
     }
 
     public String getName(){
@@ -48,6 +50,12 @@ public class Chat extends Model {
         return this;
     }
 
+    public boolean isHasNewMessages() {
+        return hasNewMessages;
+    }
+    public void setHasNewMessages(boolean hasNewMessages) {
+        this.hasNewMessages = hasNewMessages;
+    }
 
     public boolean isGroup(){
         return group;
