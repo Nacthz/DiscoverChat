@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 public class Receiver extends Model {
-    private long chatId;
     private String name;
     private String phone;
 

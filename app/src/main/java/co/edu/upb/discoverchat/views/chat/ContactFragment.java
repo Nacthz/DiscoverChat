@@ -1,6 +1,7 @@
-package co.edu.upb.discoverchat.views.user;
+package co.edu.upb.discoverchat.views.chat;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Receiver;
 import co.edu.upb.discoverchat.views.chat.ChatsAdapter;
+import co.edu.upb.discoverchat.views.message.MessageActivity;
 
 /**
  * Created by felix on 10/04/2015.
@@ -46,7 +50,7 @@ public class ContactFragment extends Fragment {
 
                 r.setName(c.getString(indexName)).setPhone(c.getString(indexNumber));
                 Chat chat = new Chat();
-                List<Receiver> ress = new ArrayList();
+                List<Receiver> ress = new ArrayList<>();
                 ress.add(r);
                 chat.setReceivers(ress);
                 chat.setName(r.getName());
@@ -57,5 +61,12 @@ public class ContactFragment extends Fragment {
         contactsList = (ListView)getActivity().findViewById(R.id.chats_lst);
         adapter = new ChatsAdapter(this.getActivity(), contacts,res,this);
         contactsList.setAdapter(adapter);
+    }
+    public void onItemClick(Chat chat) {
+        Intent intent = new Intent(this.getActivity(), MessageActivity.class);
+        ChatsManager chatsManager = new ChatsManager(getActivity());
+        chat = chatsManager.makeConsistent(chat);
+        intent.putExtra(DbBase.KEY_CHAT_ID, chat.getId());
+        startActivity(intent);
     }
 }

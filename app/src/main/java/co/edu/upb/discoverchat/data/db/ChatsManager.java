@@ -117,4 +117,19 @@ public class ChatsManager extends DbBase {
         db.insert(TBL_CHATS_RECEIVERS, null, values);
         db.close();
     }
+
+    public Chat makeConsistent(Chat chat) {
+        if(chat.getId()<1){
+            Receiver r = chat.getReceivers().get(0);
+            long chat_id;
+            ReceiversManager receiversManager = new ReceiversManager(context);
+            Receiver real = receiversManager.findBy(FIELD_PHONE,r.getPhone());
+            if(real==null){
+                receiversManager.add(r);
+                real = r;
+            }
+            return getOneChatFor(real);
+        }
+        return chat;
+    }
 }

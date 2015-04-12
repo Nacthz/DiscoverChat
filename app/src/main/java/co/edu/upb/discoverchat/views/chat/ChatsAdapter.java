@@ -88,6 +88,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
             view.setOnClickListener(new OnChatClickListener(position));
         }
         return view;
+
     }
 
     public static class ViewHolder {
@@ -106,7 +107,10 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             chat = data.get(mPosition);
-            ((ChatsFragment)fragment).onItemClick(chat.getId());
+            if (fragment instanceof ChatsFragment)
+                ((ChatsFragment)fragment).onItemClick(chat.getId());
+            if(fragment instanceof  ContactFragment)
+                ((ContactFragment)fragment).onItemClick(chat);
         }
     }
 }

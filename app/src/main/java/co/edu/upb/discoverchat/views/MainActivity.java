@@ -13,7 +13,7 @@ import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.views.chat.ChatsFragment;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
-import co.edu.upb.discoverchat.views.user.ContactFragment;
+import co.edu.upb.discoverchat.views.chat.ContactFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
