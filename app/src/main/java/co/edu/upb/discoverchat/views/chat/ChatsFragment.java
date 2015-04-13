@@ -8,8 +8,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Messenger;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,11 +20,9 @@ import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
-import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
-import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
 
 public class ChatsFragment extends Fragment {
@@ -35,7 +31,6 @@ public class ChatsFragment extends Fragment {
     ChatsAdapter adapter;
     public ArrayList<Chat> chats = new ArrayList<>();
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chats, container, false);
@@ -128,7 +123,12 @@ public class ChatsFragment extends Fragment {
     public void onItemClick(Chat chat) {
         Intent intent = new Intent(this.getActivity(), MessageActivity.class);
         intent.putExtra(DbBase.KEY_CHAT_ID, chat.getId());
-        chat.setHasNewMessages(false);
+
+        for(Chat c : chats){
+            if(c.getId()==chat.getId())
+                c.setHasNewMessages(false);
+                updateUI();
+        }
         startActivity(intent);
     }
 

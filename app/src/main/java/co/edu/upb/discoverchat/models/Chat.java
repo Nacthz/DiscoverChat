@@ -14,7 +14,7 @@ public class Chat extends Model {
     private boolean hasNewMessages = false;
     private String roomImagePath;
     private List<Receiver> receivers;
-
+    Message lastMessage;
     public Chat(){
         receivers = new ArrayList<>();
     }
