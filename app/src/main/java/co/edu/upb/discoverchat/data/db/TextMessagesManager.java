@@ -72,4 +72,15 @@ public class TextMessagesManager extends MessageManager {
     }
 
 
+    public Message getLastFor(Chat chat) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(getTable(),null,KEY_CHAT_ID + " = ? ",new String[]{String.valueOf(chat.getId())},null,null,FIELD_DATE+" DESC", "1");
+
+        TextMessage message = null;
+        if(c.moveToFirst())
+            message = new TextMessage(c);
+
+        db.close();
+        return message;
+    }
 }

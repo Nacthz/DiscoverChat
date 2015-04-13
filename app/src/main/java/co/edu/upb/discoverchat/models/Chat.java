@@ -49,12 +49,17 @@ public class Chat extends Model {
             group = true;
         return this;
     }
-
     public boolean isHasNewMessages() {
         return hasNewMessages;
     }
     public void setHasNewMessages(boolean hasNewMessages) {
         this.hasNewMessages = hasNewMessages;
+    }
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+    public void setLastMessage(Message lastMessage) {
+        this.lastMessage = lastMessage;
     }
 
     public boolean isGroup(){

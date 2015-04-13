@@ -12,6 +12,7 @@ import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.Model;
 import co.edu.upb.discoverchat.models.Receiver;
+import co.edu.upb.discoverchat.models.TextMessage;
 
 /**
  * Created by hatsumora on 30/03/15.
@@ -53,6 +54,8 @@ public class ChatsManager extends DbBase {
     private void fillChat(Chat chat) {
         ReceiversManager receiversManager = new ReceiversManager(context);
         chat.setReceivers(receiversManager.getAllForChat(chat));
+        TextMessagesManager messagesManager = new TextMessagesManager(context);
+        chat.setLastMessage(messagesManager.getLastFor(chat));
     }
 
     // Deleting single chat
@@ -87,12 +90,19 @@ public class ChatsManager extends DbBase {
     }
 
     public String getLastMessageForChat(Chat chat){
-        //TODO
-        return "'Last Message'";
+        if((chat.getLastMessage())!=null){
+            String message = ((TextMessage)chat.getLastMessage()).getContent();
+            if(message.length()>20)
+                message = message.substring(0,20)+"...";
+            return  message;
+        }
+        return "";
     }
     public String getLastDateForChat(Chat chat){
         //TODO
-        return "Date";
+        if(chat.getLastMessage()!= null && chat.getLastMessage().getDate()!=null)
+            return chat.getLastMessage().getDate().toString().substring(0,10);
+        return "";
     }
 
     public Chat newForReceiver(Receiver receiver) {

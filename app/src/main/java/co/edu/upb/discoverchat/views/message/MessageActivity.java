@@ -78,7 +78,7 @@ public class MessageActivity extends Activity {
         ChatsManager chatsManager = new ChatsManager(this);
         HashMap<String, Object> udpateNew = new HashMap<>();
         udpateNew.put(DbBase.FIELD_READED, false);
-        int changes = chatsManager.update(udpateNew, DbBase.KEY_ID + " = ?", ""+chat.getId());
+        chatsManager.update(udpateNew, DbBase.KEY_ID + " = ?", ""+chat.getId());
     }
 
     private View.OnClickListener selectImage;

@@ -21,4 +21,6 @@ public abstract class MessageManager extends DbBase{
         //todo extend for group chats
         return receiversManager.getAllForChat(new ChatsManager(context).<Chat>get(chatId)).get(0).getPhone();
     }
+
+
 }
