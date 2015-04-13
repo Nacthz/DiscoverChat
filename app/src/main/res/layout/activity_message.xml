@@ -12,8 +12,8 @@ android:layout_height="fill_parent">
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/bg_messages"
             android:id="@+id/message_lst"
-            android:background="#EEEEEE"
             android:transcriptMode="alwaysScroll" />
 
 

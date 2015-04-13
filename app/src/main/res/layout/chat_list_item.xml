@@ -33,7 +33,8 @@
                 android:textColor="#ffffffff"
                 android:gravity="center_vertical|center_horizontal"
                 android:textSize="9dp"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:visibility="invisible" />
 
 
         </RelativeLayout>
