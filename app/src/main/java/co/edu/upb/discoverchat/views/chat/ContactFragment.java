@@ -32,6 +32,7 @@ public class ContactFragment extends Fragment {
     ChatsAdapter adapter;
     public ArrayList<Chat> contacts = new ArrayList<>();
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }

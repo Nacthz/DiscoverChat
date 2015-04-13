@@ -92,11 +92,16 @@ public class ChatsFragment extends Fragment {
                 Bundle bundle = msg.getData();
                 if(bundle.containsKey(DbBase.KEY_CHAT_ID)){
                     long id = bundle.getLong(DbBase.KEY_CHAT_ID);
+                    Chat _chat = null;
                     for(Chat chat: chats){
                         if(chat.getId()==id)
-                            chat.setHasNewMessages(true);
-                            updateUI();
+                            _chat= chat;
                     }
+                    _chat.setHasNewMessages(true);
+                    if(chats.remove(_chat))
+                        chats.add(0,_chat);
+
+                    updateUI();
                 }
             }
         };
