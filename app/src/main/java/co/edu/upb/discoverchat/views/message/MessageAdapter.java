@@ -78,10 +78,12 @@ public class MessageAdapter extends BaseAdapter {
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
 
                 if (message.itsMine(activity)) {
+                    holder.user_name.setText("Yo");
                     mainLayout.setGravity(Gravity.RIGHT);
-                    user_name.setTextColor(Color.parseColor("#92A95C"));
+                    user_name.setTextColor(Color.parseColor("#acbeb8"));
                     ll.setBackgroundResource(R.drawable.message_send);
                 }else{
+                    holder.user_name.setText(message.getReceiver().getName());
                     mainLayout.setGravity(Gravity.LEFT);
                     user_name.setTextColor(Color.parseColor("#BBBBBB"));
                     ll.setBackgroundResource(R.drawable.message_received);
