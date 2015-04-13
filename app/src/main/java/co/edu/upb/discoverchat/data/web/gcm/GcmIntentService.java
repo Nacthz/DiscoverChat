@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.MessageManager;
@@ -96,7 +97,7 @@ public class GcmIntentService extends IntentService {
                 TextMessage tm = messagesManager.get(id);
                 // Post notification of received message.
                 extras.putLong(DbBase.KEY_MESSAGE_ID, id);
-
+                extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
                 if(updateGUI(extras))
                     sendNotification(extras.getString("content"));
                 Log.i(TAG, "Received: " + extras.toString());
@@ -118,8 +119,17 @@ public class GcmIntentService extends IntentService {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
+            }else if(chatMessenger!=null){
+                Messenger messenger = chatMessenger;
+                Message message = Message.obtain();
+                message.setData(extras);
+                try {
+                    messenger.send(message);
+                    return false;
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
-            Object o = extras.get(MessageActivity.MESSENGER);
         }
         return true;
     }

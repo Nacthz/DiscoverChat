@@ -2,6 +2,7 @@ package co.edu.upb.discoverchat.data.web;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.ImageManager;
@@ -66,7 +68,11 @@ public class MessageWeb extends RestClient {
                 }
                 textMessage.setReceiver_id(receiver.getId());
                 Chat chat = chatsManager.getOneChatFor(receiver);
-
+                HashMap<String, Object> udpateNew = new HashMap<>();
+                udpateNew.put(DbBase.FIELD_READED, true);
+                int changes = chatsManager.update(udpateNew, DbBase.KEY_ID + " = ?", ""+chat.getId());
+                Log.w("Filas afectadas:::::", ""+changes);
+                chat.setHasNewMessages(true);
                 textMessage.setChat_id(chat.getId());
                 textMessagesManager.add(textMessage);
                 return textMessage.getId();

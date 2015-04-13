@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
@@ -58,6 +59,7 @@ public class MessageActivity extends Activity {
         loadChat();
         loadActionBar();
         setMessageList();
+        readMessages();
 
         Resources res = getResources();
         messageList = (ListView) findViewById(R.id.message_lst);
@@ -70,6 +72,13 @@ public class MessageActivity extends Activity {
         findViewById(R.id.message_send_upload_img).setOnClickListener(selectImage);
 
         scrollChat();
+    }
+
+    private void readMessages() {
+        ChatsManager chatsManager = new ChatsManager(this);
+        HashMap<String, Object> udpateNew = new HashMap<>();
+        udpateNew.put(DbBase.FIELD_READED, false);
+        int changes = chatsManager.update(udpateNew, DbBase.KEY_ID + " = ?", ""+chat.getId());
     }
 
     private View.OnClickListener selectImage;
@@ -199,7 +208,6 @@ public class MessageActivity extends Activity {
             }
         };
         GcmIntentService.bindMessenger(new Messenger(handler));
-
     }
 
     private void addNewMessage(TextMessage textMessage) {

@@ -1,13 +1,16 @@
 package co.edu.upb.discoverchat.data.db.base;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import co.edu.upb.discoverchat.models.Model;
 
@@ -196,6 +199,14 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     }
 
 
+    public int update(HashMap<String, Object> fields, String column, String condition){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        for(Map.Entry<String, Object> entry : fields.entrySet())
+            values.put(entry.getKey(),entry.getValue().toString());
+
+        return db.update(getTable(), values,column,new String[]{condition});
+    }
     protected <T extends Model> T findByField(String field, Object object, Class<T> _class){
     SQLiteDatabase db = this.getReadableDatabase();
 
@@ -212,6 +223,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public <T extends Model> T findBy(String field, Object object){
         return (T)findByField(field, object, getModelClass());
     }
+
     protected <T extends Model> T get(long id, Class<? extends Model> _class) {
         return (T)findByField(KEY_ID, id, _class);
     }
@@ -223,7 +235,6 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public int getAllCount() {
         return getAll().size();
     }
-
     private <ModelChild extends Model> ModelChild newInstanceFromCursor(Class<? extends Model> _class, Cursor cursor){
         try {
             return (ModelChild)_class.getDeclaredConstructor(Cursor.class).newInstance(cursor);

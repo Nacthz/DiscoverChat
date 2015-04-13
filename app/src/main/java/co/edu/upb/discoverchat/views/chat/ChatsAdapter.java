@@ -114,7 +114,7 @@ public class ChatsAdapter extends BaseAdapter implements View.OnClickListener {
         public void onClick(View view) {
             chat = data.get(mPosition);
             if (fragment instanceof ChatsFragment)
-                ((ChatsFragment)fragment).onItemClick(chat.getId());
+                ((ChatsFragment)fragment).onItemClick(chat);
             if(fragment instanceof  ContactFragment)
                 ((ContactFragment)fragment).onItemClick(chat);
         }
