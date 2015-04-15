@@ -48,6 +48,10 @@ public class MessageAdapter extends BaseAdapter {
         return data.size();
     }
 
+    @Override
+    public boolean isEnabled (int position) {
+        return false;
+    }
 
     public View getView(int position, View view, ViewGroup viewGroup) {
         message = null;
