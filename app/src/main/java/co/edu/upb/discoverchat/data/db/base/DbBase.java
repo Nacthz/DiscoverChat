@@ -165,10 +165,9 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected <T extends Model> List<T> getAll(Class<T> _class){
         List<T> models = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ getTable();
         SQLiteDatabase db =  this.getReadableDatabase();
 
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = getAllCursor(db);
 
         if(c.moveToFirst())
             do
@@ -244,4 +243,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         return null;
     }
     protected abstract Class getModelClass();
+
+    protected Cursor getAllCursor(SQLiteDatabase db){
+        return db.query(getTable(),null,null,null,null,null,null);
+    }
 }

@@ -143,5 +143,17 @@ public class ChatsManager extends DbBase {
         return chat;
     }
 
-
+    @Override
+    protected Cursor getAllCursor(SQLiteDatabase db) {
+        //return db.query(getTable()+" join messages on chats.id == messages.chat_id",new String[]{TBL_CHATS+".*",TBL_MESSAGES+"."+FIELD_DATE}
+        //,null,null,TBL_CHATS+"."+KEY_ID,null, FIELD_DATE);
+        return db.query(TBL_CHATS+" JOIN "+TBL_MESSAGES+" ON "+TBL_CHATS+"."+KEY_ID+"=="+TBL_MESSAGES+"."+KEY_CHAT_ID,
+                new String[]{TBL_CHATS+".*", TBL_MESSAGES+"."+FIELD_DATE},
+                null,
+                null,
+                TBL_CHATS+"."+KEY_ID,
+                null,
+                TBL_MESSAGES+"."+FIELD_DATE);
+        //return db.rawQuery("SELECT chats.*, messages.date_of FROM chats join messages on chats.id == messages.chat_id group by chats.id order by messages.date_of desc",null);
+    }
 }

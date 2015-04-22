@@ -1,13 +1,17 @@
-      73 text files.
-classified 73 files      72 unique files.                              
-       1 file ignored.
+     100 files     117 text files.
+classified 117 filesDuplicate file check 117 files (109 known unique)Unique:      100 files                                               111 unique files.                              
+Counting:  100      47 files ignored.
 
-http://cloc.sourceforge.net v 1.62  T=0.67 s (107.9 files/s, 7215.0 lines/s)
+http://cloc.sourceforge.net v 1.62  T=0.37 s (259.8 files/s, 14277.5 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                            40            575            319           2958
-XML                             32            115             31            815
+Java                            40            577            322           2983
+Ruby                            42            184            446            331
+HTML                             4             15              3            183
+YAML                             5             11             48             83
+Javascript                       2              0             15              0
+CSS                              2              0             19              0
 -------------------------------------------------------------------------------
-SUM:                            72            690            350           3773
+SUM:                            95            787            853           3580
 -------------------------------------------------------------------------------

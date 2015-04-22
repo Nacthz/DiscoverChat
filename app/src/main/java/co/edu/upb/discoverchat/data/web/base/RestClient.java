@@ -19,7 +19,7 @@ public class RestClient {
     private static final String mods = ":80/api/";
     private static final String APPLICATION_JSON = "application/json";
     private static final String registrationPath = "users.json";
-    private static String shipMessagePath = "messages/ship.json";
+    private static final String shipMessagePath = "messages/ship.json";
 
     protected static final String FIELD_IMAGE = "image";
     protected static final String FIELD_DESTINATION = "to";
