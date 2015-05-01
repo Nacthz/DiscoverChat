@@ -1,6 +1,7 @@
 package co.edu.upb.discoverchat.models;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONObject;
 
@@ -28,7 +29,12 @@ public class Image extends Model {
         return this;
     }
     public double getLongitude() {return longitude;}
-    public Bitmap getBitmap() {return bitmap;}
+    public Bitmap getBitmap() {
+        if(bitmap==null){
+            bitmap = BitmapFactory.decodeFile(path);
+        }
+        return bitmap;
+    }
 
 
     public Image setLongitude(double longitude) {

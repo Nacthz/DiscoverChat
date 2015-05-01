@@ -31,9 +31,11 @@ import java.util.HashMap;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
@@ -198,16 +200,14 @@ public class MessageActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else{
-               // image= getResize();
             }
 
             ImageMessage message = new ImageMessage(image);
-            //TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
+            ImageMessagesManager messagesManager = new ImageMessagesManager(MessageActivity.this);
             prepareMessage(message);
-            //textMessagesManager.add(message);
-            MessageWeb web = new MessageWeb(MessageActivity.this);
             message.getImage().setPath(mCurrentPhotoPath);
+            messagesManager.add(message);
+            MessageWeb web = new MessageWeb(MessageActivity.this);
             web.sendImageMessage(chat, message, null);
             messages.add(message);
 
@@ -289,8 +289,8 @@ public class MessageActivity extends Activity {
     }
 
     private void setMessageList(){
-        TextMessagesManager textMessagesManager = new TextMessagesManager(this);
-        messages.addAll(textMessagesManager.getAllBy(KEY_CHAT_ID,chat.getId()));
+        MessageManager messageManager = new MessageManager(this);
+        messages.addAll(messageManager.getAllMessagesForChat(chat));
     }
 
     public void loadActionBar(){

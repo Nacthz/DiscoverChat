@@ -118,7 +118,6 @@ public class MessageWeb extends RestClient {
         ImageMessagesManager imageMessagesManager = new ImageMessagesManager(context);
 
         Image image = message.getImage();
-        imageManager.add(image);
 
         RequestParams params = new RequestParams();
 

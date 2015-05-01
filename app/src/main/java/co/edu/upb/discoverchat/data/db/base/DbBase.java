@@ -22,20 +22,20 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 6;
+    protected static final int VERSION = 9;
     protected static final String DATABASE_NAME = "DiscoverChat";
     /**
      * All the tables presents on the application
      *
      */
     protected static final String TBL_CHATS = "chats";
-
     protected static final String TBL_RECEIVERS = "receivers";
     protected static final String TBL_CHATS_RECEIVERS = "chats_receivers";
     protected static final String TBL_USER = "user";
     protected static final String TBL_MESSAGES = "messages";
     protected static final String TBL_MESSAGE_TEXT_DETAIL = "textMessages";
     protected static final String TBL_MESSAGE_IMAGE_DETAIL = "imageMessages";
+    protected static final String VIEW_IMAGE_MESSAGE = "imageMessageView";
     protected static final String TBL_IMAGES = "images";
     /**
      * This keys are for all tables
@@ -120,17 +120,28 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         String createImageMessages =
                 "CREATE TABLE "+TBL_MESSAGE_IMAGE_DETAIL+"(" +
                         KEY_MESSAGE_ID+" INTEGER, " +
-                        KEY_IMAGE_ID+" INTEGER," +
-                        "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+")"+
+                        KEY_IMAGE_ID+" INTEGER, " +
+                        "FOREIGN KEY("+KEY_MESSAGE_ID+") REFERENCES " +TBL_MESSAGES+"("+KEY_ID+"), "+
                         "FOREIGN KEY("+KEY_IMAGE_ID+") REFERENCES " + TBL_IMAGES +"("+KEY_ID+")"+
                 ")";
         String createImages =
                 "CREATE TABLE " + TBL_IMAGES +"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
-                    FIELD_PATH_TO_IMAGE + " TEXT, " +
+                    FIELD_PATH_TO_IMAGE + " TEXT NOT NULL, " +
                     FIELD_LATITUDE + " TEXT, " +
                     FIELD_LONGITUDE + " TEXT "+
                 ")";
+        String createImageMessageView = "CREATE VIEW "+VIEW_IMAGE_MESSAGE+" AS " +
+                "SELECT " +
+                    TBL_MESSAGES+".*, " +
+                    TBL_IMAGES+"."+FIELD_PATH_TO_IMAGE+", "+
+                    TBL_IMAGES+"."+FIELD_LONGITUDE+", "+
+                    TBL_IMAGES+"."+FIELD_LATITUDE+
+                " FROM "+
+                    TBL_MESSAGES +" JOIN "+ TBL_MESSAGE_IMAGE_DETAIL +
+                        " ON " + TBL_MESSAGES+"."+KEY_ID +" == "+ TBL_MESSAGE_IMAGE_DETAIL+"."+KEY_MESSAGE_ID+
+                " JOIN "+TBL_IMAGES+" ON "+TBL_IMAGES+"."+KEY_ID+" == "+TBL_MESSAGE_IMAGE_DETAIL+"."+
+                KEY_IMAGE_ID;
 
         queryList.add(createChats);
         queryList.add(createReceivers);
@@ -140,6 +151,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         queryList.add(createTextMessages);
         queryList.add(createImageMessages);
         queryList.add(createImages);
+        queryList.add(createImageMessageView);
 
         for(String query: queryList)
             db.execSQL(query);
@@ -156,7 +168,6 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGES);
-
         // Create tables again
         onCreate(db);
     }

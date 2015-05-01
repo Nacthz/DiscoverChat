@@ -16,7 +16,7 @@ import co.edu.upb.discoverchat.exceptions.NotImplementedMethod;
  * Created by hatsumora on 30/03/15.
  * This is the base for all models
  */
-public abstract class Model {
+public abstract class Model implements Comparable {
     protected long id = -1;
     String TAG = "MODEL: ";
     public Model(){}
@@ -56,4 +56,14 @@ public abstract class Model {
         return dateFormat.format(date);
     }
 
+    public int compareTo(Object another) {
+        if(another instanceof Model) {
+            if (this.getId() < ((Model) another).getId())
+                return -1;
+            if (this.getId() > ((Model) another).getId())
+                return 1;
+            return 0;
+        }
+        return 0;
+    }
 }

@@ -24,7 +24,6 @@ public class TextMessagesManager extends MessageManager {
     public TextMessagesManager(Context context){
         super(context, DATABASE_NAME, null, VERSION);
     }
-
     @Override
     public long add(Model model) {
         TextMessage textMessage = (TextMessage)model;

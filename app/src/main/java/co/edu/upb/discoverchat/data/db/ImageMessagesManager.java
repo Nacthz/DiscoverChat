@@ -3,6 +3,9 @@ package co.edu.upb.discoverchat.data.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.List;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.MessageManager;
@@ -31,22 +34,26 @@ public class ImageMessagesManager extends MessageManager {
         values.put(KEY_RECEIVER_ID,message.getReceiver_id());
         values.put(FIELD_TYPE,message.getType().toString());
         values.put(FIELD_SENT,message.isSent());
-        long id = db.insert(TBL_MESSAGES,null,values);
+        long message_id = db.insert(TBL_MESSAGES,null,values);
         values = new ContentValues();
-        message.setId(id);
+        message.setId(message_id);
 
         values.put(FIELD_PATH_TO_IMAGE, message.getImage().getPath());
-        values.put(FIELD_LONGITUDE, message.getImage().getLongitude());
         values.put(FIELD_LATITUDE, message.getImage().getLatitude());
-        db.insert(TBL_IMAGES, null, values);
+        long image_id = db.insert(TBL_IMAGES, null, values);
 
+        values = new ContentValues();
+        values.put(KEY_MESSAGE_ID, message_id);
+        values.put(KEY_IMAGE_ID, image_id);
+        db.insert(TBL_MESSAGE_IMAGE_DETAIL,null,values);
 
-        return id;
+        db.close();
+        return message_id;
     }
 
     @Override
     public String getTable() {
-        return TBL_MESSAGES+" JOIN "+TBL_MESSAGE_IMAGE_DETAIL +" ON "+TBL_MESSAGES+"."+KEY_ID+" == " + TBL_MESSAGE_IMAGE_DETAIL +"."+KEY_MESSAGE_ID;
+        return VIEW_IMAGE_MESSAGE;
     }
 
     @Override
@@ -59,4 +66,10 @@ public class ImageMessagesManager extends MessageManager {
         return 0;
     }
 
+
+
+    @Override
+    public List<ImageMessage> getAllBy(String field, Object query) {
+        return super.getAllBy(field, query);
+    }
 }
