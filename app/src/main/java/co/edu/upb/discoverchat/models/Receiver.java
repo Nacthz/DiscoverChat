@@ -4,6 +4,8 @@ import android.database.Cursor;
 
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 public class Receiver extends Model {
@@ -36,9 +38,11 @@ public class Receiver extends Model {
         return phone;
     }
     public Receiver setPhone(String phone) {
+        phone = phone.replaceAll(" ","").trim();
+        if(phone.contains(Pattern.quote("+57"))){
+            phone = phone.substring(3);
+        }
         this.phone = phone;
-        JSONObject jsonObject=new JSONObject();
-        Receiver r = new Receiver(jsonObject);
         return this;
     }
 

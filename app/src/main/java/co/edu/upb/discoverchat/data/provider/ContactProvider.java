@@ -32,8 +32,10 @@ public class ContactProvider {
         if(c.moveToFirst()){
             int indexName = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             int indexNumber = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            if(c.getString(indexNumber).equals(phone))
-                return c.getString(indexName);
+            do
+                if(c.getString(indexNumber).trim().replaceAll(" ","").contains(phone))
+                    return c.getString(indexName);
+            while (c.moveToNext());
         }
         return null;
     }

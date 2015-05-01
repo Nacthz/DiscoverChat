@@ -24,6 +24,7 @@ import java.util.Stack;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
+import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
@@ -48,6 +49,8 @@ public class ChatsFragment extends Fragment {
         chatList = (ListView)getActivity().findViewById(R.id.chats_lst);
         adapter = new ChatsAdapter(this.getActivity(), chats,res,this);
         chatList.setAdapter(adapter);
+        ContactProvider cp = new ContactProvider(getActivity());
+        cp.nameOfPhone("3183890392");
     }
 
     public void makeGroup(){
