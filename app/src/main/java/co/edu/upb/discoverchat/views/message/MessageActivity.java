@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
@@ -127,8 +126,7 @@ public class MessageActivity extends Activity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(null);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -186,8 +184,10 @@ public class MessageActivity extends Activity {
             prepareMessage(message);
             //textMessagesManager.add(message);
             MessageWeb web = new MessageWeb(MessageActivity.this);
-            //web.sendImageMessage(chat, message, null);
+            //TODO message.getImage().setPath()
+            web.sendImageMessage(chat, message, null);
             messages.add(message);
+
             scrollChat();
 
             /*
