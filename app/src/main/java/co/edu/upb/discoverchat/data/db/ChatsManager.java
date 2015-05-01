@@ -142,7 +142,9 @@ public class ChatsManager extends DbBase {
         }
         return chat;
     }
-
+    public void updateLastFields(Chat chat){
+        fillChat(chat);
+    }
     @Override
     protected Cursor getAllCursor(SQLiteDatabase db) {
         //return db.query(getTable()+" join messages on chats.id == messages.chat_id",new String[]{TBL_CHATS+".*",TBL_MESSAGES+"."+FIELD_DATE}

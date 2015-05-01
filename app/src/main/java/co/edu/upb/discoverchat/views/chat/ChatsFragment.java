@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.android.gms.internal.ch;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -100,7 +102,13 @@ public class ChatsFragment extends Fragment {
                         if(chat.getId()==id)
                             _chat= chat;
                     }
+                    ChatsManager cm = new ChatsManager(getActivity());
+                    if(_chat==null){
+                        _chat = cm.get(id);
+                        chats.add(_chat);
+                    }
                     _chat.setHasNewMessages(true);
+                    cm.updateLastFields(_chat);
                     if(chats.remove(_chat))
                         chats.add(0,_chat);
 
