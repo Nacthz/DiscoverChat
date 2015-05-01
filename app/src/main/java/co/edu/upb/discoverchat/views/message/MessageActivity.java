@@ -181,12 +181,22 @@ public class MessageActivity extends Activity {
                 image= getResize();
             }
 
+            ImageMessage message = new ImageMessage(image);
+            //TextMessagesManager textMessagesManager = new TextMessagesManager(MessageActivity.this);
+            prepareMessage(message);
+            //textMessagesManager.add(message);
+            MessageWeb web = new MessageWeb(MessageActivity.this);
+            //web.sendImageMessage(chat, message, null);
+            messages.add(message);
+            scrollChat();
+
+            /*
             ImageMessage imageMessage= new ImageMessage(image);
             prepareMessage(imageMessage);
             MessageWeb web = new MessageWeb(MessageActivity.this);
             web.sendTextMessage(chat, imageMessage, null);
             messages.add(imageMessage);
-            scrollChat();
+            scrollChat();*/
         }
     }
 
@@ -216,7 +226,6 @@ public class MessageActivity extends Activity {
     }
 
     private View.OnClickListener sendMessage;
-
     {
         sendMessage = new View.OnClickListener() {
             @Override

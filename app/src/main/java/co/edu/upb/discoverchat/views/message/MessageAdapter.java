@@ -93,14 +93,16 @@ public class MessageAdapter extends BaseAdapter {
                     ll.setBackgroundResource(R.drawable.message_received);
                 }
 
-                if(message.getType() == Message.Type.TEXT){
-                    TextMessage tmessage = (TextMessage) message;
-                    holder.message_txt.setText(tmessage.getContent());
-                    holder.message_date.setText(tmessage.getDate().toString());
-                }else{
+                if(message.getType() == Message.Type.IMAGE){
                     ImageMessage imessage = (ImageMessage) message;
                     holder.message_img.setImageBitmap(imessage.getBitmap());
                     holder.message_date.setText(imessage.getDate().toString());
+                    holder.message_txt.setText("");
+                }else{
+                    TextMessage tmessage = (TextMessage) message;
+                    holder.message_txt.setText(tmessage.getContent());
+                    holder.message_img.setImageDrawable(null);
+                    holder.message_date.setText(tmessage.getDate().toString());
                 }
                 ll.setPadding(15,10,15,10);
             }

@@ -1,6 +1,5 @@
 package co.edu.upb.discoverchat.models;
 
-import android.database.Cursor;
 import android.graphics.Bitmap;
 
 import org.json.JSONObject;
