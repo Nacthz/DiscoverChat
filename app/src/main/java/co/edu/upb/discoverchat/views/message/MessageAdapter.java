@@ -95,14 +95,12 @@ public class MessageAdapter extends BaseAdapter {
 
                 if(message.getType() == Message.Type.IMAGE){
                     ImageMessage imessage = (ImageMessage) message;
-                    holder.message_txt.setPadding(0,0,0,0);
                     holder.message_txt.setText("");
                     holder.message_img.setImageBitmap(imessage.getBitmap());
                     holder.message_date.setText(imessage.getDate().toString());
 
                 }else{
                     TextMessage tmessage = (TextMessage) message;
-                    holder.message_txt.setPadding(0,0,0,0);
                     holder.message_txt.setText(tmessage.getContent());
                     holder.message_img.setImageDrawable(null);
                     holder.message_date.setText(tmessage.getDate().toString());

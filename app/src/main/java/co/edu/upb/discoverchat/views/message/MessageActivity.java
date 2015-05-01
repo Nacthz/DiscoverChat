@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
@@ -19,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ import static co.edu.upb.discoverchat.data.db.base.DbBase.KEY_CHAT_ID;
 
 public class MessageActivity extends Activity {
 
+    public final static int QUALITY = 80;
     ListView messageList;
     MessageAdapter adapter;
     public ArrayList<Message> messages = new ArrayList<>();
@@ -126,7 +130,9 @@ public class MessageActivity extends Activity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(null);
+        File storageDir = Environment.getExternalStorageDirectory();
+        storageDir = new File(storageDir.getPath() + "/Discoverchat");
+        storageDir.mkdir();
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -166,6 +172,23 @@ public class MessageActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             Bitmap image = null;
+            image= getResize();
+            FileOutputStream out = null;
+            try {
+                out = new FileOutputStream(mCurrentPhotoPath);
+                image.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }finally {
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
             image = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
             if(image==null){
@@ -176,7 +199,7 @@ public class MessageActivity extends Activity {
                     e.printStackTrace();
                 }
             }else{
-                image= getResize();
+               // image= getResize();
             }
 
             ImageMessage message = new ImageMessage(image);
@@ -184,7 +207,7 @@ public class MessageActivity extends Activity {
             prepareMessage(message);
             //textMessagesManager.add(message);
             MessageWeb web = new MessageWeb(MessageActivity.this);
-            //TODO message.getImage().setPath()
+            message.getImage().setPath(mCurrentPhotoPath);
             web.sendImageMessage(chat, message, null);
             messages.add(message);
 
