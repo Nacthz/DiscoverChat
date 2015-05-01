@@ -48,7 +48,8 @@
                     android:background="@null"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:text="aldo.rinconmora@hotmail.com" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -67,7 +68,8 @@
                     android:background="@null"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:text="3142946469" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -86,7 +88,8 @@
                     android:background="@null"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:text="qqqqqqqq" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -105,7 +108,8 @@
                     android:background="@null"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:text="qqqqqqqq" />
 
                 <requestFocus
                     android:layout_alignTop="@+id/btnRegisterSend"

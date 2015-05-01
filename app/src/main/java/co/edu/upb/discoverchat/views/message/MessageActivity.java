@@ -185,7 +185,7 @@ public class MessageActivity extends Activity {
             //textMessagesManager.add(message);
             MessageWeb web = new MessageWeb(MessageActivity.this);
             //TODO message.getImage().setPath()
-            web.sendImageMessage(chat, message, null);
+//            web.sendImageMessage(chat, message, null);
             messages.add(message);
 
             scrollChat();
