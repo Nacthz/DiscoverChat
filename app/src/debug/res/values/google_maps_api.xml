@@ -5,7 +5,7 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=11:19:3D:9B:40:C5:60:01:55:4F:53:10:3E:78:A1:9B:E5:1C:F1:06%3Bco.edu.upb.discoverchat.views.map
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=11:19:3D:9B:40:C5:60:01:55:4F:53:10:3E:78:A1:9B:E5:1C:F1:06%3Bco.edu.upb.discoverchat.views.map
 
     You can also add your credentials to an existing key, using this line:
     11:19:3D:9B:40:C5:60:01:55:4F:53:10:3E:78:A1:9B:E5:1C:F1:06;co.edu.upb.discoverchat.views.map
@@ -14,5 +14,5 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     string in this file.
     --></string>
 
-    <string name="google_maps_key" templateMergeStrategy="preserve">YOUR_KEY_HERE</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve">AIzaSyACQODKDuTAZRQmfkDg8oCCRCmrMXDgtqc</string>
 </resources>
