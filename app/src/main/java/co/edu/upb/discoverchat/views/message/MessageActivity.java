@@ -174,31 +174,46 @@ public class MessageActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             Bitmap image = null;
-            image= getResize();
-            FileOutputStream out = null;
-            try {
-                out = new FileOutputStream(mCurrentPhotoPath);
-                image.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }finally {
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
             image = BitmapFactory.decodeFile(mCurrentPhotoPath);
-
             if(image==null){
                 Uri selectedImageUri = data.getData();
                 try {
                     image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    FileOutputStream out = null;
+                    createImageFile();
+                    try {
+                        out = new FileOutputStream(mCurrentPhotoPath);
+                        image.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }finally {
+                        if (out != null) {
+                            try {
+                                out.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }else{
+                image= getResize();
+                FileOutputStream out = null;
+                try {
+                    out = new FileOutputStream(mCurrentPhotoPath);
+                    image.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (out != null) {
+                        try {
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -212,14 +227,6 @@ public class MessageActivity extends Activity {
             messages.add(message);
 
             scrollChat();
-
-            /*
-            ImageMessage imageMessage= new ImageMessage(image);
-            prepareMessage(imageMessage);
-            MessageWeb web = new MessageWeb(MessageActivity.this);
-            web.sendTextMessage(chat, imageMessage, null);
-            messages.add(imageMessage);
-            scrollChat();*/
         }
     }
 

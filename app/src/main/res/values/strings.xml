@@ -9,7 +9,8 @@
     <string name="chats">Chats</string>
     <string name="settings">Configuración</string>
     <string name="options">Opciones</string>
-    <string name="contacts">Contactos</string>
+    <string name="contacts">Contactos</string>}
+    <string name="profile">Perfil</string>
     <string name="myaccount">My Account</string>
     <string name="stats">Stats</string>
     <string name="search">Search</string>

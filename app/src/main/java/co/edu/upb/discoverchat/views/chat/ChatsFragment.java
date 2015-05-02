@@ -15,18 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import com.google.android.gms.internal.ch;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
-
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.provider.ContactProvider;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
@@ -36,12 +28,10 @@ public class ChatsFragment extends Fragment {
     ListView chatList;
     ChatsAdapter adapter;
     public ArrayList<Chat> chats = new ArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -51,10 +41,7 @@ public class ChatsFragment extends Fragment {
         chatList = (ListView)getActivity().findViewById(R.id.chats_lst);
         adapter = new ChatsAdapter(this.getActivity(), chats,res,this);
         chatList.setAdapter(adapter);
-        ContactProvider cp = new ContactProvider(getActivity());
-        cp.nameOfPhone("3183890392");
     }
-
     public void makeGroup(){
         LayoutInflater li = LayoutInflater.from(getActivity());
         View groupView = li.inflate(R.layout.dialog_group, null);
@@ -127,7 +114,6 @@ public class ChatsFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     public void setChatListData() {
         ChatsManager manager = new ChatsManager(getActivity());
         chats.addAll(manager.getAll());
@@ -143,8 +129,6 @@ public class ChatsFragment extends Fragment {
         }
         startActivity(intent);
     }
-
-
     public Chat advanceChat(long id){
         Chat _chat = null;
         for(Chat chat: chats){
@@ -158,14 +142,12 @@ public class ChatsFragment extends Fragment {
         }
         return _chat;
     }
-
     @Override
     public void onStart() {
         super.onStart();
         setForReceiveUpdates();
         updateUI();
     }
-
     @Override
     public void onStop() {
         GcmIntentService.unbindChatMessenger();

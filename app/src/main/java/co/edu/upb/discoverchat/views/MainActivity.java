@@ -16,6 +16,7 @@ import co.edu.upb.discoverchat.views.chat.ChatsFragment;
 import co.edu.upb.discoverchat.views.chat.ContactFragment;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
+import co.edu.upb.discoverchat.views.user.ProfileFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerCallbacks {
@@ -63,14 +64,19 @@ public class MainActivity extends ActionBarActivity
                 fragment = getFragmentManager().findFragmentByTag(ContactFragment.TAG);
                 if (fragment == null) {
                     fragment = new ContactFragment();
-                    //setMenuItems("chat");
                 }
                 getFragmentManager().beginTransaction().replace(R.id.container, fragment, ContactFragment.TAG).commit();
                 flag = false;
                 this.setTitle("Contactos");
                 break;
             case 2:
-
+                fragment = getFragmentManager().findFragmentByTag(ProfileFragment.TAG);
+                if (fragment == null) {
+                    fragment = new ProfileFragment();
+                }
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment, ProfileFragment.TAG).commit();
+                flag = false;
+                this.setTitle("Perfil");
                 break;
             case 3: //settings //todo
                 break;
