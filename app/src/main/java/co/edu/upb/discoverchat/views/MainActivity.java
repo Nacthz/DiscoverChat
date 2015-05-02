@@ -1,6 +1,7 @@
 package co.edu.upb.discoverchat.views;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +15,7 @@ import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.models.User;
 import co.edu.upb.discoverchat.views.chat.ChatsFragment;
 import co.edu.upb.discoverchat.views.chat.ContactFragment;
+import co.edu.upb.discoverchat.views.map.DiscoverActivity;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerCallbacks;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 import co.edu.upb.discoverchat.views.user.ProfileFragment;
@@ -51,7 +53,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
-            case 0: //search//todo
+            case 0: //Chats//
                 fragment = getFragmentManager().findFragmentByTag(ChatsFragment.TAG);
                 if (fragment == null) {
                     fragment = new ChatsFragment();
@@ -60,7 +62,11 @@ public class MainActivity extends ActionBarActivity
                 flag = true;
                 this.setTitle("Chats");
                 break;
-            case 1:
+            case 1: //Discover//
+                Intent intent = new Intent(this, DiscoverActivity.class);
+                startActivity(intent);
+                break;
+            case 2: //Contacts//
                 fragment = getFragmentManager().findFragmentByTag(ContactFragment.TAG);
                 if (fragment == null) {
                     fragment = new ContactFragment();
@@ -69,7 +75,7 @@ public class MainActivity extends ActionBarActivity
                 flag = false;
                 this.setTitle("Contactos");
                 break;
-            case 2:
+            case 3://Profile//
                 fragment = getFragmentManager().findFragmentByTag(ProfileFragment.TAG);
                 if (fragment == null) {
                     fragment = new ProfileFragment();
@@ -78,7 +84,7 @@ public class MainActivity extends ActionBarActivity
                 flag = false;
                 this.setTitle("Perfil");
                 break;
-            case 3: //settings //todo
+            case 4: //Settings//
                 break;
         }
     }
