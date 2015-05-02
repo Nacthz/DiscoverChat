@@ -58,4 +58,9 @@ public class TextMessage extends Message {
                 .put(DbBase.FIELD_TYPE,"text");
         return json;
     }
+
+    @Override
+    protected void parseJsonObject(JSONObject json) {
+
+    }
 }

@@ -24,7 +24,8 @@ public class Chat extends Model {
         this.setId(c.getInt(c.getColumnIndex(DbBase.KEY_ID)));
         this.setName(c.getString(c.getColumnIndex(DbBase.FIELD_NAME)));
         this.setRoomImagePath(c.getString(c.getColumnIndex(DbBase.KEY_ROOM_IMAGE_PATH)));
-        this.setHasNewMessages(c.getInt(c.getColumnIndex(DbBase.FIELD_READED))!=0);
+        boolean flag = Boolean.parseBoolean(c.getString(c.getColumnIndex(DbBase.FIELD_READED)));
+        this.setHasNewMessages(flag);
     }
 
     public String getName(){

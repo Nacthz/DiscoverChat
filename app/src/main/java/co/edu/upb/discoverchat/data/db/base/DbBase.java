@@ -18,7 +18,7 @@ import co.edu.upb.discoverchat.models.Model;
  * Created by hatsumora on 30/03/15.
  * :) i'm fucking good
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "TryFinallyCanBeTryWithResources"})
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;

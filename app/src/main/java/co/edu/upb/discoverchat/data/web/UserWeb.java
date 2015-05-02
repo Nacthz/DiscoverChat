@@ -44,4 +44,8 @@ public class UserWeb extends RestClient{
     public void setContext(Context context) {
         this.context = context;
     }
+
+    public void updateUser(String regid) {
+
+    }
 }

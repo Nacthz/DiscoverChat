@@ -54,8 +54,18 @@ public class RestClient {
                     responseHandler.handleError(errorResponse.toString());
             }
         });
+    }
 
-
+    public static void put(String url, HttpEntity entity, final HandlerJsonRequest responseHandler){
+        client.post(null,getAbsoluteUrl(url),entity,APPLICATION_JSON,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(responseHandler!=null){
+                    responseHandler.handleResponse(response);
+                }
+            }
+        });
     }
 
     public static void post(String url, RequestParams params, final HandlerJsonRequest responseHandler) {

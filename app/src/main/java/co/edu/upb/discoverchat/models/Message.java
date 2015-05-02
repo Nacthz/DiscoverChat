@@ -72,12 +72,5 @@ public abstract class Message extends Model{
         return this.receiver == null || this.receiver.getId() < 2;
 
     }
-
-
-    @Override
-    protected void parseJsonObject(JSONObject json) {
-        //TODO
-    }
-
     public abstract Type getType();
 }

@@ -14,6 +14,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
+import co.edu.upb.discoverchat.data.db.UserManager;
+import co.edu.upb.discoverchat.data.web.UserWeb;
+
 /**
  * Created by hatsumora on 1/04/15.
  * Taked from android developers guide
@@ -147,9 +150,6 @@ public class GoogleCloudMessage {
                     // is using accounts.
                     sendRegistrationIdToBackend();
 
-                    // For this demo: we don't need to send it because the device
-                    // will send upstream messages to a server that echo back the
-                    // message using the 'from' address in the message.
 
                     // Persist the registration ID - no need to register again.
                     storeRegistrationId(instance.activity, regid);
@@ -192,7 +192,9 @@ public class GoogleCloudMessage {
      * using the 'from' address in the message.
      */
     private void sendRegistrationIdToBackend() {
-        // TODO ->Your implementation here.
+        UserWeb userWeb = new UserWeb();
+        userWeb.setContext(activity);
+        userWeb.updateUser(regid);
         // Must UPDATE the google gcm if user exits
     }
 }
