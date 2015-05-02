@@ -10,11 +10,12 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imv_user_profile"
-            android:background="#ff4d7075"
-            android:layout_margin="10dp" />
+            android:background="@drawable/message_received"
+            android:layout_margin="10dp"
+            android:padding="1dp"/>
 
         <ImageView
             android:layout_width="wrap_content"

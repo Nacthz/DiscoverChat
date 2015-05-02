@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import co.edu.upb.discoverchat.R;
 
 public class ProfileFragment extends Fragment {
@@ -21,6 +23,9 @@ public class ProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //TODO poglamar
+
+        final ImageView imv_profile = (ImageView) getView().findViewById(R.id.imv_user_profile);
+        imv_profile.setImageDrawable(getResources().getDrawable(R.drawable.avatar));
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
