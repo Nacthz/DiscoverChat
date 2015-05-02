@@ -2,9 +2,6 @@ package co.edu.upb.discoverchat.data.web;
 
 import android.content.Context;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
@@ -41,7 +38,7 @@ public class UserWeb extends RestClient{
         }
 
 
-        post(context, getRegistrationPath(), entity, hanlder);
+        post(getRegistrationPath(), entity, hanlder);
     }
 
     public void setContext(Context context) {

@@ -3,15 +3,11 @@ package co.edu.upb.discoverchat.data.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.List;
 
-import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.MessageManager;
-import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.ImageMessage;
-import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.Model;
 
 /**
@@ -38,8 +34,10 @@ public class ImageMessagesManager extends MessageManager {
         values = new ContentValues();
         message.setId(message_id);
 
-        values.put(FIELD_PATH_TO_IMAGE, message.getImage().getPath());
+        values.put(FIELD_IMAGE_PATH, message.getImage().getPath());
+        values.put(FIELD_IMAGE_URL, message.getImage().getUrl());
         values.put(FIELD_LATITUDE, message.getImage().getLatitude());
+        values.put(FIELD_LONGITUDE,message.getImage().getLongitude());
         long image_id = db.insert(TBL_IMAGES, null, values);
 
         values = new ContentValues();

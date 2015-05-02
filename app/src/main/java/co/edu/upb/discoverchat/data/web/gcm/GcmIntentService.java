@@ -19,10 +19,12 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
+import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
@@ -97,6 +99,8 @@ public class GcmIntentService extends IntentService {
                 // En los extras: {receiver: 3142946469, content: "Un mensaje bien chingon", type: text}.
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(750);
+
+                Log.i(TAG, "Received: " + extras.toString());
                 try {
                     Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -106,14 +110,23 @@ public class GcmIntentService extends IntentService {
                 }
                 MessageWeb web = new MessageWeb(this);
                 long id = web.receiveMessage(extras);
-                TextMessagesManager messagesManager = new TextMessagesManager(this);
-                TextMessage tm = messagesManager.get(id);
-                // Post notification of received message.
                 extras.putLong(DbBase.KEY_MESSAGE_ID, id);
-                extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
-                if(updateGUI(extras))
-                    sendNotification(extras.getString("content"));
-                Log.i(TAG, "Received: " + extras.toString());
+                if(extras.getString("type").equals("text")) {
+                    TextMessagesManager messagesManager = new TextMessagesManager(this);
+                    TextMessage tm = messagesManager.get(id);
+                    // Post notification of received message.
+                    extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
+                    if(updateGUI(extras)){
+                        sendNotification(extras.getString("content"));
+                    }
+                }else{
+                    ImageMessagesManager imageMessagesManager = new ImageMessagesManager(this);
+                    ImageMessage imageMessage = imageMessagesManager.get(id);
+                    extras.putLong(DbBase.KEY_CHAT_ID,imageMessage.getChat_id());
+                    if(updateGUI(extras)){
+                        sendNotification(extras.getString("IMAGE"));
+                    }
+                }
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.

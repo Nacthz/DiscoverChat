@@ -4,13 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.List;
-
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.models.Image;
-import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Model;
-import co.edu.upb.discoverchat.models.TextMessage;
 
 /**
  * Created by hatsumora on 10/04/15.
@@ -39,7 +35,7 @@ public class ImageManager extends DbBase {
 
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_PATH_TO_IMAGE,imagen.getPath());
+        values.put(FIELD_IMAGE_PATH,imagen.getPath());
         values.put(FIELD_LATITUDE,imagen.getLatitude());
         values.put(FIELD_LONGITUDE, imagen.getLongitude());
 

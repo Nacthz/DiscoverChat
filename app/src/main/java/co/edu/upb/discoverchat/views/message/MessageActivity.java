@@ -232,9 +232,14 @@ public class MessageActivity extends Activity {
                 if(bundle.containsKey(DbBase.KEY_MESSAGE_ID)){
                     long id = bundle.getLong(DbBase.KEY_MESSAGE_ID);
                     if(id>0) {
-                        TextMessage textMessage = new TextMessagesManager(MessageActivity.this).get(id);
-                        if(textMessage.getChat_id()==chat.getId()){
-                            addNewMessage(textMessage);
+                        Message message=null;
+                        if(bundle.getString("type").equals("text")) {
+                            message = new TextMessagesManager(MessageActivity.this).get(id);
+                        }else{
+                            message = new ImageMessagesManager(MessageActivity.this).get(id);
+                        }
+                        if(message.getChat_id()==chat.getId()){
+                            addNewMessage(message);
                         }
                     }
                 }
@@ -243,7 +248,7 @@ public class MessageActivity extends Activity {
         GcmIntentService.bindMessenger(new Messenger(handler));
     }
 
-    private void addNewMessage(TextMessage textMessage) {
+    private void addNewMessage(Message textMessage) {
         messages.add(textMessage);
         scrollChat();
     }

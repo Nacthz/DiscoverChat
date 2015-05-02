@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.web.ImageWeb;
+import co.edu.upb.discoverchat.data.web.base.UIUpdater;
 import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
@@ -95,6 +97,16 @@ public class MessageAdapter extends BaseAdapter {
 
                 if(message.getType() == Message.Type.IMAGE){
                     ImageMessage imessage = (ImageMessage) message;
+                    if(imessage.getImage().getPath()==null || ! (imessage.getImage().getPath().length()>0)){
+                        ImageWeb imageWeb = new ImageWeb(activity);
+                        imageWeb.setUpdater(new UIUpdater() {
+                            @Override
+                            public void updateUI() {
+                                MessageAdapter.this.notifyDataSetChanged();
+                            }
+                        });
+                        imageWeb.download(imessage.getImage());
+                    }
                     holder.message_txt.setText("");
                     holder.message_img.setImageBitmap(imessage.getBitmap());
                     holder.message_date.setText(imessage.getDate().toString());

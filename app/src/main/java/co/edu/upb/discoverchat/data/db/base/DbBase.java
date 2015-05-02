@@ -22,7 +22,7 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 9;
+    protected static final int VERSION = 11;
     protected static final String DATABASE_NAME = "DiscoverChat";
     /**
      * All the tables presents on the application
@@ -58,7 +58,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public static final String FIELD_READED = "readed";
     public static final String FIELD_CONTENT = "content";
     public static final String FIELD_DATE = "date_of";
-    public static final String FIELD_PATH_TO_IMAGE = "image_path";
+    public static final String FIELD_IMAGE_PATH = "image_path";
+    public static final String FIELD_IMAGE_URL = "image_url";
     public static final String FIELD_LONGITUDE = "longitude";
     public static final String FIELD_LATITUDE = "latitude";
 
@@ -127,14 +128,17 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         String createImages =
                 "CREATE TABLE " + TBL_IMAGES +"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
-                    FIELD_PATH_TO_IMAGE + " TEXT NOT NULL, " +
+                    FIELD_IMAGE_PATH + " TEXT, " +
+                    FIELD_IMAGE_URL + " TEXT, " +
                     FIELD_LATITUDE + " TEXT, " +
                     FIELD_LONGITUDE + " TEXT "+
                 ")";
         String createImageMessageView = "CREATE VIEW "+VIEW_IMAGE_MESSAGE+" AS " +
                 "SELECT " +
                     TBL_MESSAGES+".*, " +
-                    TBL_IMAGES+"."+FIELD_PATH_TO_IMAGE+", "+
+                    TBL_IMAGES+"."+ FIELD_IMAGE_PATH +", "+
+                    TBL_IMAGES+"."+KEY_ID + " AS "+ KEY_IMAGE_ID+", "+
+                    TBL_IMAGES+"."+ FIELD_IMAGE_URL +", "+
                     TBL_IMAGES+"."+FIELD_LONGITUDE+", "+
                     TBL_IMAGES+"."+FIELD_LATITUDE+
                 " FROM "+
@@ -168,6 +172,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_TEXT_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_MESSAGE_IMAGE_DETAIL);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_IMAGES);
+        db.execSQL("DROP VIEW IF EXISTS " + VIEW_IMAGE_MESSAGE);
         // Create tables again
         onCreate(db);
     }
@@ -179,12 +184,14 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         SQLiteDatabase db =  this.getReadableDatabase();
 
         Cursor c = getAllCursor(db);
-
-        if(c.moveToFirst())
-            do
-                models.add((T)newInstanceFromCursor(_class,c));
-            while (c.moveToNext());
-
+        try {
+            if (c.moveToFirst())
+                do
+                    models.add((T) newInstanceFromCursor(_class, c));
+                while (c.moveToNext());
+        }finally {
+            c.close();
+        }
         db.close();
         return models;
     }
@@ -197,10 +204,14 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         SQLiteDatabase db =  this.getReadableDatabase();
 
         Cursor c = db.query(getTable(),null,field +" = ?", new String[]{query.toString()},null,null,null);
-        if(c.moveToFirst())
-            do
-                models.add((T)newInstanceFromCursor(_class,c));
-            while (c.moveToNext());
+        try {
+            if (c.moveToFirst())
+                do
+                    models.add((T) newInstanceFromCursor(_class, c));
+                while (c.moveToNext());
+        }finally {
+            c.close();
+        }
         db.close();
         return models;
     }
@@ -221,10 +232,15 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     SQLiteDatabase db = this.getReadableDatabase();
 
     Cursor c = db.query(getTable(),null, field + "= ? ", new String[]{String.valueOf(object)},null,null,null,null);
-    if(c != null){
-        c.moveToFirst();
+    try {
 
-        return (T)newInstanceFromCursor(_class,c);
+        if(c != null){
+            c.moveToFirst();
+            return (T)newInstanceFromCursor(_class,c);
+        }
+    }finally {
+        assert c != null;
+        c.close();
     }
     db.close();
     return null;

@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
@@ -32,9 +31,14 @@ public class ImageMessage extends Message {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        image.setPath(c.getString(c.getColumnIndex(DbBase.FIELD_PATH_TO_IMAGE)));
-    }
+        image.setId(c.getLong(c.getColumnIndex(DbBase.KEY_IMAGE_ID)));
+        image.setPath(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)));
+        image.setUrl(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_URL)));
 
+    }
+    public ImageMessage(){
+        image = new Image();
+    }
     @Override
     public Type getType() {
         return Type.IMAGE;
