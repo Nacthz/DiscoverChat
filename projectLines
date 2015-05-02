@@ -1,17 +1,19 @@
-     100 files     117 text files.
-classified 117 filesDuplicate file check 117 files (109 known unique)Unique:      100 files                                               111 unique files.                              
-Counting:  100      47 files ignored.
+     100 files     200 files     200 text files.
+classified 200 filesDuplicate file check 200 files (165 known unique)Unique:      100 files                                               175 unique files.                              
+Counting:  100      98 files ignored.
 
-http://cloc.sourceforge.net v 1.62  T=0.37 s (259.8 files/s, 14277.5 lines/s)
+http://cloc.sourceforge.net v 1.62  T=0.58 s (219.7 files/s, 11886.3 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Java                            40            577            322           2983
-Ruby                            42            184            446            331
+Java                            43            607            342           3351
+CSS                              4             17             43            729
+Ruby                            60            268            641            475
 HTML                             4             15              3            183
-YAML                             5             11             48             83
-Javascript                       2              0             15              0
-CSS                              2              0             19              0
+YAML                             7             19             59             97
+Javascript                       8             11             43             16
+CoffeeScript                     1              0              3              0
+SASS                             1              0              3              0
 -------------------------------------------------------------------------------
-SUM:                            95            787            853           3580
+SUM:                           128            937           1137           4851
 -------------------------------------------------------------------------------
