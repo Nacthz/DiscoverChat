@@ -163,6 +163,7 @@ public class ChatsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         setForReceiveUpdates();
+        updateUI();
     }
 
     @Override

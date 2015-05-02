@@ -44,7 +44,6 @@ public class MainActivity extends ActionBarActivity
 
         UserManager um = new UserManager(this);
         User user = um.get(1);
-        int a  = 2+2;
         mNavigationDrawerFragment.setUserData("User", user.getEmail(), BitmapFactory.decodeResource(getResources(), R.drawable.avatar));
     }
 

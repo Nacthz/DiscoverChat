@@ -26,6 +26,7 @@ import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
 import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.TextMessage;
+import co.edu.upb.discoverchat.views.MainActivity;
 import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 
@@ -54,9 +55,11 @@ public class GcmIntentService extends IntentService {
     }
 
     public static void bindChatMessenger(Messenger chatMessenger){
+        Log.i("Bind","Bind Chat Messenger");
         GcmIntentService.chatMessenger = chatMessenger;
     }
     public static void unbindChatMessenger(){
+        Log.i("Unbind","Unbind Chat Messenger");
         GcmIntentService.chatMessenger = null;
     }
     @Override
@@ -165,11 +168,10 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(Bundle extras) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(this, MessageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(DbBase.KEY_CHAT_ID, extras.getLong(DbBase.KEY_CHAT_ID));
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 intent, 0);
-
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
