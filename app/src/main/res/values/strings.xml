@@ -9,11 +9,12 @@
     <string name="chats">Chats</string>
     <string name="settings">Configuración</string>
     <string name="options">Opciones</string>
-    <string name="contacts">Contactos</string>}
-    <string name="profile">Perfil</string>
+    <string name="contacts">Contactos</string>
+}    <string name="profile">Perfil</string>
     <string name="myaccount">My Account</string>
     <string name="stats">Stats</string>
     <string name="search">Search</string>
+    <string name="discover">Discover</string>
     <string name="message">Chat</string>
     <string name="action_search">Search</string>
     <string name="action_filter">Filter</string>
@@ -28,5 +29,6 @@
     <string name="hint_password">Contraseña</string>
     <string name="hint_confirm_password">Confirmar contraseña</string>
     <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_discover">Discover</string>
 
 </resources>
