@@ -97,16 +97,9 @@ public class ChatsFragment extends Fragment {
                 Bundle bundle = msg.getData();
                 if(bundle.containsKey(DbBase.KEY_CHAT_ID)){
                     long id = bundle.getLong(DbBase.KEY_CHAT_ID);
-                    Chat _chat = null;
-                    for(Chat chat: chats){
-                        if(chat.getId()==id)
-                            _chat= chat;
-                    }
                     ChatsManager cm = new ChatsManager(getActivity());
-                    if(_chat==null){
-                        _chat = cm.get(id);
-                        chats.add(_chat);
-                    }
+                    Chat _chat = advanceChat(id);
+
                     _chat.setHasNewMessages(true);
                     cm.updateLastFields(_chat);
                     if(chats.remove(_chat))
@@ -151,6 +144,20 @@ public class ChatsFragment extends Fragment {
         startActivity(intent);
     }
 
+
+    public Chat advanceChat(long id){
+        Chat _chat = null;
+        for(Chat chat: chats){
+            if(chat.getId()==id)
+                _chat= chat;
+        }
+        ChatsManager cm = new ChatsManager(getActivity());
+        if(_chat==null){
+            _chat = cm.get(id);
+            chats.add(_chat);
+        }
+        return _chat;
+    }
 
     @Override
     public void onStart() {

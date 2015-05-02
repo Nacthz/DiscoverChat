@@ -117,14 +117,14 @@ public class GcmIntentService extends IntentService {
                     // Post notification of received message.
                     extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
                     if(updateGUI(extras)){
-                        sendNotification(extras.getString("content"));
+                        sendNotification(extras);
                     }
                 }else{
                     ImageMessagesManager imageMessagesManager = new ImageMessagesManager(this);
                     ImageMessage imageMessage = imageMessagesManager.get(id);
                     extras.putLong(DbBase.KEY_CHAT_ID,imageMessage.getChat_id());
                     if(updateGUI(extras)){
-                        sendNotification(extras.getString("IMAGE"));
+                        sendNotification(extras);
                     }
                 }
             }
@@ -159,21 +159,25 @@ public class GcmIntentService extends IntentService {
         }
         return true;
     }
+    private void sendNotification(String s){
 
-    private void sendNotification(String msg) {
+    }
+    private void sendNotification(Bundle extras) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
-
+        Intent intent = new Intent(this, MessageActivity.class);
+        intent.putExtra(DbBase.KEY_CHAT_ID, extras.getLong(DbBase.KEY_CHAT_ID));
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MessageActivity.class), 0);
+                intent, 0);
+
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_action_chat)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("DiscoverChat")
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
+                                .bigText(extras.getString("content")))
+                        .setContentText(extras.getString("content"));
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

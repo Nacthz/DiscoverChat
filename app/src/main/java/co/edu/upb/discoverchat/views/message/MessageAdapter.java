@@ -18,21 +18,26 @@ import java.util.ArrayList;
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.web.ImageWeb;
 import co.edu.upb.discoverchat.data.web.base.UIUpdater;
+import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.Message;
 import co.edu.upb.discoverchat.models.TextMessage;
+import co.edu.upb.discoverchat.views.chat.ChatsFragment;
+import co.edu.upb.discoverchat.views.chat.ContactFragment;
 
-public class MessageAdapter extends BaseAdapter {
+public class MessageAdapter extends BaseAdapter implements View.OnClickListener {
     private Activity activity;
     private ArrayList <Message> data;
     private static LayoutInflater inflater = null;
     public Resources res;
+    private Chat chat;
     Message message = null;
 
-    public MessageAdapter(Activity activity, ArrayList<Message> data, Resources res) {
+    public MessageAdapter(Chat chat, Activity activity, ArrayList<Message> data, Resources res) {
         this.activity = activity;
         this.data = data;
         this.res = res;
+        this.chat = chat;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -84,12 +89,14 @@ public class MessageAdapter extends BaseAdapter {
                 LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_message_main);
 
                 if (message.itsMine(activity)) {
-                    holder.user_name.setText("Yo");
+                    if(chat.isGroup())
+                        holder.user_name.setText("Yo");
                     mainLayout.setGravity(Gravity.RIGHT);
                     user_name.setTextColor(Color.parseColor("#acbeb8"));
                     ll.setBackgroundResource(R.drawable.message_send);
                 }else{
-                    holder.user_name.setText(message.getReceiver().getName());
+                    if(chat.isGroup())
+                        holder.user_name.setText(message.getReceiver().getName());
                     mainLayout.setGravity(Gravity.LEFT);
                     user_name.setTextColor(Color.parseColor("#BBBBBB"));
                     ll.setBackgroundResource(R.drawable.message_received);
@@ -118,10 +125,32 @@ public class MessageAdapter extends BaseAdapter {
                     holder.message_date.setText(tmessage.getDate().toString());
                 }
                 ll.setPadding(15,10,15,10);
+                if(!chat.isGroup()){
+                    holder.user_name.setHeight(3);
+                    holder.user_name.setMaxHeight(3);
+                }
             }
         }
+        view.setOnClickListener(new OnMessageClickListener(position));
         return view;
     }
+
+    public class OnMessageClickListener implements View.OnClickListener{
+        private int mPosition;
+        private OnMessageClickListener(int mPosition) {
+            this.mPosition = mPosition;
+        }
+
+        @Override
+        public void onClick(View v) {
+            message = data.get(mPosition);
+            if(activity instanceof MessageActivity){
+                ((MessageActivity)activity).onItemClick(message);
+            }
+        }
+    }
+    @Override
+    public void onClick(View v) {}
 
     public static class ViewHolder {
         public TextView user_name;

@@ -70,7 +70,7 @@ public class MessageActivity extends Activity {
         messageList = (ListView) findViewById(R.id.message_lst);
         messageList.setDivider(null);
         messageList.setDividerHeight(0);
-        adapter = new MessageAdapter(this, messages,res);
+        adapter = new MessageAdapter(chat, this, messages,res);
 
         messageList.setAdapter(adapter);
         findViewById(R.id.message_send_btn).setOnClickListener(sendMessage);
@@ -232,7 +232,7 @@ public class MessageActivity extends Activity {
                 if(bundle.containsKey(DbBase.KEY_MESSAGE_ID)){
                     long id = bundle.getLong(DbBase.KEY_MESSAGE_ID);
                     if(id>0) {
-                        Message message=null;
+                        Message message;
                         if(bundle.getString("type").equals("text")) {
                             message = new TextMessagesManager(MessageActivity.this).get(id);
                         }else{
@@ -290,7 +290,10 @@ public class MessageActivity extends Activity {
     }
     private void loadChat() {
         Bundle extras = getIntent().getExtras();
-        chat = new ChatsManager(this).get(extras.getLong(KEY_CHAT_ID));
+        if(extras.containsKey(KEY_CHAT_ID));{
+            long id = extras.getLong(KEY_CHAT_ID);
+            chat = new ChatsManager(this).get(id);}
+
     }
 
     private void setMessageList(){
@@ -340,5 +343,17 @@ public class MessageActivity extends Activity {
     protected void onStart() {
         super.onStart();
         setForReceiveUpdates();
+    }
+
+    public void onItemClick(Message message) {
+        if(message.getType() == Message.Type.IMAGE){
+            ImageMessage imageMessage = (ImageMessage)message;
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            String path = "file://" + imageMessage.getImage().getPath();
+            intent.setDataAndType(Uri.parse(path), "image/*");
+            startActivity(intent);
+        }
+
     }
 }

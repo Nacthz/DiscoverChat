@@ -131,7 +131,6 @@ public class ChatsManager extends DbBase {
     public Chat makeConsistent(Chat chat) {
         if(chat.getId()<1){
             Receiver r = chat.getReceivers().get(0);
-            long chat_id;
             ReceiversManager receiversManager = new ReceiversManager(context);
             Receiver real = receiversManager.findBy(FIELD_PHONE,r.getPhone());
             if(real==null){
@@ -147,15 +146,12 @@ public class ChatsManager extends DbBase {
     }
     @Override
     protected Cursor getAllCursor(SQLiteDatabase db) {
-        //return db.query(getTable()+" join messages on chats.id == messages.chat_id",new String[]{TBL_CHATS+".*",TBL_MESSAGES+"."+FIELD_DATE}
-        //,null,null,TBL_CHATS+"."+KEY_ID,null, FIELD_DATE);
-        return db.query(TBL_CHATS+" JOIN "+TBL_MESSAGES+" ON "+TBL_CHATS+"."+KEY_ID+"=="+TBL_MESSAGES+"."+KEY_CHAT_ID,
+        return   db.query(TBL_CHATS+" JOIN "+TBL_MESSAGES+" ON "+TBL_CHATS+"."+KEY_ID+"=="+TBL_MESSAGES+"."+KEY_CHAT_ID,
                 new String[]{TBL_CHATS+".*", TBL_MESSAGES+"."+FIELD_DATE},
                 null,
                 null,
                 TBL_CHATS+"."+KEY_ID,
                 null,
-                TBL_MESSAGES+"."+FIELD_DATE);
-        //return db.rawQuery("SELECT chats.*, messages.date_of FROM chats join messages on chats.id == messages.chat_id group by chats.id order by messages.date_of desc",null);
+                TBL_MESSAGES+"."+FIELD_DATE+" DESC");
     }
 }
