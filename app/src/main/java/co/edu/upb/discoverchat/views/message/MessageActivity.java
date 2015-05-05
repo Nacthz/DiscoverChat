@@ -12,12 +12,16 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Messenger;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,15 +32,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ImageManager;
 import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
+import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.data.web.gcm.GcmIntentService;
 import co.edu.upb.discoverchat.models.Chat;
 import co.edu.upb.discoverchat.models.ImageMessage;
@@ -45,6 +52,7 @@ import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.navigation.NavigationDrawerFragment;
 
 import static co.edu.upb.discoverchat.data.db.base.DbBase.KEY_CHAT_ID;
+import static co.edu.upb.discoverchat.data.db.base.DbBase.KEY_ID;
 
 public class MessageActivity extends Activity {
 
@@ -171,7 +179,7 @@ public class MessageActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             Bitmap image = null;
             image = BitmapFactory.decodeFile(mCurrentPhotoPath);
@@ -223,7 +231,7 @@ public class MessageActivity extends Activity {
             message.getImage().setPath(mCurrentPhotoPath);
             messagesManager.add(message);
             MessageWeb web = new MessageWeb(MessageActivity.this);
-            web.sendImageMessage(chat, message, null);
+            web.sendImageMessage(message, null);
             messages.add(message);
 
             scrollChat();
@@ -274,7 +282,7 @@ public class MessageActivity extends Activity {
                     message.setContent(content);
                     textMessagesManager.add(message);
                     MessageWeb web = new MessageWeb(MessageActivity.this);
-                    web.sendTextMessage(chat, message, null);
+                    web.sendTextMessage(message, null);
                     messages.add(message);
                     messageETxt.setText("");
                     scrollChat();

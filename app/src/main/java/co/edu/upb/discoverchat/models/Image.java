@@ -1,38 +1,52 @@
 package co.edu.upb.discoverchat.models;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.regex.Pattern;
-
-import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 
 /**
  * Created by hatsumora on 10/04/15.
+ *
  */
 public class Image extends Model {
     private String path;
     private String url;
+    private long serverID;
     private double latitude;
     private double longitude;
     private Bitmap bitmap;
+
+    public Image(Cursor c) {
+        base(c,false);
+    }
+    public Image(){
+
+    }
+    public Image(Cursor c, boolean flag ) {
+        base(c, flag);
+    }
+    private void base(Cursor c, boolean flag){
+        if(flag)
+            this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_IMAGE_ID)));
+        else
+            this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
+        if (c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)>-1)
+            this.setPath(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)));
+        if (c.getColumnIndex(DbBase.FIELD_IMAGE_URL)>-1)
+            this.setUrl(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_URL)));
+        if (c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)>-1)
+            this.setServerID(c.getLong(c.getColumnIndex(DbBase.KEY_SERVER_MODEL_ID)));
+    }
+    public long getServerID() {
+        return serverID;
+    }
+    public void setServerID(long serverID) {
+        this.serverID = serverID;
+    }
 
     public String getPath() {
         return path;

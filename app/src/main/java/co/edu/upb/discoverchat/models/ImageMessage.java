@@ -21,7 +21,7 @@ public class ImageMessage extends Message {
         image.setBitmap(bitmap);
     }
     public ImageMessage(Cursor c ){
-        image = new Image();
+        image = new Image(c, true);
         this.setId(c.getLong(c.getColumnIndex(DbBase.KEY_ID)));
         this.setChat_id(c.getLong(c.getColumnIndex(DbBase.KEY_CHAT_ID)));
         this.setReceiver_id(c.getLong(c.getColumnIndex(DbBase.KEY_RECEIVER_ID)));
@@ -31,10 +31,6 @@ public class ImageMessage extends Message {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        image.setId(c.getLong(c.getColumnIndex(DbBase.KEY_IMAGE_ID)));
-        image.setPath(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)));
-        image.setUrl(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_URL)));
-
     }
     public ImageMessage(){
         image = new Image();

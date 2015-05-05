@@ -22,12 +22,13 @@ import co.edu.upb.discoverchat.models.Model;
 public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
 
     protected Context context;
-    protected static final int VERSION = 11;
+    protected static final int VERSION = 12;
     protected static final String DATABASE_NAME = "DiscoverChat";
     /**
      * All the tables presents on the application
      *
      */
+
     protected static final String TBL_CHATS = "chats";
     protected static final String TBL_RECEIVERS = "receivers";
     protected static final String TBL_CHATS_RECEIVERS = "chats_receivers";
@@ -47,8 +48,9 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     public static final String KEY_RECEIVER_ID = "receiver_id";
     public static final String KEY_MESSAGE_ID = "message_id";
     public static final String KEY_IMAGE_ID = "image_id";
-    public static final String FIELD_NAME = "name";
+    public static final String KEY_SERVER_MODEL_ID  = "server_id";
 
+    public static final String FIELD_NAME = "name";
     public static final String FIELD_EMAIL = "email";
     public static final String FIELD_PHONE = "phone";
     public static final String FIELD_GOOGLE_CLOUD_MESSAGE = "google_cloud_message";
@@ -128,6 +130,7 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         String createImages =
                 "CREATE TABLE " + TBL_IMAGES +"(" +
                     KEY_ID + " INTEGER PRIMARY KEY, " +
+                    KEY_SERVER_MODEL_ID + " INTEGER, " +
                     FIELD_IMAGE_PATH + " TEXT, " +
                     FIELD_IMAGE_URL + " TEXT, " +
                     FIELD_LATITUDE + " TEXT, " +

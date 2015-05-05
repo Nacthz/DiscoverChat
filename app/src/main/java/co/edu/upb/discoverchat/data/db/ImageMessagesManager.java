@@ -40,6 +40,7 @@ public class ImageMessagesManager extends MessageManager {
         values.put(FIELD_LONGITUDE,message.getImage().getLongitude());
         long image_id = db.insert(TBL_IMAGES, null, values);
 
+        message.getImage().setId(image_id);
         values = new ContentValues();
         values.put(KEY_MESSAGE_ID, message_id);
         values.put(KEY_IMAGE_ID, image_id);

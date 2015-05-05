@@ -1,20 +1,12 @@
 package co.edu.upb.discoverchat.data.web;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
@@ -24,20 +16,18 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.edu.upb.discoverchat.data.db.ChatsManager;
+import co.edu.upb.discoverchat.data.db.ImageManager;
 import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.ReceiversManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.UserManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.provider.ContactProvider;
+import co.edu.upb.discoverchat.data.provider.UbicationProvider;
 import co.edu.upb.discoverchat.data.web.base.HandlerJsonRequest;
 import co.edu.upb.discoverchat.data.web.base.RestClient;
 import co.edu.upb.discoverchat.models.Chat;
@@ -55,14 +45,15 @@ public class MessageWeb extends RestClient {
     private Context context;
     ReceiversManager receiversManager;
     ChatsManager chatsManager;
+    private UserManager userManager;
     public MessageWeb(Context context){
         this.context = context;
+        chatsManager = new ChatsManager(context);
+        receiversManager = new ReceiversManager(context);
+        userManager = new UserManager(context);
     }
 
     public long receiveMessage(Bundle extras){
-        chatsManager = new ChatsManager(context);
-        receiversManager = new ReceiversManager(context);
-
         Receiver receiver;
         receiver = receiversManager.findBy(ReceiversManager.FIELD_PHONE, extras.get("receiver"));
         if(receiver==null){
@@ -107,7 +98,7 @@ public class MessageWeb extends RestClient {
         {message: {to: 3142946469, content: "Mensaje de Luis David para aldo :)", type: "text"}}
         ]
     }*/
-    public synchronized void sendTextMessage(Chat chat, Message message, final HandlerJsonRequest handlerJsonRequest){
+    public synchronized void sendTextMessage(Message message, final HandlerJsonRequest handlerJsonRequest){
         JSONObject request = new JSONObject();
         JSONArray messages = new JSONArray();
         ArrayList<Message> pendingMessages = new ArrayList<>();
@@ -120,9 +111,10 @@ public class MessageWeb extends RestClient {
         }
         try {
             for(Message m: pendingMessages)
-                messages.put(new JSONObject().put("message",m.toJson().put(FIELD_DESTINATION,textMessagesManager.phoneDestination(m))));
+                messages.put(new JSONObject().put("message",m.toJson().put(FIELD_DESTINATION, textMessagesManager != null ? textMessagesManager.phoneDestination(m) : null)));
 
             addAuthenticate(request);
+            addCurrentLocation(request);
             request.put("messages",messages);
             entity = new StringEntity(request.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -132,18 +124,14 @@ public class MessageWeb extends RestClient {
 
         post(getShipMessagePath(),entity,handlerJsonRequest);
     }
-    public synchronized void sendImageMessage(Chat chat, ImageMessage message, final HandlerJsonRequest handlerJsonRequest){
-        UserManager userManager = new UserManager(context);
-
+    public synchronized void sendImageMessage(ImageMessage message, final HandlerJsonRequest handlerJsonRequest){
         ImageMessagesManager imageMessagesManager = new ImageMessagesManager(context);
-        Image image = message.getImage();
-
+        final Image image = message.getImage();
+        Log.e("ID", ""+image.getId());
         RequestParams params = new RequestParams();
 
         File imageFile = new File(image.getPath());
         try {
-            RequestParams imageParam = new RequestParams();
-
             params.put(FIELD_IMAGE,imageFile);
             params.put(DbBase.FIELD_LONGITUDE,image.getLongitude());
             params.put(DbBase.FIELD_LATITUDE,image.getLatitude());
@@ -152,8 +140,29 @@ public class MessageWeb extends RestClient {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        params.put(DbBase.KEY_AUTHENTICATION_TOKEN,userManager.getToken());
-        post(RestClient.getImageMessagePath(),params,handlerJsonRequest);
+        addAuthenticate(params);
+        addCurrentLocation(params);
+        post(RestClient.getImageMessagePath(),params,new HandlerJsonRequest() {
+            @Override
+            public void handleResponse(JSONObject response) {
+                if(handlerJsonRequest!=null)
+                    handlerJsonRequest.handleResponse(response);
+                ImageManager imageManager = new ImageManager(context);
+                HashMap<String, Object> hashMap = new HashMap<>();
+                try {
+                    hashMap.put(DbBase.KEY_SERVER_MODEL_ID, response.getLong(DbBase.KEY_ID));
+                    imageManager.update(hashMap, DbBase.KEY_ID+" = ?", String.valueOf(image.getId()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void handleError(String err) {
+                if(handlerJsonRequest!=null)
+                    handlerJsonRequest.handleError(err);
+            }
+        });
     }
 
     private Receiver receiverFromBundle(Bundle extras){
@@ -165,7 +174,28 @@ public class MessageWeb extends RestClient {
         return receiver;
     }
     private void addAuthenticate(JSONObject request) throws JSONException {
-        UserManager userManager = new UserManager(context);
         request.put(DbBase.KEY_AUTHENTICATION_TOKEN, userManager.getToken());
     }
+    private void addAuthenticate(RequestParams request)  {
+        request.put(DbBase.KEY_AUTHENTICATION_TOKEN,userManager.getToken());
+    }
+    private synchronized  void addCurrentLocation(JSONObject request) throws JSONException{
+        UbicationProvider ubicationProvider = UbicationProvider.getInstace(context);
+        Location location = ubicationProvider.getLocation();
+        if(location!=null){
+            request.put(DbBase.FIELD_LATITUDE, location.getLatitude());
+            request.put(DbBase.FIELD_LONGITUDE,location.getLongitude());
+        }
+    }
+    private synchronized void addCurrentLocation(RequestParams request){
+        UbicationProvider ubicationProvider = UbicationProvider.getInstace(context);
+        Location location = ubicationProvider.getLocation();
+        if(location!=null) {
+            request.put(DbBase.FIELD_LATITUDE, location.getLatitude());
+            request.put(DbBase.FIELD_LONGITUDE, location.getLongitude());
+
+        }
+    }
+
+
 }
