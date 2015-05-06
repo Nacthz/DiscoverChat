@@ -1,36 +1,25 @@
 package co.edu.upb.discoverchat.models;
 
+import android.graphics.Bitmap;
+
 public class MyMarker
 {
-    private String mLabel;
-    private String mIcon;
+    private Bitmap mIcon;
     private Double mLatitude;
     private Double mLongitude;
 
-    public MyMarker(String label, String icon, Double latitude, Double longitude)
+    public MyMarker(Bitmap icon, Double latitude, Double longitude)
     {
-        this.mLabel = label;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mIcon = icon;
     }
-
-    public String getmLabel()
-    {
-        return mLabel;
-    }
-
-    public void setmLabel(String mLabel)
-    {
-        this.mLabel = mLabel;
-    }
-
-    public String getmIcon()
+    public Bitmap getmIcon()
     {
         return mIcon;
     }
 
-    public void setmIcon(String icon)
+    public void setmIcon(Bitmap icon)
     {
         this.mIcon = icon;
     }

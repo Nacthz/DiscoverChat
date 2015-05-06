@@ -1,15 +1,17 @@
 package co.edu.upb.discoverchat.views.map;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,6 +24,7 @@ import co.edu.upb.discoverchat.models.MyMarker;
 
 public class DiscoverActivity extends Activity
 {
+    private static Double latitude, longitude;
     private GoogleMap mMap;
     private ArrayList<MyMarker> mMyMarkersArray = new ArrayList<MyMarker>();
     private HashMap<Marker, MyMarker> mMarkersHashMap;
@@ -33,20 +36,22 @@ public class DiscoverActivity extends Activity
         setContentView(R.layout.activity_discover);
 
         // Initialize the HashMap for Markers and MyMarker object
-        mMarkersHashMap = new HashMap<Marker, MyMarker>();
 
-        mMyMarkersArray.add(new MyMarker("Brasil", "icon1", Double.parseDouble("-28.5971788"), Double.parseDouble("-52.7309824")));
-        mMyMarkersArray.add(new MyMarker("United States", "icon2", Double.parseDouble("33.7266622"), Double.parseDouble("-87.1469829")));
-        mMyMarkersArray.add(new MyMarker("Canada", "icon3", Double.parseDouble("51.8917773"), Double.parseDouble("-86.0922954")));
-        mMyMarkersArray.add(new MyMarker("England", "icon4", Double.parseDouble("52.4435047"), Double.parseDouble("-3.4199249")));
-        mMyMarkersArray.add(new MyMarker("EspaÃ±a", "icon5", Double.parseDouble("41.8728262"), Double.parseDouble("-0.2375882")));
-        mMyMarkersArray.add(new MyMarker("Portugal", "icon6", Double.parseDouble("40.8316649"), Double.parseDouble("-4.936009")));
-        mMyMarkersArray.add(new MyMarker("Deutschland", "icon7", Double.parseDouble("51.1642292"), Double.parseDouble("10.4541194")));
-        mMyMarkersArray.add(new MyMarker("Atlantic Ocean", "icondefault", Double.parseDouble("-13.1294607"), Double.parseDouble("-19.9602353")));
+        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
+
+        mMarkersHashMap = new HashMap<Marker, MyMarker>();
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("-28.5971788"), Double.parseDouble("-52.7309824")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("33.7266622"), Double.parseDouble("-87.1469829")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("51.8917773"), Double.parseDouble("-86.0922954")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("52.4435047"), Double.parseDouble("-3.4199249")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("41.8728262"), Double.parseDouble("-0.2375882")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("40.8316649"), Double.parseDouble("-4.936009")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("51.1642292"), Double.parseDouble("10.4541194")));
+        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("-13.1294607"), Double.parseDouble("-19.9602353")));
 
         setUpMap();
-
         plotMarkers(mMyMarkersArray);
+        centerMe();
     }
 
     private void plotMarkers(ArrayList<MyMarker> markers)
@@ -55,11 +60,8 @@ public class DiscoverActivity extends Activity
         {
             for (MyMarker myMarker : markers)
             {
-
                 // Create user marker with custom icon and other options
                 MarkerOptions markerOption = new MarkerOptions().position(new LatLng(myMarker.getmLatitude(), myMarker.getmLongitude()));
-                markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.avatar));
-
                 Marker currentMarker = mMap.addMarker(markerOption);
                 mMarkersHashMap.put(currentMarker, myMarker);
 
@@ -67,30 +69,21 @@ public class DiscoverActivity extends Activity
             }
         }
     }
+    private void centerMe(){
 
-    private int manageMarkerIcon(String markerIcon)
-    {
-        if (markerIcon.equals("icon1"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon2"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon3"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon4"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon5"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon6"))
-            return R.drawable.avatar;
-        else if(markerIcon.equals("icon7"))
-            return R.drawable.avatar;
-        else
-            return R.drawable.avatar;
+        mMap.setMyLocationEnabled(true);
+        Location location = mMap.getMyLocation();
+
+        //TODO Locaction siempre nulo
+        if (location != null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), 12.0f));
+        }
     }
-
 
     private void setUpMap()
     {
+
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null)
         {
@@ -110,6 +103,7 @@ public class DiscoverActivity extends Activity
                         return true;
                     }
                 });
+
             }
             else
                 Toast.makeText(getApplicationContext(), "Unable to create Maps", Toast.LENGTH_SHORT).show();
@@ -132,20 +126,9 @@ public class DiscoverActivity extends Activity
         public View getInfoContents(Marker marker)
         {
             View v  = getLayoutInflater().inflate(R.layout.infowindow_layout, null);
-
             MyMarker myMarker = mMarkersHashMap.get(marker);
-
             ImageView markerIcon = (ImageView) v.findViewById(R.id.marker_icon);
-
-            TextView markerLabel = (TextView)v.findViewById(R.id.marker_label);
-
-            TextView anotherLabel = (TextView)v.findViewById(R.id.another_label);
-
-            markerIcon.setImageResource(manageMarkerIcon(myMarker.getmIcon()));
-
-            markerLabel.setText(myMarker.getmLabel());
-            anotherLabel.setText("A custom text");
-
+            markerIcon.setImageBitmap(myMarker.getmIcon());
             return v;
         }
     }
