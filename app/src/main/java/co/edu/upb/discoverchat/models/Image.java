@@ -3,6 +3,7 @@ package co.edu.upb.discoverchat.models;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -38,8 +39,9 @@ public class Image extends Model {
             this.setPath(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)));
         if (c.getColumnIndex(DbBase.FIELD_IMAGE_URL)>-1)
             this.setUrl(c.getString(c.getColumnIndex(DbBase.FIELD_IMAGE_URL)));
-        if (c.getColumnIndex(DbBase.FIELD_IMAGE_PATH)>-1)
+        if (c.getColumnIndex(DbBase.KEY_SERVER_MODEL_ID)>-1)
             this.setServerID(c.getLong(c.getColumnIndex(DbBase.KEY_SERVER_MODEL_ID)));
+
     }
     public long getServerID() {
         return serverID;

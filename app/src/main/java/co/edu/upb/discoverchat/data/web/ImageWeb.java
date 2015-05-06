@@ -73,8 +73,7 @@ public class ImageWeb extends RestClient{
                 try {
                     inputStream = entity.getContent();
                     Log.e("MSG", inputStream.toString());
-                    final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    return bitmap;
+                    return BitmapFactory.decodeStream(inputStream);
                 } finally {
                     if (inputStream != null) {
                         inputStream.close();
@@ -83,14 +82,10 @@ public class ImageWeb extends RestClient{
                 }
             }
         } catch (Exception e) {
-            // Could provide a more explicit error message for IOException or
-            // IllegalStateException
             e.printStackTrace();
             getRequest.abort();
         } finally {
-            if (client != null) {
-                client.close();
-            }
+            client.close();
         }
         return null;
     }

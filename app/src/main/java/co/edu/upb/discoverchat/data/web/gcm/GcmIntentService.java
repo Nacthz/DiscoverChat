@@ -18,16 +18,13 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import co.edu.upb.discoverchat.data.db.ChatsManager;
 import co.edu.upb.discoverchat.data.db.ImageMessagesManager;
 import co.edu.upb.discoverchat.data.db.TextMessagesManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
-import co.edu.upb.discoverchat.data.db.base.MessageManager;
 import co.edu.upb.discoverchat.data.web.MessageWeb;
 import co.edu.upb.discoverchat.models.ImageMessage;
 import co.edu.upb.discoverchat.models.TextMessage;
 import co.edu.upb.discoverchat.views.MainActivity;
-import co.edu.upb.discoverchat.views.message.MessageActivity;
 import co.edu.upb.discoverchat.R;
 
 /**
@@ -111,24 +108,32 @@ public class GcmIntentService extends IntentService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                MessageWeb web = new MessageWeb(this);
-                long id = web.receiveMessage(extras);
-                extras.putLong(DbBase.KEY_MESSAGE_ID, id);
-                if(extras.getString("type").equals("text")) {
-                    TextMessagesManager messagesManager = new TextMessagesManager(this);
-                    TextMessage tm = messagesManager.get(id);
-                    // Post notification of received message.
-                    extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
-                    if(updateGUI(extras)){
-                        sendNotification(extras);
+                if(extras.containsKey(DbBase.FIELD_TYPE)){
+                    if(extras.getString(DbBase.FIELD_TYPE)==DbBase.TAG_IMAGES_UPDATE){
+                        return;
                     }
-                }else{
-                    ImageMessagesManager imageMessagesManager = new ImageMessagesManager(this);
-                    ImageMessage imageMessage = imageMessagesManager.get(id);
-                    extras.putLong(DbBase.KEY_CHAT_ID,imageMessage.getChat_id());
-                    if(updateGUI(extras)){
-                        sendNotification(extras);
+                    if(extras.getString(DbBase.FIELD_TYPE).equals("text" ) || extras.getString(DbBase.FIELD_TYPE).equals("image") ){
+                        MessageWeb web = new MessageWeb(this);
+                        long id = web.receiveMessage(extras);
+                        extras.putLong(DbBase.KEY_MESSAGE_ID, id);
+                        if(extras.getString("type").equals("text")) {
+                            TextMessagesManager messagesManager = new TextMessagesManager(this);
+                            TextMessage tm = messagesManager.get(id);
+                            extras.putLong(DbBase.KEY_CHAT_ID,tm.getChat_id());
+                            if(updateGUI(extras)){
+                                sendNotification(extras);
+                            }
+                        }else{
+                            ImageMessagesManager imageMessagesManager = new ImageMessagesManager(this);
+                            ImageMessage imageMessage = imageMessagesManager.get(id);
+                            extras.putLong(DbBase.KEY_CHAT_ID,imageMessage.getChat_id());
+                            if(updateGUI(extras)){
+                                sendNotification(extras);
+                            }
+                        }
+                        return;
                     }
+
                 }
             }
         }
@@ -163,7 +168,7 @@ public class GcmIntentService extends IntentService {
         return true;
     }
     private void sendNotification(String s){
-
+        Log.e("Notification",s);
     }
     private void sendNotification(Bundle extras) {
         mNotificationManager = (NotificationManager)

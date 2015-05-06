@@ -38,6 +38,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
     protected static final String TBL_MESSAGE_IMAGE_DETAIL = "imageMessages";
     protected static final String VIEW_IMAGE_MESSAGE = "imageMessageView";
     protected static final String TBL_IMAGES = "images";
+
+    public static final String TAG_IMAGES_UPDATE = "images_update";
     /**
      * This keys are for all tables
      */
@@ -210,7 +212,8 @@ public abstract class DbBase extends SQLiteOpenHelper implements DbInterface {
         try {
             if (c.moveToFirst())
                 do
-                    models.add((T) newInstanceFromCursor(_class, c));
+                    if(!c.isClosed())
+                        models.add((T) newInstanceFromCursor(_class, c));
                 while (c.moveToNext());
         }finally {
             c.close();
