@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.edu.upb.discoverchat.R;
+import co.edu.upb.discoverchat.data.provider.UbicationProvider;
+import co.edu.upb.discoverchat.data.web.ImageWeb;
+import co.edu.upb.discoverchat.data.web.base.UIUpdater;
+import co.edu.upb.discoverchat.models.Image;
 import co.edu.upb.discoverchat.models.MyMarker;
 
 public class DiscoverActivity extends Activity
@@ -39,18 +43,28 @@ public class DiscoverActivity extends Activity
 
         Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.avatar);
 
-        mMarkersHashMap = new HashMap<Marker, MyMarker>();
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("-28.5971788"), Double.parseDouble("-52.7309824")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("33.7266622"), Double.parseDouble("-87.1469829")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("51.8917773"), Double.parseDouble("-86.0922954")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("52.4435047"), Double.parseDouble("-3.4199249")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("41.8728262"), Double.parseDouble("-0.2375882")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("40.8316649"), Double.parseDouble("-4.936009")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("51.1642292"), Double.parseDouble("10.4541194")));
-        mMyMarkersArray.add(new MyMarker(image, Double.parseDouble("-13.1294607"), Double.parseDouble("-19.9602353")));
 
+
+        mMarkersHashMap = new HashMap<Marker, MyMarker>();
+        ImageWeb web = new ImageWeb(this);
+        web.getClosestImages(new UIUpdater() {
+            @Override
+            public void updateUI() {
+            }
+
+            @Override
+            public void updateUI(ArrayList<Image> images) {
+                super.updateUI(images);
+                for(Image image: images){
+                    mMyMarkersArray.add(new MyMarker(image));
+                    ImageWeb imageWeb = new ImageWeb(DiscoverActivity.this);
+                    imageWeb.download(image);
+                }
+                plotMarkers(mMyMarkersArray);
+
+            }
+        });
         setUpMap();
-        plotMarkers(mMyMarkersArray);
         centerMe();
     }
 
@@ -72,7 +86,8 @@ public class DiscoverActivity extends Activity
     private void centerMe(){
 
         mMap.setMyLocationEnabled(true);
-        Location location = mMap.getMyLocation();
+        UbicationProvider ubicationProvider = UbicationProvider.getInstace(this);
+        Location location = ubicationProvider.getLocation();
 
         //TODO Locaction siempre nulo
         if (location != null) {

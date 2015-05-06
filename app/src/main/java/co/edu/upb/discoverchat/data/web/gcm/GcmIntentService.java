@@ -112,7 +112,7 @@ public class GcmIntentService extends IntentService {
                     if(extras.getString(DbBase.FIELD_TYPE)==DbBase.TAG_IMAGES_UPDATE){
                         return;
                     }
-                    if(extras.getString(DbBase.FIELD_TYPE).equals("text" ) || extras.getString(DbBase.FIELD_TYPE).equals("image") ){
+                    if(extras.getString(DbBase.FIELD_TYPE).equals("text" ) || extras.getString(DbBase.FIELD_TYPE).equals("IMAGE") ){
                         MessageWeb web = new MessageWeb(this);
                         long id = web.receiveMessage(extras);
                         extras.putLong(DbBase.KEY_MESSAGE_ID, id);

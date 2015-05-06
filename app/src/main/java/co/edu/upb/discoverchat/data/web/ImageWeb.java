@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import co.edu.upb.discoverchat.R;
 import co.edu.upb.discoverchat.data.db.ImageManager;
 import co.edu.upb.discoverchat.data.db.base.DbBase;
 import co.edu.upb.discoverchat.data.provider.UbicationProvider;
@@ -152,7 +153,7 @@ public class ImageWeb extends RestClient{
         }
     }
 
-    public void getClosestImages(UIUpdater uiUpdater){
+    public void getClosestImages(final UIUpdater uiUpdater){
         final ArrayList<Image> images = new ArrayList();
         UbicationProvider ubicationProvider = UbicationProvider.getInstace(context);
         Location lastKnow = ubicationProvider.getLocation();
@@ -176,12 +177,24 @@ public class ImageWeb extends RestClient{
                         super.onSuccess(statusCode, headers, response);
                         for(int i = 0; i < response.length(); i++){
                             Image image = new Image();
+                            image.setBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
                             images.add(image);
                             try {
-                                image.setPath(response.getString(i));
+                                Log.i("####################", response.getString(i));
+                                String[] full = response.getString(i).split("\\$");
+                                String url = full[0];
+                                Double latitude = Double.parseDouble(full[1]);
+                                Double longitude = Double.parseDouble(full[2]);
+
+                                image.setUrl(url)
+                                        .setLatitude(latitude)
+                                        .setLongitude(longitude);
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            // image.setBitmap(downloadBitmap(image.getUrl()));
                         }
                     }
 
@@ -198,11 +211,9 @@ public class ImageWeb extends RestClient{
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                for(Image image1:images){
-                    Log.e("Response",image1.toString());
-                }
-                if(updater!=null)
-                    updater.updateUI(images);
+
+                if(uiUpdater!=null)
+                    uiUpdater.updateUI(images);
             }
         }.execute(  );
     }

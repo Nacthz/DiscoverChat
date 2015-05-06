@@ -4,43 +4,40 @@ import android.graphics.Bitmap;
 
 public class MyMarker
 {
+    Image image;
     private Bitmap mIcon;
     private Double mLatitude;
     private Double mLongitude;
 
-    public MyMarker(Bitmap icon, Double latitude, Double longitude)
+    public MyMarker(Image image)
     {
-        this.mLatitude = latitude;
-        this.mLongitude = longitude;
-        this.mIcon = icon;
+        this.image = image;
     }
     public Bitmap getmIcon()
-    {
-        return mIcon;
-    }
+    {return image.getBitmap();}
 
     public void setmIcon(Bitmap icon)
     {
-        this.mIcon = icon;
+        this.image.setBitmap(icon);
     }
 
     public Double getmLatitude()
     {
-        return mLatitude;
+        return image.getLatitude();
     }
 
     public void setmLatitude(Double mLatitude)
     {
-        this.mLatitude = mLatitude;
+        image.setLatitude(mLatitude);
     }
 
     public Double getmLongitude()
     {
-        return mLongitude;
+        return image.getLongitude();
     }
 
     public void setmLongitude(Double mLongitude)
     {
-        this.mLongitude = mLongitude;
+        this.image.setLatitude(mLongitude);
     }
 }
