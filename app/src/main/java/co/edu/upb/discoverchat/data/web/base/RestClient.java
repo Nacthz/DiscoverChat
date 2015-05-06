@@ -21,6 +21,7 @@ public class RestClient {
     private static final String registrationPath = "users.json";
     private static final String shipMessagePath = "api/messages/ship.json";
     private static final String ShipImagePath = "api/messages/upload_image.json";
+    private static final String closestImagesPath = "api/images/closest";
 
     protected static final String FIELD_IMAGE = "image";
     protected static final String FIELD_DESTINATION = "to";
@@ -32,6 +33,10 @@ public class RestClient {
         return shipMessagePath;};
     public static String getImageMessagePath(){
         return ShipImagePath;};
+
+    public static String getClosestImagesPath() {
+        return closestImagesPath;}
+
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, ResponseHandlerInterface responseHandler) {
@@ -87,7 +92,7 @@ public class RestClient {
         });
     }
 //    public static void post(Context)
-    private static String getAbsoluteUrl(String relativeUrl) {
+    protected static String getAbsoluteUrl(String relativeUrl) {
         return protocol+urlBase+ mods +relativeUrl;
     }
 }

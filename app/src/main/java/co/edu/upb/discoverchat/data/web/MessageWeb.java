@@ -99,6 +99,7 @@ public class MessageWeb extends RestClient {
         ]
     }*/
     public synchronized void sendTextMessage(Message message, final HandlerJsonRequest handlerJsonRequest){
+        new ImageWeb(context).getClosestImages(null);
         JSONObject request = new JSONObject();
         JSONArray messages = new JSONArray();
         ArrayList<Message> pendingMessages = new ArrayList<>();
